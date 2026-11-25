@@ -214,6 +214,11 @@ export async function uploadSiteAsset(
   if (fileError) throw new Error(fileError);
 
   const optimizedFile = await optimizeRasterImage(file);
+  const optimizedFileError = validateSiteAssetFile(
+    { name: optimizedFile.name, type: optimizedFile.type, size: optimizedFile.size },
+    { allowSvg }
+  );
+  if (optimizedFileError) throw new Error(optimizedFileError);
 
   if (supabase) {
     const safeExt = (optimizedFile.name.split('.').pop() || 'png')
