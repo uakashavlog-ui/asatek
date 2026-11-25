@@ -220,7 +220,7 @@ export const AdminOrdersPage: React.FC = () => {
                   <td className="py-3 px-4">
                     <div className="font-semibold text-on-surface">{order.customerName}</div>
                     <div className="font-spec-code text-xs text-on-surface-variant">{order.phone}</div>
-                    <a href={buildWhatsAppUrl(`Assalam o Alaikum ${order.customerName}, your ASATEK order ${order.orderNumber || order.id} for ${order.productName} x ${order.quantity} is ${order.status === 'Confirmed' ? 'confirmed' : order.status === 'Skipped' ? 'on hold' : order.status === 'Cancelled' ? 'cancelled' : 'pending'}. Thank you!`, order.whatsapp || order.phone)} target="_blank" rel="noreferrer" className="mt-1 inline-flex rounded-md bg-[#28A745] px-2 py-1 text-[11px] font-bold text-white">WhatsApp</a>
+                    <a href={buildWhatsAppUrl(`Assalam o Alaikum ${order.customerName}, your ASATEK order ${order.orderNumber || order.id} for ${order.productName} x ${order.quantity} is ${order.status === 'Confirmed' ? 'confirmed' : order.status === 'Skipped' ? 'on hold' : order.status === 'Cancelled' ? 'cancelled' : order.status.toLowerCase()}. Thank you!`, order.whatsapp || order.phone)} target="_blank" rel="noreferrer" className="mt-1 inline-flex rounded-md bg-[#28A745] px-2 py-1 text-[11px] font-bold text-white">WhatsApp</a>
                   </td>
                   <td className="py-3 px-4 text-xs">
                     <div className="font-semibold text-on-surface">{order.city}</div>
