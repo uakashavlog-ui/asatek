@@ -17,7 +17,7 @@ const statusMessage = (status: string) => {
     case 'Confirmed': return 'confirmed';
     case 'Skipped': return 'on hold';
     case 'Cancelled': return 'cancelled';
-    default: return 'pending';
+    default: return status.toLowerCase();
   }
 };
 
