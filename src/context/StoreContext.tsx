@@ -166,9 +166,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [selectedOrderId, setSelectedOrderId] = useState<string>(
     storeData.orders[0]?.id || '#AST-2025-0042'
   );
-  const [lastPlacedOrderId, setLastPlacedOrderId] = useState<string>(
-    storeData.orders[0]?.id || '#AST-2025-0042'
-  );
+  const [lastPlacedOrderId, setLastPlacedOrderId] = useState<string>('');
   const [catalogCategoryFilter, setCatalogCategoryFilter] = useState<ProductCategory | 'All Categories'>(
     'All Categories'
   );
