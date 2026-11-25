@@ -77,7 +77,7 @@ export type OrderStatus =
   | 'Pending'
   | 'Confirmed'
   | 'Shipped'
-  | 'On Hold'
+  | 'Delivered'
   | 'Cancelled';
 
 export type PaymentMethod = 'COD' | 'Bank Transfer';
@@ -98,9 +98,6 @@ export interface Order {
   address: string;
   city: string;
   province: string;
-  country: string;
-  zipCode: string;
-  location?: string;
   landmark?: string;
   instructions?: string;
   productId: string;
@@ -117,7 +114,6 @@ export interface Order {
   serialNumber?: string;
   expectedDelivery?: string;
   createdAt: string;
-  createdAtIso?: string;
   updatedAt: string;
   history: OrderHistoryEntry[];
 }
