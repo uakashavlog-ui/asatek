@@ -44,12 +44,14 @@ export const OrderFormPage: React.FC = () => {
   const [landmark, setLandmark] = useState('');
   const [instructions, setInstructions] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   if (!selectedProduct) return null;
 
   const totals = calculateOrderTotals(selectedProduct.price, checkoutQuantity, STANDARD_COD_SHIPPING_PKR);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const nextErrors: Record<string, string> = {};
 
@@ -78,21 +80,28 @@ export const OrderFormPage: React.FC = () => {
       return;
     }
 
-    placeOrder({
-      productId: selectedProduct.id,
-      quantity: totals.quantity,
-      customerName,
-      phone,
-      whatsapp: effectiveWa,
-      address,
-      city,
-      province,
-      landmark,
-      instructions,
-      paymentMethod: 'COD',
-    });
-
-    navigate('order-confirmation');
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      await placeOrder({
+        productId: selectedProduct.id,
+        quantity: totals.quantity,
+        customerName,
+        phone,
+        whatsapp: effectiveWa,
+        address,
+        city,
+        province,
+        landmark,
+        instructions,
+        paymentMethod: 'COD',
+      });
+      navigate('order-confirmation');
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'We could not save your order. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -468,12 +477,14 @@ export const OrderFormPage: React.FC = () => {
               </div>
             </div>
 
+            {submitError && <p role="alert" className="rounded-lg bg-error-container px-3 py-2 text-xs font-semibold text-on-error-container">{submitError}</p>}
             <button
               type="submit"
+              disabled={submitting}
               className="w-full py-3.5 px-5 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-bold text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.99]"
             >
               <span className="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
-              <span>Place Order (Cash on Delivery)</span>
+              <span>{submitting ? 'Saving Order...' : 'Place Order (Cash on Delivery)'}</span>
             </button>
 
             <div className="p-3 rounded-lg bg-surface-container-low text-xs text-on-surface-variant leading-relaxed">
