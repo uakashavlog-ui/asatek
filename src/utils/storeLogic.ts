@@ -127,6 +127,7 @@ export function computeOrderStats(orders: Order[]) {
   const confirmedOrShipped = orders.filter(
     (o) => o.status === 'Confirmed' || o.status === 'Shipped' || o.status === 'Delivered'
   ).length;
+  const skippedOrders = orders.filter((o) => o.status === 'Skipped').length;
   const cancelledOrders = orders.filter((o) => o.status === 'Cancelled').length;
   const grossRevenue = orders
     .filter((o) => o.status !== 'Cancelled')
