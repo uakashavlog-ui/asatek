@@ -150,6 +150,7 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
       return;
     }
     if (!isValidImageUrlSyntax(raw.trim(), { allowSvg })) {
+      checkSeqRef.current += 1;
       setErrorMsg('Invalid image link');
       notifyValid(false, 'Invalid image link');
       return;
