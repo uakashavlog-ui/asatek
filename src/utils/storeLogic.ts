@@ -244,25 +244,44 @@ export function deriveBrandPalette(primaryHex: string) {
 }
 
 export const SITE_ASSET_MAX_BYTES = 2 * 1024 * 1024; // 2 MB
-export const ALLOWED_SITE_ASSET_MIME_TYPES = [
+export const STANDARD_IMAGE_MIME_TYPES = [
   'image/png',
   'image/jpeg',
   'image/jpg',
   'image/webp',
-  'image/svg+xml',
-  'image/x-icon',
-  'image/vnd.microsoft.icon',
+];
+export const SVG_IMAGE_MIME_TYPES = ['image/svg+xml'];
+export const ALLOWED_SITE_ASSET_MIME_TYPES = [
+  ...STANDARD_IMAGE_MIME_TYPES,
+  ...SVG_IMAGE_MIME_TYPES,
 ];
 
+export interface ImageValidationOptions {
+  allowSvg?: boolean;
+}
+
 export function validateSiteAssetFile(
-  file: { name: string; type: string; size: number }
+  file: { name: string; type: string; size: number },
+  options: ImageValidationOptions = { allowSvg: true }
 ): string | null {
+  const allowSvg = options.allowSvg ?? true;
   const mime = (file.type || '').toLowerCase();
   const ext = file.name.split('.').pop()?.toLowerCase() || '';
-  const allowedExt = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'ico'].includes(ext);
 
-  if (!ALLOWED_SITE_ASSET_MIME_TYPES.includes(mime) && !allowedExt) {
-    return 'Unsupported image format. Allowed types: PNG, JPG, WebP, SVG, or ICO.';
+  const isSvg = mime === 'image/svg+xml' || ext === 'svg';
+  if (isSvg && !allowSvg) {
+    return 'SVG format is only allowed for the site logo and favicon. Please choose a JPG, PNG, or WebP image.';
+  }
+
+  const allowedExt = allowSvg
+    ? ['png', 'jpg', 'jpeg', 'webp', 'svg'].includes(ext)
+    : ['png', 'jpg', 'jpeg', 'webp'].includes(ext);
+  const allowedMimes = allowSvg ? ALLOWED_SITE_ASSET_MIME_TYPES : STANDARD_IMAGE_MIME_TYPES;
+
+  if (!allowedMimes.includes(mime) && !allowedExt) {
+    return allowSvg
+      ? 'Unsupported image format. Allowed formats: JPG, PNG, WebP, or SVG.'
+      : 'Unsupported image format. Allowed formats: JPG, PNG, or WebP.';
   }
   if (file.size <= 0) {
     return 'The selected image file appears to be empty.';
@@ -271,6 +290,74 @@ export function validateSiteAssetFile(
     return 'Image exceeds the 2 MB file size limit. Please choose a smaller file.';
   }
   return null;
+}
+
+export function isValidImageUrlSyntax(
+  rawUrl: string,
+  options: ImageValidationOptions = { allowSvg: true }
+): boolean {
+  const trimmed = rawUrl.trim();
+  if (!trimmed) return false;
+  const allowSvg = options.allowSvg ?? true;
+
+  if (trimmed.startsWith('/')) {
+    if (trimmed.startsWith('//')) return false;
+    if (!allowSvg && /\.svg(\?|#|$)/i.test(trimmed)) return false;
+    return trimmed.length > 1;
+  }
+
+  if (trimmed.startsWith('data:image/')) {
+    if (!allowSvg && trimmed.startsWith('data:image/svg+xml')) return false;
+    return trimmed.includes(',');
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      return false;
+    }
+    if (!allowSvg && /\.svg$/i.test(parsed.pathname)) {
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function normalizeProductImages(rawImages: unknown, rawImageUrl?: unknown): string[] {
+  const list: string[] = [];
+  if (Array.isArray(rawImages)) {
+    for (const item of rawImages) {
+      if (typeof item === 'string' && item.trim().length > 0) {
+        list.push(item.trim());
+      }
+    }
+  } else if (typeof rawImages === 'string' && rawImages.trim().length > 0) {
+    const trimmed = rawImages.trim();
+    if (trimmed.startsWith('[')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) {
+          for (const item of parsed) {
+            if (typeof item === 'string' && item.trim().length > 0) {
+              list.push(item.trim());
+            }
+          }
+        }
+      } catch {
+        list.push(trimmed);
+      }
+    } else {
+      list.push(trimmed);
+    }
+  }
+
+  if (list.length === 0 && typeof rawImageUrl === 'string' && rawImageUrl.trim().length > 0) {
+    list.push(rawImageUrl.trim());
+  }
+
+  return list;
 }
 
 export function validateSiteSettings(settings: SiteSettings): Record<string, string> {

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import type { ProductCategory, SystemVoltage } from '../../types/asatek';
 import { filterProducts, formatPkr } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const ProductsPage: React.FC = () => {
   const {
@@ -267,11 +268,12 @@ export const ProductsPage: React.FC = () => {
                       onClick={() => navigate('product-detail', { productId: product.id })}
                       className="w-full h-48 rounded-lg overflow-hidden bg-surface-container mb-3 block"
                     >
-                      <img
+                      <SafeImage
                         src={product.images[0]}
                         alt={product.name}
-                        referrerPolicy="no-referrer"
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        placeholderIcon="inventory_2"
+                        placeholderLabel={product.sku}
                       />
                     </button>
 

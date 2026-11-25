@@ -3,6 +3,7 @@ import { useStore } from '../../context/StoreContext';
 import type { SystemVoltage } from '../../types/asatek';
 import { formatPkr } from '../../utils/storeLogic';
 import { ConfirmDialog } from '../modals/ConfirmDialog';
+import { SafeImage } from '../common/SafeImage';
 
 export const AdminProductsPage: React.FC = () => {
   const {
@@ -142,12 +143,14 @@ export const AdminProductsPage: React.FC = () => {
                 <tr key={prod.id} className="hover:bg-surface-container-low/60">
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={prod.images[0]}
-                        alt={prod.name}
-                        referrerPolicy="no-referrer"
-                        className="w-12 h-12 rounded-lg object-cover bg-white border border-surface-container shrink-0"
-                      />
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-white border border-surface-container shrink-0">
+                        <SafeImage
+                          src={prod.images[0]}
+                          alt={prod.name}
+                          className="w-full h-full object-cover"
+                          placeholderIcon="inventory_2"
+                        />
+                      </div>
                       <div>
                         <div className="font-bold text-on-surface">{prod.name}</div>
                         <div className="font-spec-code text-xs text-primary">{prod.sku}</div>

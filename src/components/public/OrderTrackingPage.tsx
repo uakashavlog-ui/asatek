@@ -3,6 +3,7 @@ import { ASSETS } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import type { OrderStatus } from '../../types/asatek';
 import { buildWhatsAppUrl, findOrdersByPhone, formatPkr } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 function getStatusBadgeClasses(status: OrderStatus): string {
   switch (status) {
@@ -252,12 +253,14 @@ export const OrderTrackingPage: React.FC = () => {
 
                 <div className="p-3 rounded-lg bg-surface-container-low flex items-center gap-3">
                   {activeProduct && (
-                    <img
-                      src={activeProduct.images[0]}
-                      alt={activeOrder.productName}
-                      referrerPolicy="no-referrer"
-                      className="w-16 h-16 rounded-md object-cover bg-white border border-surface-container shrink-0"
-                    />
+                    <div className="w-16 h-16 rounded-md overflow-hidden bg-white border border-surface-container shrink-0">
+                      <SafeImage
+                        src={activeProduct.images[0]}
+                        alt={activeOrder.productName}
+                        className="w-full h-full object-cover"
+                        placeholderIcon="inventory_2"
+                      />
+                    </div>
                   )}
                   <div>
                     <span className="font-spec-code text-xs text-primary font-bold">
@@ -300,11 +303,11 @@ export const OrderTrackingPage: React.FC = () => {
               </div>
 
               <div className="rounded-xl overflow-hidden border border-surface-container bg-surface-container-lowest relative h-44">
-                <img
+                <SafeImage
                   src={ASSETS.hubMap}
                   alt="Pakistan Logistics Transit Corridors"
-                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
+                  placeholderIcon="map"
                 />
                 <div className="absolute bottom-2.5 left-2.5 right-2.5 bg-white/95 px-3 py-1.5 rounded-lg border border-surface-container text-xs flex items-center justify-between">
                   <span className="font-semibold text-on-surface">

@@ -272,7 +272,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     rootStyle.setProperty('--color-primary-fixed-dim', palette.primaryFixedDim);
     rootStyle.setProperty('--color-on-primary-fixed', palette.onPrimaryFixed);
 
-    document.title = `${siteSettings.site_name} — ${siteSettings.tagline}`;
+    const siteName = siteSettings.site_name.trim() || 'ASATEK';
+    const tagline = siteSettings.tagline.trim();
+    document.title = tagline ? `${siteName} — ${tagline}` : siteName;
 
     let iconLink = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
     if (!iconLink) {
@@ -280,8 +282,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       iconLink.rel = 'icon';
       document.head.appendChild(iconLink);
     }
-    if (siteSettings.favicon_url) {
-      iconLink.href = siteSettings.favicon_url;
+    const faviconUrl = (siteSettings.favicon_url || siteSettings.logo_url || '').trim();
+    if (faviconUrl) {
+      iconLink.href = faviconUrl;
+      if (faviconUrl.endsWith('.svg') || faviconUrl.startsWith('data:image/svg+xml')) {
+        iconLink.type = 'image/svg+xml';
+      } else {
+        iconLink.removeAttribute('type');
+      }
     }
   }, [siteSettings]);
 

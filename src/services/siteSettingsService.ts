@@ -7,6 +7,9 @@ import {
 } from '../lib/supabaseClient';
 import type { SiteSettings } from '../types/asatek';
 import {
+  SITE_ASSET_MAX_BYTES,
+  STANDARD_IMAGE_MIME_TYPES,
+  SVG_IMAGE_MIME_TYPES,
   normalizeSiteSettings,
   validateSiteAssetFile,
   validateSiteSettings,
@@ -41,7 +44,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   updated_at: new Date().toISOString(),
 };
 
-export type SiteAssetSlot = 'logo' | 'favicon' | 'hero';
+export type SiteAssetSlot = 'logo' | 'favicon' | 'hero' | 'products' | 'reviews';
 
 export function loadLocalSiteSettings(): SiteSettings {
   if (typeof window === 'undefined') {
@@ -166,11 +169,15 @@ export async function uploadSiteAsset(
   file: File,
   slot: SiteAssetSlot
 ): Promise<string> {
-  const fileError = validateSiteAssetFile({
-    name: file.name,
-    type: file.type,
-    size: file.size,
-  });
+  const allowSvg = slot === 'logo' || slot === 'favicon';
+  const fileError = validateSiteAssetFile(
+    {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+    },
+    { allowSvg }
+  );
   if (fileError) {
     throw new Error(fileError);
   }
@@ -179,15 +186,35 @@ export async function uploadSiteAsset(
     const safeExt = (file.name.split('.').pop() || 'png')
       .toLowerCase()
       .replace(/[^a-z0-9]/g, '');
-    const objectPath = `${slot}-${Date.now()}.${safeExt || 'png'}`;
+    const uniqueSuffix = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const objectPath = `${slot}/${slot}-${uniqueSuffix}.${safeExt || 'png'}`;
+    const uploadOptions = {
+      cacheControl: '3600',
+      upsert: true,
+      contentType: file.type || 'application/octet-stream',
+    };
 
-    const { error } = await supabase.storage
+    let { error } = await supabase.storage
       .from(SITE_ASSETS_BUCKET)
-      .upload(objectPath, file, {
-        cacheControl: '3600',
-        upsert: true,
-        contentType: file.type || 'application/octet-stream',
+      .upload(objectPath, file, uploadOptions);
+
+    if (error && /bucket.*not.*found/i.test(error.message)) {
+      const { error: createErr } = await supabase.storage.createBucket(SITE_ASSETS_BUCKET, {
+        public: true,
+        fileSizeLimit: SITE_ASSET_MAX_BYTES,
+        allowedMimeTypes: [...STANDARD_IMAGE_MIME_TYPES, ...SVG_IMAGE_MIME_TYPES],
       });
+      if (!createErr) {
+        const retry = await supabase.storage
+          .from(SITE_ASSETS_BUCKET)
+          .upload(objectPath, file, uploadOptions);
+        error = retry.error;
+      } else {
+        throw new Error(
+          `Supabase Storage bucket "${SITE_ASSETS_BUCKET}" does not exist yet and could not be auto-created (${createErr.message}). Create the public "${SITE_ASSETS_BUCKET}" bucket in Supabase Storage and try again.`
+        );
+      }
+    }
 
     if (error) {
       throw new Error(`Upload to "${SITE_ASSETS_BUCKET}" failed: ${error.message}`);

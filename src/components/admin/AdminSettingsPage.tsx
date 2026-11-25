@@ -9,6 +9,7 @@ import {
 import type { SiteSettings } from '../../types/asatek';
 import { deriveBrandPalette, validateSiteSettings } from '../../utils/storeLogic';
 import { ConfirmDialog } from '../modals/ConfirmDialog';
+import { ImageInputControl } from './ImageInputControl';
 
 type SectionTab = 'all' | 'branding' | 'contact' | 'homepage' | 'footer';
 
@@ -25,14 +26,17 @@ export const AdminSettingsPage: React.FC = () => {
     siteSettingsSaving,
     saveSiteSettings,
     resetSiteSettings,
-    uploadSiteAsset,
     navigate,
   } = useStore();
 
   const [draft, setDraft] = useState<SiteSettings>(() => ({ ...siteSettings }));
   const [activeTab, setActiveTab] = useState<SectionTab>('all');
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [uploadingSlot, setUploadingSlot] = useState<SiteAssetSlot | null>(null);
+  const [imageErrors, setImageErrors] = useState<Record<'logo' | 'favicon' | 'hero', string | null>>({
+    logo: null,
+    favicon: null,
+    hero: null,
+  });
   const [toast, setToast] = useState<ToastState | null>(null);
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
 
@@ -61,40 +65,25 @@ export const AdminSettingsPage: React.FC = () => {
     }
   };
 
-  const handleAssetUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    slot: SiteAssetSlot
-  ) => {
-    const file = e.target.files?.[0];
-    e.target.value = '';
-    if (!file) return;
-
-    setUploadingSlot(slot);
-    setToast(null);
-    try {
-      const uploadedUrl = await uploadSiteAsset(file, slot);
-      if (slot === 'logo') updateField('logo_url', uploadedUrl);
-      if (slot === 'favicon') updateField('favicon_url', uploadedUrl);
-      if (slot === 'hero') updateField('hero_image_url', uploadedUrl);
-
-      setToast({
-        type: 'success',
-        message: `${
-          slot === 'logo' ? 'Logo' : slot === 'favicon' ? 'Favicon' : 'Hero banner'
-        } uploaded (${file.name}). Click Save Changes to publish.`,
-      });
-    } catch (err) {
-      setToast({
-        type: 'error',
-        message: err instanceof Error ? err.message : 'Image upload failed.',
-      });
-    } finally {
-      setUploadingSlot(null);
-    }
+  const handleImageValidityChange = (slot: SiteAssetSlot, valid: boolean, errMsg?: string) => {
+    if (slot !== 'logo' && slot !== 'favicon' && slot !== 'hero') return;
+    setImageErrors((prev) => ({
+      ...prev,
+      [slot]: valid ? null : errMsg || 'Invalid image link',
+    }));
   };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    const pendingImageError = imageErrors.logo || imageErrors.favicon || imageErrors.hero;
+    if (pendingImageError) {
+      setToast({
+        type: 'error',
+        message: pendingImageError,
+      });
+      return;
+    }
+
     const validationErrors = validateSiteSettings(draft);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -261,7 +250,7 @@ export const AdminSettingsPage: React.FC = () => {
           <div className="flex items-center gap-2.5 ml-auto shrink-0">
             <button
               type="button"
-              disabled={siteSettingsSaving || uploadingSlot !== null}
+              disabled={siteSettingsSaving}
               onClick={() => setResetDialogOpen(true)}
               className="px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface text-xs font-bold disabled:opacity-60 flex items-center gap-1.5"
             >
@@ -270,7 +259,7 @@ export const AdminSettingsPage: React.FC = () => {
             </button>
             <button
               type="submit"
-              disabled={siteSettingsSaving || uploadingSlot !== null}
+              disabled={siteSettingsSaving}
               className="px-4 py-2 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary text-xs font-bold shadow-sm disabled:opacity-60 flex items-center gap-1.5"
             >
               <span aria-hidden="true" className="material-symbols-outlined text-[17px]">
@@ -292,100 +281,44 @@ export const AdminSettingsPage: React.FC = () => {
                 <h2 className="text-headline-sm font-bold text-on-surface">Branding</h2>
               </div>
               <span className="text-xs text-on-surface-variant font-spec-code">
-                PNG, JPG, WebP, SVG, ICO · Max 2 MB
+                JPG, PNG, WEBP, SVG (Logo/Favicon) · Max 2 MB
               </span>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Logo + Favicon Uploaders */}
               <div className="lg:col-span-5 flex flex-col gap-4">
-                <div className="p-4 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-on-surface">Website Logo</span>
-                    <button
-                      type="button"
-                      onClick={() => updateField('logo_url', DEFAULT_SITE_SETTINGS.logo_url)}
-                      className="text-[11px] font-semibold text-primary hover:underline"
-                    >
-                      Use Default Logo
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 rounded-xl bg-white border border-outline-variant p-1.5 flex items-center justify-center shrink-0 overflow-hidden">
-                      <img
-                        src={draft.logo_url}
-                        alt="Brand logo preview"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2 min-w-0 flex-1">
-                      <label
-                        htmlFor="settings-logo-upload"
-                        className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-on-surface cursor-pointer"
-                      >
-                        <span className="material-symbols-outlined text-[16px] text-primary">upload</span>
-                        <span>
-                          {uploadingSlot === 'logo' ? 'Uploading...' : 'Upload Logo Image'}
-                        </span>
-                      </label>
-                      <input
-                        id="settings-logo-upload"
-                        type="file"
-                        accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                        disabled={uploadingSlot !== null}
-                        onChange={(e) => void handleAssetUpload(e, 'logo')}
-                        className="sr-only"
-                      />
-                      <span className="text-[11px] text-on-surface-variant truncate">
-                        Shown in header, footer, admin sidebar &amp; login.
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <ImageInputControl
+                  label="Website Logo"
+                  value={draft.logo_url}
+                  onChange={(url) => updateField('logo_url', url)}
+                  onValidityChange={(valid, err) => handleImageValidityChange('logo', valid, err)}
+                  uploadFolder="logo"
+                  allowSvg={true}
+                  defaultUrl={DEFAULT_SITE_SETTINGS.logo_url}
+                  defaultButtonLabel="Use Default Logo"
+                  previewClassName="w-20 h-20 rounded-xl bg-white border border-outline-variant p-1.5 flex items-center justify-center shrink-0 overflow-hidden"
+                  previewImageClassName="w-full h-full object-contain"
+                  previewAlt="Brand logo preview"
+                  helperText="Shown in header, footer, admin sidebar & login."
+                  inputIdPrefix="settings-logo"
+                />
 
-                <div className="p-4 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-on-surface">Browser Favicon</span>
-                    <button
-                      type="button"
-                      onClick={() => updateField('favicon_url', DEFAULT_SITE_SETTINGS.favicon_url)}
-                      className="text-[11px] font-semibold text-primary hover:underline"
-                    >
-                      Use Default Favicon
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-white border border-outline-variant p-1.5 flex items-center justify-center shrink-0 overflow-hidden">
-                      <img
-                        src={draft.favicon_url}
-                        alt="Favicon preview"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-                      <label
-                        htmlFor="settings-favicon-upload"
-                        className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-on-surface cursor-pointer"
-                      >
-                        <span className="material-symbols-outlined text-[16px] text-primary">upload</span>
-                        <span>
-                          {uploadingSlot === 'favicon' ? 'Uploading...' : 'Upload Favicon'}
-                        </span>
-                      </label>
-                      <input
-                        id="settings-favicon-upload"
-                        type="file"
-                        accept="image/png,image/x-icon,image/vnd.microsoft.icon,image/svg+xml,image/webp"
-                        disabled={uploadingSlot !== null}
-                        onChange={(e) => void handleAssetUpload(e, 'favicon')}
-                        className="sr-only"
-                      />
-                      <span className="text-[11px] text-on-surface-variant">
-                        Updates the browser tab icon immediately on save.
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <ImageInputControl
+                  label="Browser Favicon"
+                  value={draft.favicon_url}
+                  onChange={(url) => updateField('favicon_url', url)}
+                  onValidityChange={(valid, err) => handleImageValidityChange('favicon', valid, err)}
+                  uploadFolder="favicon"
+                  allowSvg={true}
+                  defaultUrl={DEFAULT_SITE_SETTINGS.favicon_url}
+                  defaultButtonLabel="Use Default Favicon"
+                  previewClassName="w-12 h-12 rounded-lg bg-white border border-outline-variant p-1.5 flex items-center justify-center shrink-0 overflow-hidden"
+                  previewImageClassName="w-full h-full object-contain"
+                  previewAlt="Favicon preview"
+                  helperText="Updates the browser tab icon immediately on save."
+                  inputIdPrefix="settings-favicon"
+                />
               </div>
 
               {/* Site Name, Tagline & Primary Color */}
@@ -615,40 +548,20 @@ export const AdminSettingsPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="lg:col-span-5 p-4 rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-on-surface">Hero Banner Image</span>
-                  <button
-                    type="button"
-                    onClick={() => updateField('hero_image_url', DEFAULT_SITE_SETTINGS.hero_image_url)}
-                    className="text-[11px] font-semibold text-primary hover:underline"
-                  >
-                    Use Default Image
-                  </button>
-                </div>
-                <div className="w-full h-44 rounded-lg overflow-hidden bg-white border border-outline-variant">
-                  <img
-                    src={draft.hero_image_url}
-                    alt="Hero banner preview"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <label
-                  htmlFor="settings-hero-upload"
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-on-surface cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-[16px] text-primary">add_photo_alternate</span>
-                  <span>
-                    {uploadingSlot === 'hero' ? 'Uploading...' : 'Upload Hero Banner Image'}
-                  </span>
-                </label>
-                <input
-                  id="settings-hero-upload"
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                  disabled={uploadingSlot !== null}
-                  onChange={(e) => void handleAssetUpload(e, 'hero')}
-                  className="sr-only"
+              <div className="lg:col-span-5">
+                <ImageInputControl
+                  label="Hero Banner Image"
+                  value={draft.hero_image_url}
+                  onChange={(url) => updateField('hero_image_url', url)}
+                  onValidityChange={(valid, err) => handleImageValidityChange('hero', valid, err)}
+                  uploadFolder="hero"
+                  allowSvg={false}
+                  defaultUrl={DEFAULT_SITE_SETTINGS.hero_image_url}
+                  defaultButtonLabel="Use Default Image"
+                  previewClassName="w-full h-44 rounded-lg overflow-hidden bg-white border border-outline-variant shrink-0"
+                  previewImageClassName="w-full h-full object-cover"
+                  previewAlt="Hero banner preview"
+                  inputIdPrefix="settings-hero"
                 />
               </div>
             </div>

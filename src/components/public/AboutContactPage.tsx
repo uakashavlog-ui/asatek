@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ASSETS } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import { buildWhatsAppUrl, formatDisplayIntlPhone, formatTelHref } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const AboutContactPage: React.FC = () => {
   const { submitContactInquiry, siteSettings, navigate } = useStore();
@@ -87,12 +88,12 @@ export const AboutContactPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-surface-container min-h-[280px]">
-            <img
+          <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-surface-container min-h-[280px] bg-surface-container-low">
+            <SafeImage
               src={ASSETS.workshop}
               alt="ASATEK Lahore Assembly & Calibration Facility"
-              referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
+              placeholderIcon="precision_manufacturing"
             />
           </div>
         </section>
@@ -166,12 +167,12 @@ export const AboutContactPage: React.FC = () => {
               <span className="material-symbols-outlined text-[16px]">content_copy</span>
               <span>{copiedAddress ? 'Address Copied!' : 'Copy Factory Address'}</span>
             </button>
-            <div className="rounded-lg overflow-hidden border border-surface-container h-52">
-              <img
+            <div className="rounded-lg overflow-hidden border border-surface-container h-52 bg-surface-container-low">
+              <SafeImage
                 src={ASSETS.hubMap}
                 alt="ASATEK Logistics & Service Map"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
+                placeholderIcon="map"
               />
             </div>
             <button

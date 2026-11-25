@@ -3,12 +3,17 @@ import { ASSETS } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import type { ReviewStatus } from '../../types/asatek';
 import { ConfirmDialog } from '../modals/ConfirmDialog';
+import { SafeImage } from '../common/SafeImage';
+import { ImageInputControl } from './ImageInputControl';
 
 export const AdminReviewsPage: React.FC = () => {
   const { reviews, products, addReview, updateReview, deleteReview } = useStore();
   const [statusTab, setStatusTab] = useState<'All' | ReviewStatus>('All');
   const [search, setSearch] = useState('');
   const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const [imageLinkError, setImageLinkError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const [newForm, setNewForm] = useState({
     customerName: '',
@@ -34,7 +39,12 @@ export const AdminReviewsPage: React.FC = () => {
 
   const handleIngestSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (imageLinkError) {
+      setFormError(imageLinkError);
+      return;
+    }
     if (!newForm.customerName.trim() || !newForm.comment.trim()) return;
+    setFormError(null);
     const prod = products.find((p) => p.id === newForm.productId);
     addReview({
       customerName: newForm.customerName.trim(),
@@ -44,7 +54,7 @@ export const AdminReviewsPage: React.FC = () => {
       rating: newForm.rating,
       setupMetric: newForm.setupMetric.trim() || 'Verified Field Setup',
       comment: newForm.comment.trim(),
-      image: newForm.image,
+      image: newForm.image.trim() || undefined,
       verifiedBuyer: true,
       status: 'Published',
     });
@@ -137,6 +147,30 @@ export const AdminReviewsPage: React.FC = () => {
             className="w-full rounded-lg border border-outline-variant px-3 py-2 text-xs"
           />
         </div>
+        <div className="md:col-span-6">
+          <ImageInputControl
+            label="Customer Field Installation Photo"
+            value={newForm.image}
+            onChange={(url) => setNewForm((prev) => ({ ...prev, image: url }))}
+            onValidityChange={(valid, err) => {
+              setImageLinkError(valid ? null : err || 'Invalid image link');
+              if (valid) setFormError(null);
+            }}
+            uploadFolder="reviews"
+            allowSvg={false}
+            allowClear={true}
+            previewClassName="w-16 h-14 rounded-lg overflow-hidden bg-white border border-outline-variant shrink-0"
+            previewImageClassName="w-full h-full object-cover"
+            previewAlt="Review installation preview"
+            inputIdPrefix="review-image"
+            compact={true}
+          />
+          {formError && (
+            <p role="alert" className="text-xs text-error font-semibold mt-1.5">
+              {formError}
+            </p>
+          )}
+        </div>
       </form>
 
       {/* Filter Bar */}
@@ -175,14 +209,14 @@ export const AdminReviewsPage: React.FC = () => {
             className="bg-surface-container-lowest rounded-xl border border-surface-container overflow-hidden shadow-sm flex flex-col justify-between"
           >
             <div>
-              {rev.image && (
-                <img
+              <div className="w-full h-36 bg-surface-container-low overflow-hidden">
+                <SafeImage
                   src={rev.image}
                   alt={rev.productName}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-36 object-cover"
+                  className="w-full h-full object-cover"
+                  placeholderLabel={rev.productName}
                 />
-              )}
+              </div>
               <div className="p-4">
                 <div className="flex items-center justify-between text-xs mb-1">
                   <span

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
 import { buildWhatsAppUrl, formatPkr } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const OrderConfirmationPage: React.FC = () => {
   const { orders, products, lastPlacedOrderId, siteSettings, setTrackingPrefillPhone, navigate } = useStore();
@@ -106,12 +107,14 @@ export const OrderConfirmationPage: React.FC = () => {
               </div>
               <div className="mt-3 flex items-center gap-3">
                 {product && (
-                  <img
-                    src={product.images[0]}
-                    alt={order.productName}
-                    referrerPolicy="no-referrer"
-                    className="w-16 h-16 rounded-lg object-cover bg-white border border-surface-container"
-                  />
+                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-surface-container shrink-0">
+                    <SafeImage
+                      src={product.images[0]}
+                      alt={order.productName}
+                      className="w-full h-full object-cover"
+                      placeholderIcon="inventory_2"
+                    />
+                  </div>
                 )}
                 <div>
                   <div className="font-bold text-sm text-on-surface">{order.productName}</div>

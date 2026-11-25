@@ -16,6 +16,7 @@ import type {
   ReviewItem,
   ServiceCenter,
 } from '../types/asatek';
+import { normalizeProductImages } from '../utils/storeLogic';
 
 export const STORE_STORAGE_KEY = 'asatek_pakistan_state_v2';
 
@@ -112,7 +113,7 @@ function mapProductRow(row: DbRow): Product {
     codEligible: Boolean(row.cod_eligible ?? row.codEligible ?? true),
     urduManualIncluded: Boolean(row.urdu_manual_included ?? row.urduManualIncluded ?? true),
     isPublicVisible: Boolean(row.is_public_visible ?? row.isPublicVisible ?? true),
-    images: Array.isArray(row.images) ? (row.images as string[]) : [],
+    images: normalizeProductImages(row.images, row.image_url ?? row.imageUrl),
     youtubeUrl: typeof row.youtube_url === 'string' ? row.youtube_url : (typeof row.youtubeUrl === 'string' ? row.youtubeUrl : undefined),
     description: String(row.description ?? ''),
     urduDescription: String(row.urdu_description ?? row.urduDescription ?? ''),
@@ -184,7 +185,10 @@ function mapReviewRow(row: DbRow): ReviewItem {
       ? String(row.urdu_comment ?? row.urduComment)
       : undefined,
     setupMetric: String(row.setup_metric ?? row.setupMetric ?? ''),
-    image: typeof row.image === 'string' ? row.image : undefined,
+    image: (() => {
+      const rawImg = row.image ?? row.image_url ?? row.imageUrl;
+      return typeof rawImg === 'string' && rawImg.trim().length > 0 ? rawImg.trim() : undefined;
+    })(),
     verifiedBuyer: Boolean(row.verified_buyer ?? row.verifiedBuyer ?? true),
     status: (row.status as ReviewItem['status']) || 'Published',
     createdAt: String(row.created_at ?? row.createdAt ?? ''),

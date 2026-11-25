@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { ASSETS } from '../../data/seedData';
 import { buildWhatsAppUrl, formatDisplayIntlPhone, formatPkr } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const ProductDetailPage: React.FC = () => {
   const {
@@ -68,11 +69,12 @@ export const ProductDetailPage: React.FC = () => {
               </span>
             </div>
             <div className="w-full h-80 sm:h-96 rounded-lg overflow-hidden bg-surface-container-low">
-              <img
+              <SafeImage
                 src={product.images[activeImgIdx] || product.images[0]}
                 alt={product.name}
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
+                placeholderIcon="inventory_2"
+                placeholderLabel={product.sku}
               />
             </div>
 
@@ -87,11 +89,11 @@ export const ProductDetailPage: React.FC = () => {
                       activeImgIdx === idx ? 'border-primary' : 'border-surface-container opacity-75 hover:opacity-100'
                     }`}
                   >
-                    <img
+                    <SafeImage
                       src={img}
                       alt={`${product.name} view ${idx + 1}`}
-                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
+                      placeholderIcon="image"
                     />
                   </button>
                 ))}
@@ -282,11 +284,11 @@ export const ProductDetailPage: React.FC = () => {
                   </button>
                 </div>
                 <div className="flex-1 flex flex-col items-center justify-center text-center gap-3 py-4">
-                  <img
+                  <SafeImage
                     src={ASSETS.workshop}
                     alt="Technician walkthrough"
-                    referrerPolicy="no-referrer"
                     className="w-full max-w-md h-44 object-cover rounded-lg border border-white/20"
+                    placeholderIcon="precision_manufacturing"
                   />
                   <p className="text-sm text-white/90 max-w-md">
                     Step-by-Step Technician Guide: Connect battery bank first, verify voltage gauge deflection, attach solar PV terminals using pure copper cable, then engage DC load.
@@ -295,11 +297,11 @@ export const ProductDetailPage: React.FC = () => {
               </div>
             ) : (
               <div className="relative h-full min-h-[280px]">
-                <img
+                <SafeImage
                   src={ASSETS.workshop}
                   alt="ASATEK installation tutorial"
-                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
+                  placeholderIcon="precision_manufacturing"
                 />
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-3 p-6 text-center">
                   <button
@@ -410,11 +412,12 @@ export const ProductDetailPage: React.FC = () => {
               className="text-left bg-surface-container-lowest rounded-xl border border-surface-container p-4 hover:shadow-md transition-all"
             >
               <div className="w-full h-44 rounded-lg overflow-hidden bg-surface-container mb-3">
-                <img
+                <SafeImage
                   src={item.images[0]}
                   alt={item.name}
-                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
+                  placeholderIcon="inventory_2"
+                  placeholderLabel={item.sku}
                 />
               </div>
               <span className="text-[11px] font-spec-code text-primary uppercase font-semibold">

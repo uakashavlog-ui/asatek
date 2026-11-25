@@ -3,6 +3,7 @@ import { UI_TEXT } from '../data/seedData';
 import { useStore } from '../context/StoreContext';
 import type { PageRoute } from '../types/asatek';
 import { buildWhatsAppUrl, formatDisplayIntlPhone, formatTelHref } from '../utils/storeLogic';
+import { BrandLogo } from './common/BrandLogo';
 
 export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const {
@@ -50,10 +51,9 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
               onClick={() => navigate('home')}
               className="flex items-center gap-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg min-w-0"
             >
-              <img
+              <BrandLogo
                 src={siteSettings.logo_url}
-                alt={`${siteSettings.site_name} Logo`}
-                referrerPolicy="no-referrer"
+                siteName={siteSettings.site_name}
                 className="h-8 w-8 sm:h-9 sm:w-9 rounded-md object-contain bg-white border border-surface-container shrink-0"
               />
               <span className="font-headline-sm text-base sm:text-headline-sm text-primary tracking-tight font-extrabold truncate max-w-[120px] sm:max-w-[175px]">
@@ -175,11 +175,10 @@ export const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2.5">
-                <img
+                <BrandLogo
                   src={siteSettings.logo_url}
-                  alt={`${siteSettings.site_name} Logo`}
-                  referrerPolicy="no-referrer"
-                  className="h-8 w-8 rounded object-contain bg-white border border-surface-container"
+                  siteName={siteSettings.site_name}
+                  className="h-8 w-8 rounded object-contain bg-white border border-surface-container shrink-0"
                 />
                 <span className="font-headline-sm text-headline-sm text-primary font-extrabold tracking-tight">
                   {siteSettings.site_name}

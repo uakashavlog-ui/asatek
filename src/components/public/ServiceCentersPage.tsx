@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ASSETS } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import { buildWhatsAppUrl } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const ServiceCentersPage: React.FC = () => {
   const { serviceCenters, submitContactInquiry, siteSettings, navigate } = useStore();
@@ -232,12 +233,12 @@ export const ServiceCentersPage: React.FC = () => {
 
       {/* Walk-In Warranty Protocol */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch bg-surface-container-lowest rounded-2xl border border-surface-container p-6 mb-10 shadow-sm">
-        <div className="lg:col-span-5 rounded-xl overflow-hidden relative min-h-[240px]">
-          <img
+        <div className="lg:col-span-5 rounded-xl overflow-hidden relative min-h-[240px] bg-surface-container-low">
+          <SafeImage
             src={ASSETS.workshop}
             alt="Standardized ASATEK Diagnostic Benches"
-            referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
+            placeholderIcon="precision_manufacturing"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end p-4 text-white">
             <div>
@@ -292,12 +293,12 @@ export const ServiceCentersPage: React.FC = () => {
           </div>
           <span className="font-spec-code text-xs text-primary font-semibold">Lahore Central Hub + 14 Regional Depots</span>
         </div>
-        <div className="rounded-xl overflow-hidden border border-surface-container relative h-72">
-          <img
+        <div className="rounded-xl overflow-hidden border border-surface-container relative h-72 bg-surface-container-low">
+          <SafeImage
             src={ASSETS.hubMap}
             alt="ASATEK Pakistan Authorized Service Hubs Map"
-            referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
+            placeholderIcon="map"
           />
           <div className="absolute bottom-4 left-4 bg-white/95 rounded-xl p-4 border border-surface-container shadow-md max-w-xs">
             <span className="text-[11px] font-bold text-primary uppercase block">ASATEK GPS Routing</span>

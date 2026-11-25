@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { BrandLogo } from '../common/BrandLogo';
 
 export const AdminLoginPage: React.FC = () => {
   const {
@@ -49,11 +50,10 @@ export const AdminLoginPage: React.FC = () => {
       <div className="w-full max-w-md bg-surface-container-lowest rounded-2xl border border-surface-container shadow-lg p-6 sm:p-8">
         <div className="flex flex-col items-center text-center mb-6">
           <div className="flex items-center gap-2.5 mb-3">
-            <img
+            <BrandLogo
               src={siteSettings.logo_url}
-              alt={`${siteSettings.site_name} Logo`}
-              referrerPolicy="no-referrer"
-              className="w-10 h-10 rounded-lg object-contain border border-surface-container bg-white"
+              siteName={siteSettings.site_name}
+              className="w-10 h-10 rounded-lg object-contain border border-surface-container bg-white shrink-0"
             />
             <div className="text-left">
               <span className="text-xl font-extrabold text-primary tracking-tight block leading-none">

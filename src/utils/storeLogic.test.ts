@@ -14,8 +14,10 @@ import {
   formatTelHref,
   generateNextOrderId,
   getNextOrderStatuses,
+  isValidImageUrlSyntax,
   isValidPkPhone,
   normalizePkPhone,
+  normalizeProductImages,
   normalizeSiteSettings,
   resolveRouteFromLocation,
   routeToPath,
@@ -106,8 +108,19 @@ test('validateSiteSettings and validateSiteAssetFile enforce formats, URLs, and 
   assert.ok(invalidErrors.facebook_url);
 
   assert.equal(validateSiteAssetFile({ name: 'logo.png', type: 'image/png', size: 102400 }), null);
+  assert.equal(validateSiteAssetFile({ name: 'logo.svg', type: 'image/svg+xml', size: 10240 }, { allowSvg: true }), null);
+  assert.ok(validateSiteAssetFile({ name: 'hero.svg', type: 'image/svg+xml', size: 10240 }, { allowSvg: false }));
   assert.ok(validateSiteAssetFile({ name: 'doc.pdf', type: 'application/pdf', size: 1024 }));
   assert.ok(validateSiteAssetFile({ name: 'huge.png', type: 'image/png', size: 3 * 1024 * 1024 }));
+
+  assert.equal(isValidImageUrlSyntax('https://cdn.example.com/photo.webp', { allowSvg: false }), true);
+  assert.equal(isValidImageUrlSyntax('https://cdn.example.com/logo.svg', { allowSvg: true }), true);
+  assert.equal(isValidImageUrlSyntax('https://cdn.example.com/hero.svg', { allowSvg: false }), false);
+  assert.equal(isValidImageUrlSyntax('not-a-url'), false);
+
+  assert.deepEqual(normalizeProductImages(['https://a.com/1.jpg', '']), ['https://a.com/1.jpg']);
+  assert.deepEqual(normalizeProductImages('["https://a.com/1.jpg"]'), ['https://a.com/1.jpg']);
+  assert.deepEqual(normalizeProductImages([], 'https://a.com/fallback.png'), ['https://a.com/fallback.png']);
 });
 
 test('normalizeSiteSettings falls back cleanly to ASATEK defaults and deriveBrandPalette computes CSS tokens', () => {

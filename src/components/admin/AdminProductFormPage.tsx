@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ASSETS } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import type { Product, ProductCategory, SystemVoltage } from '../../types/asatek';
+import { SafeImage } from '../common/SafeImage';
+import { ImageInputControl } from './ImageInputControl';
 
 export const AdminProductFormPage: React.FC = () => {
   const { products, selectedProductId, saveProduct, navigate } = useStore();
@@ -47,20 +49,22 @@ export const AdminProductFormPage: React.FC = () => {
   );
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [imageLinkError, setImageLinkError] = useState<string | null>(null);
 
-  const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        setForm((prev) => ({ ...prev, images: [reader.result as string, ...prev.images] }));
-      }
-    };
-    reader.readAsDataURL(file);
+  const handlePrimaryImageChange = (newUrl: string) => {
+    const trimmed = newUrl.trim();
+    if (!trimmed) return;
+    setForm((prev) => ({
+      ...prev,
+      images: [trimmed, ...prev.images.filter((img) => img !== trimmed)],
+    }));
   };
 
   const handleSave = (publishVisible: boolean) => {
+    if (imageLinkError) {
+      setErrorMsg(imageLinkError);
+      return;
+    }
     if (!form.name.trim() || !form.sku.trim()) {
       setErrorMsg('Product Name and SKU are required.');
       return;
@@ -391,17 +395,46 @@ export const AdminProductFormPage: React.FC = () => {
 
           <section className="bg-surface-container-lowest rounded-xl border border-surface-container p-5 shadow-sm flex flex-col gap-3">
             <h2 className="text-base font-bold text-on-surface">Product Gallery &amp; Media</h2>
-            <div className="grid grid-cols-3 gap-2">
-              {form.images.map((img, i) => (
-                <div key={i} className="relative h-20 rounded-lg overflow-hidden border border-surface-container">
-                  <img src={img} alt="Product preview" className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-            <label className="text-xs font-semibold text-primary cursor-pointer hover:underline">
-              <span>+ Upload Photo from Device</span>
-              <input type="file" accept="image/*" onChange={handleImageFile} className="hidden" />
-            </label>
+            {form.images.length > 0 && (
+              <div className="grid grid-cols-3 gap-2">
+                {form.images.map((img, i) => (
+                  <div key={`${img}-${i}`} className="relative h-20 rounded-lg overflow-hidden border border-surface-container group bg-surface-container-low">
+                    <SafeImage src={img} alt="Product preview" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      aria-label={`Remove product image ${i + 1}`}
+                      onClick={() =>
+                        setForm((prev) => ({
+                          ...prev,
+                          images: prev.images.filter((_, idx) => idx !== i),
+                        }))
+                      }
+                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 text-white text-[11px] flex items-center justify-center opacity-90 hover:bg-error"
+                    >
+                      ×
+                    </button>
+                    {i === 0 && (
+                      <span className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded bg-primary text-on-primary text-[9px] font-bold">
+                        Primary
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            <ImageInputControl
+              label="Primary Product Image"
+              value={form.images[0] || ''}
+              onChange={handlePrimaryImageChange}
+              onValidityChange={(valid, err) => setImageLinkError(valid ? null : err || 'Invalid image link')}
+              uploadFolder="products"
+              allowSvg={false}
+              previewClassName="w-16 h-16 rounded-lg overflow-hidden bg-white border border-outline-variant shrink-0"
+              previewImageClassName="w-full h-full object-cover"
+              previewAlt="Primary product image preview"
+              inputIdPrefix="product-primary-image"
+              compact={true}
+            />
           </section>
 
           <section className="bg-surface-container-lowest rounded-xl border border-surface-container p-5 shadow-sm flex flex-col gap-3">

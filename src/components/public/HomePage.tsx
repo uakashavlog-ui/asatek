@@ -3,6 +3,7 @@ import { ASSETS, UI_TEXT } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import type { ProductCategory } from '../../types/asatek';
 import { buildWhatsAppUrl, formatPkr } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const HomePage: React.FC = () => {
   const {
@@ -130,11 +131,12 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-5 relative">
               <div className="relative bg-surface-container-low rounded-xl p-5 shadow-md border border-surface-container">
                 <div className="w-full h-72 rounded-lg overflow-hidden bg-surface-container-lowest relative flex items-center justify-center">
-                  <img
+                  <SafeImage
                     src={siteSettings.hero_image_url}
                     alt={`${siteSettings.site_name} Hero Showcase`}
-                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
+                    placeholderIcon="solar_power"
+                    placeholderLabel={siteSettings.site_name}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent flex items-end p-4">
                     <div className="text-white">
@@ -274,11 +276,12 @@ export const HomePage: React.FC = () => {
                     onClick={() => navigate('product-detail', { productId: product.id })}
                     className="relative w-full h-56 rounded-lg bg-surface-container overflow-hidden mb-4 block"
                   >
-                    <img
+                    <SafeImage
                       src={product.images[0]}
                       alt={product.name}
-                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      placeholderIcon="inventory_2"
+                      placeholderLabel={product.sku}
                     />
                   </button>
 
@@ -380,11 +383,11 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
             <div className="lg:col-span-6 min-h-[280px]">
-              <img
+              <SafeImage
                 src={ASSETS.workshop}
                 alt="ASATEK Lahore Electronics QA Workbench"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
+                placeholderIcon="precision_manufacturing"
               />
             </div>
           </div>

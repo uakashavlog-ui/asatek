@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import type { PageRoute } from '../types/asatek';
+import { BrandLogo } from './common/BrandLogo';
 
 export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const {
@@ -71,10 +72,9 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col">
         <div className="h-[72px] px-5 py-3 flex items-center gap-2.5 border-b border-surface-container">
-          <img
+          <BrandLogo
             src={siteSettings.logo_url}
-            alt={`${siteSettings.site_name} Logo`}
-            referrerPolicy="no-referrer"
+            siteName={siteSettings.site_name}
             className="w-9 h-9 rounded-lg object-contain bg-white border border-surface-container shrink-0"
           />
           <div className="min-w-0 flex flex-col">

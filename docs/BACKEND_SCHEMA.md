@@ -80,11 +80,13 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
 
 ## 3. Storage Bucket: `site-assets`
 
-Uploaded branding and homepage media (`logo`, `favicon`, `hero`) are stored in the **`site-assets`** bucket.
+Uploaded branding, hero, product, and review media (`logo`, `favicon`, `hero`, `products`, `reviews`) are stored in the **`site-assets`** bucket.
 
-- **Allowed MIME Types**: `image/png`, `image/jpeg`, `image/webp`, `image/svg+xml`, `image/x-icon`
+- **Allowed MIME Types**: `image/jpeg`, `image/png`, `image/webp`, `image/svg+xml` (SVG enforced for logo & favicon only in the admin UI)
 - **Max File Size**: `2 MB` (`2097152` bytes)
-- **Public Read**: Enabled (so storefront header/footer/hero assets load fast without signed URLs)
+- **Public Read**: Enabled (so storefront header/footer/hero/product/review assets load fast without signed URLs)
+
+See [`docs/SUPABASE_SETUP.sql`](./SUPABASE_SETUP.sql) for the complete idempotent SQL script covering `storage.buckets`, `storage.objects`, `site_settings`, `products`, and `reviews`.
 
 ```sql
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -93,17 +95,20 @@ VALUES (
   'site-assets',
   TRUE,
   2097152,
-  ARRAY['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'image/x-icon']
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']
 )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+  public = EXCLUDED.public,
+  file_size_limit = EXCLUDED.file_size_limit,
+  allowed_mime_types = EXCLUDED.allowed_mime_types;
 ```
 
 ---
 
 ## 4. Security Rules (RLS Policies)
 
-- **Public visitors**: `SELECT` only on `site_settings` and public read on `site-assets`.
-- **Admin only**: `INSERT` / `UPDATE` on `site_settings` and upload (`INSERT` / `UPDATE` / `DELETE`) on `storage.objects` in bucket `site-assets` (authenticated admin JWT claim `role = 'admin'`).
+- **Public visitors**: `SELECT` only on `site_settings`, `products`, `reviews`, and public read on `site-assets`.
+- **Authenticated Admin**: `INSERT` / `UPDATE` / `DELETE` on `site_settings`, `products`, `reviews`, and `storage.objects` in bucket `site-assets` (`TO authenticated` with `auth.uid() IS NOT NULL`).
 
 ```sql
 ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
@@ -120,16 +125,16 @@ CREATE POLICY "Admins can insert site_settings"
   ON public.site_settings
   FOR INSERT
   TO authenticated
-  WITH CHECK ((auth.jwt() ->> 'role') = 'admin');
+  WITH CHECK (auth.uid() IS NOT NULL);
 
 CREATE POLICY "Admins can update site_settings"
   ON public.site_settings
   FOR UPDATE
   TO authenticated
-  USING ((auth.jwt() ->> 'role') = 'admin')
-  WITH CHECK ((auth.jwt() ->> 'role') = 'admin');
+  USING (auth.uid() IS NOT NULL)
+  WITH CHECK (auth.uid() IS NOT NULL);
 
--- Storage bucket "site-assets": public read, admin-only write/upload
+-- Storage bucket "site-assets": public read, authenticated admin upload/update/delete
 CREATE POLICY "Public can read site-assets"
   ON storage.objects
   FOR SELECT
@@ -140,17 +145,19 @@ CREATE POLICY "Admins can upload to site-assets"
   ON storage.objects
   FOR INSERT
   TO authenticated
-  WITH CHECK (bucket_id = 'site-assets' AND (auth.jwt() ->> 'role') = 'admin');
+  WITH CHECK (bucket_id = 'site-assets' AND auth.uid() IS NOT NULL);
 
 CREATE POLICY "Admins can update site-assets"
   ON storage.objects
   FOR UPDATE
   TO authenticated
-  USING (bucket_id = 'site-assets' AND (auth.jwt() ->> 'role') = 'admin');
+  USING (bucket_id = 'site-assets' AND auth.uid() IS NOT NULL)
+  WITH CHECK (bucket_id = 'site-assets' AND auth.uid() IS NOT NULL);
 
 CREATE POLICY "Admins can delete site-assets"
   ON storage.objects
   FOR DELETE
   TO authenticated
-  USING (bucket_id = 'site-assets' AND (auth.jwt() ->> 'role') = 'admin');
+  USING (bucket_id = 'site-assets' AND auth.uid() IS NOT NULL);
 ```
+

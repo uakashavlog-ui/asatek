@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { SafeImage } from '../common/SafeImage';
 
 export const ReviewsPage: React.FC = () => {
   const { reviews, products, language, addReview, navigate } = useStore();
@@ -178,16 +179,15 @@ export const ReviewsPage: React.FC = () => {
               className="bg-surface-container-lowest rounded-xl border border-surface-container overflow-hidden shadow-sm flex flex-col justify-between"
             >
               <div>
-                {rev.image && (
-                  <div className="h-44 w-full bg-surface-container overflow-hidden">
-                    <img
-                      src={rev.image}
-                      alt={`${rev.productName} installation in ${rev.city}`}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
+                <div className="h-44 w-full bg-surface-container overflow-hidden">
+                  <SafeImage
+                    src={rev.image}
+                    alt={`${rev.productName} installation in ${rev.city}`}
+                    className="w-full h-full object-cover"
+                    placeholderIcon="photo_camera"
+                    placeholderLabel={rev.productName}
+                  />
+                </div>
                 <div className="p-5">
                   <div className="flex items-center justify-between text-xs mb-2">
                     <span className="font-spec-code font-bold text-primary">{rev.rating}.0 ★ Verified</span>

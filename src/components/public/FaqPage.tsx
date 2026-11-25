@@ -3,6 +3,7 @@ import { ASSETS } from '../../data/seedData';
 import { useStore } from '../../context/StoreContext';
 import type { FaqCategory } from '../../types/asatek';
 import { buildWhatsAppUrl } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 export const FaqPage: React.FC = () => {
   const { faqs, language, siteSettings, navigate } = useStore();
@@ -141,12 +142,14 @@ export const FaqPage: React.FC = () => {
         {/* Right Column Factory Assurance */}
         <aside className="lg:col-span-4 flex flex-col gap-5">
           <div className="rounded-xl overflow-hidden bg-surface-container-lowest border border-surface-container shadow-sm">
-            <img
-              src={ASSETS.workshop}
-              alt="ASATEK Factory QA Lab"
-              referrerPolicy="no-referrer"
-              className="w-full h-44 object-cover"
-            />
+            <div className="w-full h-44 bg-surface-container-low">
+              <SafeImage
+                src={ASSETS.workshop}
+                alt="ASATEK Factory QA Lab"
+                className="w-full h-full object-cover"
+                placeholderIcon="precision_manufacturing"
+              />
+            </div>
             <div className="p-5">
               <span className="font-spec-code text-xs text-tertiary font-bold uppercase block">
                 FACTORY DIRECT ASSURANCE

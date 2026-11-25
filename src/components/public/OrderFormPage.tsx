@@ -7,6 +7,7 @@ import {
   isValidPkPhone,
   STANDARD_COD_SHIPPING_PKR,
 } from '../../utils/storeLogic';
+import { SafeImage } from '../common/SafeImage';
 
 const PROVINCES = [
   'Punjab',
@@ -170,12 +171,14 @@ export const OrderFormPage: React.FC = () => {
 
             <div className="p-3.5 rounded-lg bg-surface-container-low border border-surface-container flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
-                <img
-                  src={selectedProduct.images[0]}
-                  alt={selectedProduct.name}
-                  referrerPolicy="no-referrer"
-                  className="w-14 h-14 rounded-md object-cover bg-white border border-surface-container shrink-0"
-                />
+                <div className="w-14 h-14 rounded-md overflow-hidden bg-white border border-surface-container shrink-0">
+                  <SafeImage
+                    src={selectedProduct.images[0]}
+                    alt={selectedProduct.name}
+                    className="w-full h-full object-cover"
+                    placeholderIcon="inventory_2"
+                  />
+                </div>
                 <div className="min-w-0">
                   <div className="font-bold text-sm text-on-surface truncate">{selectedProduct.name}</div>
                   <div className="font-spec-code text-xs text-primary font-semibold">SKU: {selectedProduct.sku}</div>
