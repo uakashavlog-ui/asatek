@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"background":"#fcf9f8","on-tertiary":"#ffffff","on-primary-fixed":"#410000","on-background":"#1c1b1b","surface-container-highest":"#e5e2e1","inverse-on-surface":"#f3f0ef","on-secondary-fixed-variant":"#930000","secondary-container":"#d83828","tertiary":"#005a1d","primary":"#9e0000","surface":"#fcf9f8","tertiary-fixed-dim":"#66df75","on-secondary-container":"#fffbff","secondary-fixed-dim":"#ffb4a8","surface-container-low":"#f6f3f2","on-tertiary-fixed":"#002106","on-secondary-fixed":"#410000","inverse-primary":"#ffb4a8","on-primary":"#ffffff","surface-dim":"#dcd9d9","on-primary-fixed-variant":"#930000","surface-container":"#f0eded","surface-container-lowest":"#ffffff","error-container":"#ffdad6","on-primary-container":"#ffdad4","on-surface":"#1c1b1b","surface-bright":"#fcf9f8","secondary":"#b41d11","on-tertiary-fixed-variant":"#00531a","inverse-surface":"#313030","surface-container-high":"#eae7e7","primary-fixed":"#ffdad4","secondary-fixed":"#ffdad4","on-surface-variant":"#5e3f3a","error":"#ba1a1a","outline-variant":"#e8bdb6","tertiary-container":"#007528","primary-fixed-dim":"#ffb4a8","on-secondary":"#ffffff","surface-variant":"#e5e2e1","on-error":"#ffffff","primary-container":"#cc0000","outline":"#926e69","on-tertiary-container":"#83fc8e","on-error-container":"#93000a","tertiary-fixed":"#83fc8e","surface-tint":"#c00000"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","gutter":"1.5rem","space-sm":"0.5rem","space-lg":"1.5rem","space-md":"1rem","margin-mobile":"1rem","gutter-mobile":"1rem","margin":"2rem","space-xl":"2.5rem"},"fontFamily":{"spec-code":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"display-hero-mobile":["Inter"],"headline-lg":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Inter"],"label-uppercase":["Inter"],"label-md":["Inter"],"display-hero":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"]},"fontSize":{"spec-code":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"display-hero-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"label-uppercase":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","fontWeight":"500"}],"display-hero":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)]"><div class="h-20 max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><img alt="ASATEK Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="transition-colors text-primary font-bold" data-path="products" href="#">Products</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="service-centers" href="#">Service Centers</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="reviews" href="#">Reviews</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="faq" href="#">FAQ</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="contact" href="#">Contact</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container-low rounded-lg p-space-xs"><button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-label-uppercase text-label-uppercase shadow-sm" type="button">EN</button><button class="px-space-sm py-1 rounded text-on-surface-variant font-label-uppercase text-label-uppercase hover:text-on-surface" type="button">اردو</button></div><a class="hidden sm:flex items-center gap-space-xs text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="tel:+923001234567"><span class="material-symbols-outlined text-primary text-[20px]">call</span><span class="font-spec-code text-spec-code">0300-1234567</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Quick Anchor Bar -->
+<section class="w-full bg-surface-container-low py-space-sm">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between">
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span>Home</span>
+</a>
+<span class="text-outline-variant font-spec-code">/</span>
+<a class="hover:text-primary transition-colors" href="#">Products</a>
+<span class="text-outline-variant font-spec-code">/</span>
+<a class="hover:text-primary transition-colors" href="#">Solar Charge Controllers</a>
+<span class="text-outline-variant font-spec-code">/</span>
+<span class="text-primary font-semibold truncate max-w-[200px] sm:max-w-none">ASATEK SC5 VA-1260</span>
+</nav>
+<div class="hidden md:flex items-center gap-space-md">
+<span class="inline-flex items-center gap-1 font-spec-code text-spec-code bg-surface-container-lowest px-space-sm py-0.5 rounded-lg text-tertiary">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+          Official Direct Store
+        </span>
+<span class="text-on-surface-variant font-spec-code text-spec-code">SKU: AST-SC5-1260-PK</span>
+</div>
+</div>
+</section>
+<!-- Two-Column Product Overview Section -->
+<section class="w-full py-space-lg lg:py-space-xl">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Gallery & Engineering Visuals (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Main Display Card -->
+<div class="relative w-full rounded-xl bg-surface-container-lowest overflow-hidden shadow-sm group">
+<!-- Badge Accents -->
+<div class="absolute top-4 left-4 z-20 flex flex-col gap-2">
+<span class="inline-flex items-center gap-1 bg-primary text-on-primary font-label-uppercase text-label-uppercase px-space-sm py-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+                Heavy Industrial PWM
+              </span>
+<span class="inline-flex items-center gap-1 bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-spec-code text-spec-code px-space-sm py-0.5 rounded shadow-sm">
+                Dual Analog Meters
+              </span>
+</div>
+<div class="absolute top-4 right-4 z-20">
+<span class="inline-flex items-center gap-1.5 bg-tertiary-container text-on-tertiary font-label-uppercase text-label-uppercase px-space-sm py-1 rounded shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-ping"></span>
+                In Stock (Direct Dispatch)
+              </span>
+</div>
+<!-- Primary Image Canvas -->
+<div class="relative w-full aspect-[4/3] bg-surface-container-low flex items-center justify-center overflow-hidden">
+<img alt="ASATEK SC5 VA-1260 Front Panel Display" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Industrial solar charge controller unit model ASATEK SC5 VA-1260 shot straight on an industrial workstation. Features a bold crimson red metal faceplate, twin circular analog gauges with needle indicators for voltage and amperage, heavy-gauge brass screw terminals at the base, powder-coated matte grey casing, and clean side ventilation louvers. Professional studio lighting with crisp metallic highlights and deep mechanical depth." id="mainProductImage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2XcZK-QGLNF9e0xqgWqtD7whlY0GeUex2Yr9FDGvPRn4ju0sbjh1OUuGZOsuNNGGggnfe-rwOKoMntb6YhGPih0WGx5bCHjLh8tycTBrqCuxdpkhCkM2yri6LKCP1-DTcwOWmknCyx7TtqcSrYtIF1IWlK0wQXKnYAcnUzktSBgbCNGRB10EwQbR9x8Wx50HrmXMsO9VshgTtnRw4wpDVFqR6ZNVfJOxsqDHhdA8"/>
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 backdrop-blur-sm text-inverse-on-surface px- space-sm py-1 rounded text-spec-code font-spec-code flex items-center gap-1 pointer-events-none">
+<span class="material-symbols-outlined text-[14px]">zoom_in</span>
+                High-Res Technical View
+              </div>
+</div>
+</div>
+<!-- Thumbnail Selector Strip -->
+<div class="grid grid-cols-4 gap-space-sm">
+<button aria-label="View front faceplate" class="thumb-btn active relative rounded-lg overflow-hidden bg-surface-container-lowest shadow-sm aspect-video transition-all hover:opacity-90" onclick="selectImage(0)" type="button">
+<img alt="Front Faceplate Gauge Panel" class="w-full h-full object-cover" data-alt="Close up view of ASATEK SC5 front crimson panel displaying twin analog voltmeter and ammeter with precision calibration lines and rugged toggle switches under sharp industrial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlB7x2o3QCl4Jrfb_R5MVpp9DwodRwK9mpB79Q7pTT0AZfK0HB7ugebk-Hwcrb1gi9kyWoiBYFotPxWIvSEqb7dQLdytcVYr76fOCAIYtT6bMrB6fvV9qUCX7ojiyyxeuoEvWIrftdcx4xjotzLXRn9AT48q9G0V8UkwrAMbBUZli94kJ9yt9tGjf65P5RKol_ta08dhy08hs7hecOa0tfO25AC7UCizOM60fnsDo"/>
+<span class="absolute inset-x-0 bottom-0 bg-inverse-surface/75 text-inverse-on-surface font-spec-code text-[10px] text-center py-0.5 truncate">Front Gauges</span>
+</button>
+<button aria-label="View heavy terminal block" class="thumb-btn relative rounded-lg overflow-hidden bg-surface-container-lowest shadow-sm aspect-video transition-all hover:opacity-90" onclick="selectImage(1)" type="button">
+<img alt="High-Amperage Brass Terminals" class="w-full h-full object-cover" data-alt="Macro perspective of ASATEK charge controller heavy-duty solid copper terminal block connectors with hex screws labeled for Solar PV positive negative and 12V Battery lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFUXX8dlKdUqlFzeOE-jDt7PtJgXCl_C2MMh5RlyZbSjS_vnq17vsg4t_7xRAvubQsMPKoZXU2El6mdntkzehGeu2j8PbiZdkg9c8KK-YWEP8EuJKVJk73mmHhq1v1VIGuEXzEfC4IhbsQjG3ttq6acapWKYbiPM8gc3tG_xxbD8znAyIyqKesXDjwAd24pXUHnTRZnFyV2RCPRkyrXDIra00t3LB0o5owAap8gcU"/>
+<span class="absolute inset-x-0 bottom-0 bg-inverse-surface/75 text-inverse-on-surface font-spec-code text-[10px] text-center py-0.5 truncate">Terminals</span>
+</button>
+<button aria-label="View cooling fan and vents" class="thumb-btn relative rounded-lg overflow-hidden bg-surface-container-lowest shadow-sm aspect-video transition-all hover:opacity-90" onclick="selectImage(2)" type="button">
+<img alt="High RPM Forced Air Cooling" class="w-full h-full object-cover" data-alt="Side profile view of ASATEK SC5 unit showing heavy-duty cooling fan exhaust grille, industrial heatsink ribs and powder-coated steel chassis in crisp detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGCJjYWk7lu_w4knyAhJ1MNSm6hUjyRbbVcx5b16Qx4pfyYO71_qRultyQMYNrX1OxUEIRcb2xMWUb81oQWwcQIj1WiZKDFChuHCTNpK22X5csrFnZaLTwBfnWe7N6Re4wciuDxmf6xYr7Ud89JsB9cbopxnpuZsrtsHp-tctKJnTzAJoBRdWfLC2unPKiijyJ7dLecxm7TUUzcSJk7_XeaWouwQdRaGyDUpVHeoc"/>
+<span class="absolute inset-x-0 bottom-0 bg-inverse-surface/75 text-inverse-on-surface font-spec-code text-[10px] text-center py-0.5 truncate">Active Cooling</span>
+</button>
+<button aria-label="View retail packaging and warranty" class="thumb-btn relative rounded-lg overflow-hidden bg-surface-container-lowest shadow-sm aspect-video transition-all hover:opacity-90" onclick="selectImage(3)" type="button">
+<img alt="Retail Packaging and Certificate" class="w-full h-full object-cover" data-alt="ASATEK branded retail packaging box with green Pakistan warranty card certificate and printed Urdu English instruction schematic diagram on crisp white studio table." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY9-qx1iz9HJfADzVa11tQFdplz-DsWdnpnQjTePdRbTz4ZYLTb6JJzNefBzaZ08bw_TF7yX0H1g3GiugROrlKLjIEySYdL6K-pi0CV-heMiSazZOp3ydWtGcNi9hSATkaziVSlibqculSG9N2gBkBWR9DmmFR2gkdtQKD3UnPCC1P5r9oa6S9tIVziC36mi6xCFop0y09jeuhGesByT-jr9vyhluHECOoqI9FNi8"/>
+<span class="absolute inset-x-0 bottom-0 bg-inverse-surface/75 text-inverse-on-surface font-spec-code text-[10px] text-center py-0.5 truncate">Box &amp; Warranty</span>
+</button>
+</div>
+<!-- Quick Technical Highlights Bar -->
+<div class="grid grid-cols-3 gap-space-sm p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">speed</span>
+</div>
+<div class="min-w-0">
+<p class="font-spec-code text-spec-code text-on-surface-variant uppercase">Current Load</p>
+<p class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">60A Cont.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">solar_power</span>
+</div>
+<div class="min-w-0">
+<p class="font-spec-code text-spec-code text-on-surface-variant uppercase">Max Array</p>
+<p class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">1000W PV</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+<div class="min-w-0">
+<p class="font-spec-code text-spec-code text-on-surface-variant uppercase">Coverage</p>
+<p class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">1 Yr Direct</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Product Detail, Specs & Purchase Actions (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<!-- Category and Product Code -->
+<div class="flex items-center justify-between gap-space-sm flex-wrap">
+<span class="bg-primary-container text-on-primary-container font-label-uppercase text-label-uppercase px-space-sm py-1 rounded font-bold">
+                Solar Charge Controller
+              </span>
+<span class="text-tertiary font-spec-code text-spec-code font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                Lahore Factory Direct
+              </span>
+</div>
+<!-- Title Header -->
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-extrabold tracking-tight">
+                ASATEK SC5 VA-1260
+              </h1>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium mt-1">
+                Heavy-Duty 12V 60A PWM Solar Controller with Dual Analog Meters
+              </p>
+</div>
+<!-- Trust Metrics / Social Proof -->
+<div class="flex items-center flex-wrap gap-x-space-md gap-y-1 py-space-xs border-y border-surface-container-highest">
+<div class="flex items-center gap-1 text-[#e5a00d]">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-headline-sm text-on-surface font-bold text-base ml-1">4.9</span>
+</div>
+<span class="text-outline-variant">•</span>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm underline" href="#reviews">
+                48 Verified Reviews
+              </a>
+<span class="text-outline-variant">•</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[16px]">home_repair_service</span>
+                15+ Service Hubs
+              </span>
+</div>
+<!-- Pricing Block -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-baseline justify-between gap-space-sm flex-wrap">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-spec-code text-on-surface-variant text-body-md font-semibold">PKR</span>
+<span class="font-display-hero text-display-hero text-primary font-black tracking-tight">4,500</span>
+<span class="text-on-surface-variant text-body-sm line-through font-spec-code ml-2">PKR 5,200</span>
+</div>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-spec-code text-spec-code font-bold px-2 py-0.5 rounded">
+                  Save 13%
+                </span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px]">local_shipping</span>
+<span class="font-medium text-on-surface">Cash on Delivery Available</span>
+<span>(Nationwide 24-72h)</span>
+</div>
+</div>
+<!-- Core Paragraph Description -->
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+              Engineered specifically for Pakistan's aggressive summer ambient temperatures and high load-shedding cycles. 
+              The <strong class="text-primary font-semibold">ASATEK SC5 VA-1260</strong> integrates mechanical analog dials that supply real-time monitoring even under zero-battery scenarios, bypassing fragile digital microprocessors that fail during severe power surges.
+            </p>
+<!-- Key Engineering Highlights Box -->
+<div class="bg-surface-container-lowest rounded-lg p-space-sm bg-surface-container-low">
+<h2 class="font-label-uppercase text-label-uppercase text-on-surface-variant mb-space-xs font-bold">
+                Quick Engineering Snapshot
+              </h2>
+<div class="grid grid-cols-2 gap-x-space-md gap-y-space-xs font-body-sm text-body-sm">
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-xs font-spec-code">TOPOLOGY</span>
+<span class="font-semibold text-on-surface font-spec-code">Solid-State PWM</span>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-xs font-spec-code">VOLTAGE / CURRENT</span>
+<span class="font-semibold text-on-surface font-spec-code">12V DC / 60 Amps</span>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-xs font-spec-code">PV ARRAY MAX</span>
+<span class="font-semibold text-on-surface font-spec-code">30V Voc / 1,000W</span>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-xs font-spec-code">CHASSIS</span>
+<span class="font-semibold text-on-surface font-spec-code">1.2mm Steel Enclosure</span>
+</div>
+</div>
+</div>
+<!-- Functional Checklist -->
+<ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span>
+<span><strong>Zero-Battery DC Operation:</strong> Run 12V DC fans and lights directly from daytime solar output without battery connection.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span>
+<span><strong>Multi-Stage Protection:</strong> Built-in reverse polarity, short-circuit, and battery overcharge safeguards.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span>
+<span><strong>Official Warranty:</strong> 1-Year replacement &amp; repair warranty valid across all ASATEK service centers nationwide.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span>
+<span><strong>Localized Urdu Manual:</strong> Detailed terminal connection guide printed in English and Urdu (اردو) included.</span>
+</li>
+</ul>
+<!-- Quantity & Call To Action Buttons -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<!-- Quantity Selector -->
+<div class="flex items-center bg-surface-container rounded-lg p-1">
+<button aria-label="Decrease quantity" class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-bold" onclick="adjustQty(-1)" type="button">-</button>
+<input class="w-12 text-center bg-transparent font-spec-code text-spec-code font-bold text-on-surface focus:outline-none" id="productQty" max="50" min="1" type="number" value="1"/>
+<button aria-label="Increase quantity" class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-bold" onclick="adjustQty(1)" type="button">+</button>
+</div>
+<!-- Primary Order Now Button -->
+<button class="flex-1 bg-primary hover:bg-[#850000] active:scale-[0.98] text-on-primary font-label-md text-label-md font-bold py-3 px-space-md rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+<span>Order Now (Cash on Delivery)</span>
+</button>
+</div>
+<!-- Green WhatsApp Instant Order Button -->
+<a class="w-full bg-[#25D366] hover:bg-[#1ebc59] active:scale-[0.98] text-[#ffffff] font-label-md text-label-md font-bold py-3 px-space-md rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all" href="https://wa.me/923001234567?text=Assalam-o-Alaikum%20ASATEK%20Team%2C%20I%20want%20to%20order%20the%20ASATEK%20SC5%20VA-1260%20(PKR%204500)." rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span>Order via WhatsApp (+92 300 1234567)</span>
+</a>
+</div>
+<!-- Safe Buying Assurance Footer -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs text-on-surface-variant font-spec-code text-spec-code">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span>100% Genuine ASATEK</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-[18px]">published_with_changes</span>
+<span>7-Day Return Guarantee</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Video Demonstration & Schematic Connection Section -->
+<section class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-space-sm">
+<div>
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">
+            Hands-On Field Guide
+          </span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-extrabold mt-1">
+            Watch Product Demonstration &amp; Connection Guide
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Follow our certified technician walkthrough for proper battery-first connection sequencing and DC direct load setups.
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 font-spec-code text-spec-code bg-surface-container-highest px- space-sm py-1 rounded text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">play_circle</span>
+            Urdu &amp; English Audio
+          </span>
+</div>
+</div>
+<!-- Video & Schematic Bento Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
+<!-- Video Preview Card (8 cols) -->
+<div class="lg:col-span-8 rounded-xl overflow-hidden shadow-sm bg-surface-container-lowest relative group">
+<div class="relative w-full aspect-video bg-inverse-surface flex items-center justify-center">
+<img alt="ASATEK SC5 Connection Video Thumbnail" class="w-full h-full object-cover opacity-85 group-hover:opacity-75 transition-opacity" data-alt="Technical video presentation preview frame showing an electrical technician in an ASATEK industrial workshop demonstrating solar panel connection to the SC5 VA-1260 charge controller. Clearly visible multimeter, twin 12V tubular batteries, brass terminal wiring, and schematic guide poster on the workbench wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUhNEsMy3Ch3G83QT2sebH9SSnMH-cu5Hc6EQB6Rgw5zcM7_DdJF1SNU0_QQfUxqWlo2SC18PXBCyRvzM9T7ms3cl81lyebMpsLiByyTT53BjGMa7NjfZC-IaaIxm_b-uxFLIJxSROvYT6MM8q5Cjs08LqfErn74mtTr_mXBTMmEMTIkCsYVBmUKMhPqZ4lNRJ6rJWArkWR149TgANK8WGEGFZvPn9HQvWGFUQxCY"/>
+<!-- Video Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-transparent to-inverse-surface/30"></div>
+<!-- Big Interactive Play Button -->
+<button aria-label="Play product demonstration video" class="absolute z-10 w-20 h-20 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-xl group-hover:scale-110 active:scale-95 transition-all" onclick="playVideoModal()" type="button">
+<span class="material-symbols-outlined text-[44px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<!-- Video Captions Overlay Bottom -->
+<div class="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between text-inverse-on-surface">
+<div>
+<p class="font-headline-sm text-headline-sm font-bold text-white leading-tight">Step-by-Step Installation: SC5 60A Unit</p>
+<p class="font-spec-code text-spec-code text-white/80">Duration: 4 mins 42 secs • 1080p HD</p>
+</div>
+<span class="bg-primary/90 text-white font-spec-code text-spec-code px- space-sm py-1 rounded">
+                Watch Demo
+              </span>
+</div>
+</div>
+</div>
+<!-- Wire Diagram & Connection Rules (4 cols) -->
+<div class="lg:col-span-4 rounded-xl p-space-lg bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-space-sm mb-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Safe Wiring Sequence</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Always adhere to the sequential protocol to prevent internal high-voltage arcing across terminal gates:
+            </p>
+<ol class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+<li class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary font-spec-code text-spec-code flex items-center justify-center flex-shrink-0 font-bold">1</span>
+<div>
+<strong class="text-on-surface">Connect Battery First:</strong>
+<p class="text-on-surface-variant text-xs mt-0.5">Allows internal sensing circuits to calibrate 12V baseline before PV exposure.</p>
+</div>
+</li>
+<li class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary font-spec-code text-spec-code flex items-center justify-center flex-shrink-0 font-bold">2</span>
+<div>
+<strong class="text-on-surface">Connect Solar PV Panels:</strong>
+<p class="text-on-surface-variant text-xs mt-0.5">Analog meters will smoothly deflect to indicate operational generation.</p>
+</div>
+</li>
+<li class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary font-spec-code text-spec-code flex items-center justify-center flex-shrink-0 font-bold">3</span>
+<div>
+<strong class="text-on-surface">Connect DC Load Output:</strong>
+<p class="text-on-surface-variant text-xs mt-0.5">Direct DC fans, light loops, or inverter trigger lines.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-surface-container-high flex items-center justify-between">
+<span class="text-tertiary font-spec-code text-spec-code flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+              PDF Manual Included
+            </span>
+<a class="text-primary hover:underline font-label-md text-label-md font-bold flex items-center gap-1" href="#">
+              Download Schematics
+              <span class="material-symbols-outlined text-[16px]">download</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Complete Technical Specifications Section -->
+<section class="w-full py-space-xl">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<div class="max-w-2xl mb-space-lg">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold">
+          Verified Laboratory Ratings
+        </span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-extrabold mt-1">
+          Full Technical Specifications
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+          All specifications are tested at 25°C ambient temperature under ISO 9001 certified QA protocols in Lahore, Pakistan.
+        </p>
+</div>
+<!-- Technical Specifications Table (Clean Striped) -->
+<div class="w-full overflow-hidden rounded-xl shadow-sm bg-surface-container-lowest">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-high text-on-surface font-label-uppercase text-label-uppercase">
+<th class="py-space-md px-space-lg font-bold" scope="col">Engineering Parameter</th>
+<th class="py-space-md px-space-lg font-bold text-right" scope="col">Standard Nominal Value</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Product Model Identifier</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-primary">ASATEK SC5 VA-1260</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Regulation Methodology</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code text-on-surface">Solid-State PWM (Pulse Width Modulation)</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Nominal System DC Voltage</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-on-surface">12 Volts DC</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Continuous Rated Current Output</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-tertiary">60.0 Amperes Continuous</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Max Solar PV Open Circuit Voltage (Voc)</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code text-on-surface">30 Volts DC Max</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Max Recommended Solar Array Power</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-on-surface">1,000 Watts (1.0 kW)</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Conversion Efficiency</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-tertiary">≥ 96.5% at Peak Solar Load</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Analog Display Meters</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code text-on-surface">Voltmeter (0-30V) + Ammeter (0-70A)</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Cooling Topology</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code text-on-surface">Dual Exhaust Active High-Speed Ball-Bearing Fan</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Chassis Construction</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code text-on-surface">1.2mm Heavy Gauge Electrostatic Powder-Coated Metal</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Physical Dimensions (H × W × D)</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code text-on-surface">260 mm × 210 mm × 115 mm</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Net Weight</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-on-surface">3.2 kg (Heavy Duty Core)</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Origin &amp; Manufacturing Country</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-on-surface">Made in Pakistan 🇵🇰 (Lahore Hub)</td>
+</tr>
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-lg font-medium text-on-surface">Official Manufacturer Warranty</td>
+<td class="py-space-sm px-space-lg text-right font-spec-code text-spec-code font-bold text-primary">1-Year Direct Service Center Replacement / Repair</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Related Products Cross-Sell Row -->
+<section class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<div class="flex items-center justify-between mb-space-lg">
+<div>
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold">
+            Hardware Lineup
+          </span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-extrabold mt-1">
+            Related Power Electronics
+          </h2>
+</div>
+<a class="hidden sm:flex items-center gap-1 text-primary font-label-md text-label-md font-bold hover:underline" href="#">
+<span>Explore All Controllers</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<!-- 3-Product Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Product Card 1: SC5 VA-2460 (24V 60A) -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+<div class="relative w-full aspect-[4/3] bg-surface-container-low overflow-hidden">
+<img alt="ASATEK SC5 VA-2460 24V Charge Controller" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK SC5 VA-2460 solar charge controller unit with distinctive dual dial meters and blue label badge for 24 volt configuration. Placed cleanly on an industrial surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk6QUft_O8gATBJdIhgzz03R8xbvh9WSmJhjLTjdDH2hj49CmUBj-XE3k2xYsj4W8JcgH5NsarRrs3bElDzk2vxV-H1BPuHIZpVOt4sicPPzwFih4xjkrPJkjowMMvPlQrtFmeJUL1qNh9cbp5cxgmT-nMr5tMIBUV18yiPCIigAUNdNldRYq0Ruov8LvWKCXv4HzVfl8Ft6XyoDbAIKobCNRwZsRFj38BvjQXusc"/>
+<span class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-spec-code text-spec-code px-2 py-0.5 rounded shadow-sm">
+              24V Commercial
+            </span>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<span class="font-label-uppercase text-[11px] text-on-surface-variant tracking-wider uppercase font-semibold">Dual System Support</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 group-hover:text-primary transition-colors">
+                ASATEK SC5 VA-2460
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Higher voltage 24V 60A controller handling up to 2000W PV array with analog readout.
+              </p>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant font-spec-code">RETAIL PRICE</span>
+<span class="font-headline-sm text-headline-sm font-extrabold text-primary">PKR 5,400</span>
+</div>
+<button aria-label="View product details" class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface p-2 rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2: SC6-1230 3-in-1 Hybrid -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+<div class="relative w-full aspect-[4/3] bg-surface-container-low overflow-hidden">
+<img alt="ASATEK SC6-1230 3-in-1 Controller" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK SC6 1230 3-in-1 hybrid solar controller unit with dual LED and analog meter display in rugged black and red casing shot in high clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRyHNGea3rqIHO5IQHYeeWl1NyHfpV3m_dMHyZt2PLWsswY7hGrdPh6_P_NqctkWYdDUr4_CV6GEGBqoL_dGOE3k7-65zX5bR_VCidaB4dLKwvpu11ZM-pnKGtgOOTgUy-YH-cLizjsyLDWU_2YVgXRXu2I-CtUgj_999H04-xHa-qmsVLv8NEAHsbflo-0hTTf-dgp5JqQ1zkOA01nHx6EclvEoYmZDcEdZlZOhE"/>
+<span class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-spec-code text-spec-code px-2 py-0.5 rounded shadow-sm">
+              3-in-1 Hybrid
+            </span>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<span class="font-label-uppercase text-[11px] text-on-surface-variant tracking-wider uppercase font-semibold">Multi-Feature Unit</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 group-hover:text-primary transition-colors">
+                ASATEK SC6-1230 3-in-1
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Combines 12V 30A solar charging, DC dusk-to-dawn lighting timer, and USB fast charger ports.
+              </p>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant font-spec-code">RETAIL PRICE</span>
+<span class="font-headline-sm text-headline-sm font-extrabold text-primary">PKR 3,800</span>
+</div>
+<button aria-label="View product details" class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface p-2 rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3: Heavy Battery Charger 12V 20A -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+<div class="relative w-full aspect-[4/3] bg-surface-container-low overflow-hidden">
+<img alt="ASATEK 12V 20A Heavy Battery Charger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK heavy-duty industrial battery charger 12V 20A unit with copper transformer core, front ammeter, heavy crocodile clamps, and steel cooling louvers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAokcKZbxQtbP9X_S_NH76bR53JVOpamRPKIgm0RGUe7PmATKFt-oZHqXJpqlT2pqpQWfmQ8Pr-eY-oWbv1SglFA_mE5cSXyxlemnn0Eavh4fEKD622pUrX5ikSAOOZWkmf04yByAngDFAlqVlugyZxXDYpQd1_c7xrZ-sZ1xvfr52kak1lEr0EcLovh_Sq9kYtiH2NSv6LnichFjx9CLWfRApOBKWWomOdRMkS9kI"/>
+<span class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface font-spec-code text-spec-code px-2 py-0.5 rounded shadow-sm">
+              AC-to-DC Charger
+            </span>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<span class="font-label-uppercase text-[11px] text-on-surface-variant tracking-wider uppercase font-semibold">Copper Transformer</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 group-hover:text-primary transition-colors">
+                Battery Charger 12V 20A
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Rapid battery booster featuring pure copper winding transformer designed for unconditioned WAPDA mains.
+              </p>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant font-spec-code">RETAIL PRICE</span>
+<span class="font-headline-sm text-headline-sm font-extrabold text-primary">PKR 6,200</span>
+</div>
+<button aria-label="View product details" class="bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface p-2 rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Client-side Scripting -->
+<script>
+    function adjustQty(amount) {
+      const input = document.getElementById('productQty');
+      if (!input) return;
+      let val = parseInt(input.value) || 1;
+      val = Math.max(1, Math.min(50, val + amount));
+      input.value = val;
+    }
+
+    const galleryImages = [
+      {
+        alt: "Front Faceplate Gauge Panel",
+        prompt: "Industrial solar charge controller unit model ASATEK SC5 VA-1260 shot straight on an industrial workstation. Features a bold crimson red metal faceplate, twin circular analog gauges with needle indicators for voltage and amperage, heavy-gauge brass screw terminals at the base, powder-coated matte grey casing, and clean side ventilation louvers."
+      },
+      {
+        alt: "High-Amperage Brass Terminals",
+        prompt: "Macro perspective of ASATEK charge controller heavy-duty solid copper terminal block connectors with hex screws labeled for Solar PV positive negative and 12V Battery lines."
+      },
+      {
+        alt: "High RPM Forced Air Cooling",
+        prompt: "Side profile view of ASATEK SC5 unit showing heavy-duty cooling fan exhaust grille, industrial heatsink ribs and powder-coated steel chassis in crisp detail."
+      },
+      {
+        alt: "Retail Packaging and Certificate",
+        prompt: "ASATEK branded retail packaging box with green Pakistan warranty card certificate and printed Urdu English instruction schematic diagram on crisp white studio table."
+      }
+    ];
+
+    function selectImage(index) {
+      const mainImg = document.getElementById('mainProductImage');
+      const buttons = document.querySelectorAll('.thumb-btn');
+      
+      if (mainImg && galleryImages[index]) {
+        mainImg.setAttribute('data-alt', galleryImages[index].prompt);
+        mainImg.setAttribute('alt', galleryImages[index].alt);
+        mainImg.classList.add('opacity-75');
+        setTimeout(() => mainImg.classList.remove('opacity-75'), 150);
+      }
+
+      buttons.forEach((btn, idx) => {
+        if (idx === index) {
+          btn.classList.add('ring-2', 'ring-primary');
+        } else {
+          btn.classList.remove('ring-2', 'ring-primary');
+        }
+      });
+    }
+
+    function playVideoModal() {
+      alert("Demonstration Video: ASATEK SC5 VA-1260 Installation & Setup Guide.\n\nNow connecting to official ASATEK Pakistan Video Portal.");
+    }
+  </script>
+</div></main><aside class="fixed bottom-6 right-6 z-50"><a class="flex items-center gap-space-sm bg-tertiary-container hover:bg-tertiary text-on-tertiary px-space-lg py-space-sm rounded-full shadow-[0_4px_16px_rgba(0,117,40,0.35)] transition-all hover:scale-105 active:scale-95" href="https://wa.me/923001234567" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[24px]">chat</span><span class="font-label-md text-label-md font-bold tracking-wide">WhatsApp</span></a></aside><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.04)] pt-space-xl pb-space-lg"><div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm mb-space-xs"><img alt="ASATEK Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Pakistan's trusted power electronics brand since 2021. Designing rugged solar MPPTs, pure sine wave inverters, and high-efficiency chargers.</p><div class="flex items-center gap-space-sm mt-space-sm"><span class="inline-flex items-center gap-1 text-tertiary font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px]">verified</span>ISO 9001 Compliant</span></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Quick Navigation</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Home Overview</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Hardware Catalog</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Customer Reviews</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Technical Support FAQ</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Customer Support</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Service Centers Network</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Warranty Policy &amp; Claims</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">User Manuals &amp; Schematics</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Wholesale &amp; Dealership</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Contact &amp; Assistance</h3><div class="flex flex-col gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">location_on</span><span>Industrial Estate, Lahore, Pakistan</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">call</span><span class="font-spec-code text-spec-code">+92 300 1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[18px]">chat</span><span class="font-spec-code text-spec-code">WhatsApp: 0300-1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">mail</span><span class="font-spec-code text-spec-code">support@asatek.pk</span></div></div></div></div><div class="pt-space-md bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 ASATEK Pakistan. All rights reserved. Made in Pakistan 🇵🇰</p><div class="flex items-center gap-space-md font-label-md text-label-md text-on-surface-variant"><span class="flex items-center gap-1 font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px] text-tertiary">shield</span>1-Year Nationwide Warranty</span></div></div></div></footer></body></html>

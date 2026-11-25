@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ba1a1a","secondary-fixed":"#ffdad4","tertiary":"#005a1d","surface-container-lowest":"#ffffff","secondary":"#b41d11","primary":"#9e0000","on-primary":"#ffffff","surface-container":"#f0eded","on-secondary-container":"#fffbff","on-error-container":"#93000a","tertiary-fixed-dim":"#66df75","surface-dim":"#dcd9d9","surface-variant":"#e5e2e1","on-tertiary-fixed-variant":"#00531a","surface-bright":"#fcf9f8","surface":"#fcf9f8","on-secondary":"#ffffff","outline-variant":"#e8bdb6","tertiary-fixed":"#83fc8e","on-primary-fixed-variant":"#930000","on-tertiary-fixed":"#002106","surface-container-highest":"#e5e2e1","on-primary-container":"#ffdad4","error-container":"#ffdad6","inverse-on-surface":"#f3f0ef","primary-container":"#cc0000","on-surface":"#1c1b1b","inverse-primary":"#ffb4a8","secondary-fixed-dim":"#ffb4a8","on-background":"#1c1b1b","on-surface-variant":"#5e3f3a","surface-container-low":"#f6f3f2","inverse-surface":"#313030","on-error":"#ffffff","tertiary-container":"#007528","on-tertiary":"#ffffff","surface-tint":"#c00000","on-tertiary-container":"#83fc8e","outline":"#926e69","primary-fixed-dim":"#ffb4a8","on-secondary-fixed-variant":"#930000","background":"#fcf9f8","on-secondary-fixed":"#410000","on-primary-fixed":"#410000","primary-fixed":"#ffdad4","surface-container-high":"#eae7e7","secondary-container":"#d83828"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-sm":"0.5rem","space-xs":"0.25rem","gutter":"1.5rem","gutter-mobile":"1rem","margin-mobile":"1rem","margin":"2rem","space-lg":"1.5rem","space-md":"1rem","space-xl":"2.5rem"},fontFamily:{"headline-md":["Inter"],"headline-sm":["Inter"],"body-lg":["Inter"],"headline-lg-mobile":["Inter"],"body-sm":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"display-hero-mobile":["Inter"],"label-uppercase":["Inter"],"headline-lg":["Inter"],"display-hero":["Inter"],"spec-code":["JetBrains Mono"]},fontSize:{"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-lg-mobile":["24px",{lineHeight:"32px",fontWeight:"700"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],"label-md":["14px",{lineHeight:"20px",fontWeight:"500"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-hero-mobile":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"800"}],"label-uppercase":["12px",{lineHeight:"16px",letterSpacing:"0.08em",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}],"display-hero":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"800"}],"spec-code":["13px",{lineHeight:"18px",fontWeight:"500"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-18 px-margin py-space-md flex flex-col justify-center"><div class="flex items-center gap-space-xs"><span class="text-headline-md font-headline-md text-primary tracking-tight">ASATEK</span><span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface text-label-uppercase font-label-uppercase">PK</span></div><span class="text-label-uppercase font-label-uppercase text-on-surface-variant tracking-wider">Admin Portal</span></div><nav class="flex flex-col gap-space-xs px-space-md mt-space-sm" data-active-classes="bg-primary-container text-on-primary font-label-md rounded-lg"><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-label-md font-label-md" data-path="admin-dashboard" href="#">Dashboard</a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-label-md font-label-md" data-path="admin-orders" href="#">Orders</a><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm transition-colors bg-primary-container text-on-primary font-label-md rounded-lg" data-path="admin-products" href="#">Products</a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-label-md font-label-md" data-path="admin-reviews" href="#">Reviews</a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-label-md font-label-md" data-path="admin-service-centers" href="#">Service Centers</a><a class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-label-md font-label-md" data-path="admin-faq" href="#">FAQ</a></nav></div><div class="p-space-md m-space-md rounded-lg bg-surface-container-low"><div class="flex items-center gap-space-sm mb-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col min-w-0 flex-1"><span class="text-label-md font-label-md text-on-surface truncate">Admin Supervisor</span><span class="text-label-uppercase font-label-uppercase text-on-surface-variant truncate">admin@asatek.pk</span></div></div><a class="flex items-center justify-center gap-space-xs w-full py-space-xs rounded bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors text-label-uppercase font-label-uppercase" data-path="admin-login" href="#">Logout</a></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-18 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-18 w-full px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm text-body-sm font-body-sm text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">home</span><span>/</span><span class="text-on-surface font-label-md text-label-md">ASATEK PK Admin Portal</span></div><div class="flex-1 max-w-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="w-full pl-9 pr-4 py-1.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Search orders, products, components..." type="text"/></div></div><div class="flex items-center gap-space-lg"><div class="hidden xl:flex items-center gap-space-xs text-spec-code font-spec-code text-on-surface-variant bg-surface-container-low px-space-sm py-1 rounded"><span class="material-symbols-outlined text-[16px] text-tertiary-container">schedule</span><span>PKT (UTC+5)</span></div><div class="hidden lg:flex items-center gap-space-xs px-2.5 py-1 rounded-full bg-surface-container text-tertiary-container text-label-uppercase font-label-uppercase"><span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span><span>Operational 99.9%</span></div><a class="hidden sm:flex items-center gap-space-xs text-primary hover:text-secondary text-label-md font-label-md" href="#" target="_blank"><span class="material-symbols-outlined text-[18px]">open_in_new</span><span>View Live Website</span></a><button aria-label="Notifications" class="relative p-space-xs rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-secondary"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-18 min-h-screen bg-surface px-gutter py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Command & Action Bar -->
+<div class="flex flex-col gap-space-md mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<a class="inline-flex items-center gap-space-xs text-primary hover:text-secondary font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Back to Products List</span>
+</a>
+<span class="text-surface-dim font-headline-sm">|</span>
+<button class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant text-label-uppercase font-label-uppercase transition-colors" id="mode-toggle-btn">
+<span class="material-symbols-outlined text-[16px] text-tertiary">swap_horiz</span>
+<span id="mode-label">Switch to New Product Mode</span>
+</button>
+</div>
+<!-- Global Actions -->
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors" type="button">
+          Discard Changes
+        </button>
+<button class="px-space-md py-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-sm" type="button">
+          Save Draft
+        </button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-2 rounded bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md shadow-md transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Publish &amp; Save Product</span>
+</button>
+</div>
+</div>
+<!-- Title & Operational Status Strip -->
+<div class="flex flex-wrap items-center justify-between gap-space-md bg-surface-container-lowest p-space-lg rounded-xl shadow-sm">
+<div class="flex flex-col gap-space-xs min-w-0">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-spec-code text-spec-code">AST-PROD-ENTRY #842</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-label-uppercase font-label-uppercase">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-ping"></span>
+<span>ACTIVE ON E-STORE (PUBLIC)</span>
+</span>
+<span class="text-spec-code font-spec-code text-on-surface-variant">Last Synced: 24 mins ago</span>
+</div>
+<h1 class="text-headline-md font-headline-md text-on-surface tracking-tight truncate">
+          Edit Product: ASATEK SC5 VA-1260 Heavy-Duty PWM
+        </h1>
+</div>
+<!-- Quick Metrics Pill -->
+<div class="flex items-center gap-space-lg bg-surface-container-low px-space-md py-space-sm rounded-lg">
+<div class="flex flex-col">
+<span class="text-label-uppercase font-label-uppercase text-on-surface-variant">Live Views (30d)</span>
+<span class="text-headline-sm font-headline-sm text-on-surface font-spec-code">14,892</span>
+</div>
+<div class="w-px h-8 bg-surface-variant"></div>
+<div class="flex flex-col">
+<span class="text-label-uppercase font-label-uppercase text-on-surface-variant">Fulfillment</span>
+<span class="text-label-md font-label-md text-tertiary font-spec-code">Ready in Sundar Hub</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary 2-Column Industrial Grid (Left 70% / Right 30%) -->
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-gutter items-start">
+<!-- ==================== LEFT COLUMN (70%) ==================== -->
+<div class="lg:col-span-7 flex flex-col gap-space-xl min-w-0">
+<!-- 1. Basic Product Identification -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">power</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">1. Basic Hardware Identification</h2>
+</div>
+<span class="text-label-uppercase font-label-uppercase text-on-surface-variant">Core Spec Index</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="text-label-md font-label-md text-on-surface" for="prod-title">Full Product Title (Technical &amp; Commercial)</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prod-title" type="text" value="ASATEK SC5 VA-1260 Heavy-Duty 12V 60A PWM Solar Charge Controller with Dual Analog Meters"/>
+<span class="text-spec-code font-spec-code text-on-surface-variant">Maximum 120 characters recommended for high-ranking SERP display</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="prod-model">Model Identifier</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-spec-code text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prod-model" type="text" value="SC5 VA-1260"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="prod-sku">Factory SKU Code</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-spec-code text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prod-sku" type="text" value="AST-SC5-1260-PK"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="prod-category">Product Category</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-body-sm font-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prod-category">
+<option selected="" value="scc">Solar Charge Controllers</option>
+<option value="ups">UPS / Inverters (Pure Sine)</option>
+<option value="chargers">Battery Chargers (Industrial)</option>
+<option value="parts">Parts &amp; Accessories</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="prod-summary">Listing Card Technical Summary (Quick Pitch)</label>
+<textarea class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-body-md font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="prod-summary" rows="3">Engineered specifically for Pakistani summer ambient temperatures and high load-shedding cycles with zero-battery DC run capability.</textarea>
+</div>
+</section>
+<!-- 2. Hardware Specifications Builder -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">tune</span>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">2. Hardware Specifications Builder</h2>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Front-panel technical metadata table synced with customer spec sheet</span>
+</div>
+</div>
+<button class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md transition-colors" id="add-spec-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ Add Specification Parameter</span>
+</button>
+</div>
+<!-- Spec Data Rows -->
+<div class="overflow-x-auto">
+<div class="min-w-[620px] flex flex-col gap-1.5" id="spec-rows-container">
+<!-- Header -->
+<div class="grid grid-cols-12 gap-space-sm px-space-md py-2 bg-surface-container-low rounded font-label-uppercase text-label-uppercase text-on-surface-variant">
+<span class="col-span-4">Engineering Parameter</span>
+<span class="col-span-7">Calibrated Value / Tolerance</span>
+<span class="col-span-1 text-center">Action</span>
+</div>
+<!-- Row 1 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Topology"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Solid-State PWM (Pulse Width Modulation)"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface-container-low hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Rated System Voltage"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="12 Volts DC Nominal"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Continuous Rated Amperage"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="60.0 Amperes Continuous"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface-container-low hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Max Solar PV Voc"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="30 Volts DC Max (1000W PV Max)"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Display &amp; Metering"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Dual Physical Analog Meters (Voltmeter 0-30V + Ammeter 0-70A)"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 6 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface-container-low hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Cooling Architecture"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Active High-RPM Dual Exhaust Fan with Copper Core Sink"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 7 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Chassis Material"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="1.2mm Heavy Gauge Electrostatic Powder-Coated Metal"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 8 -->
+<div class="spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface-container-low hover:bg-surface-container transition-colors">
+<input class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Origin &amp; Warranty"/>
+<input class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" type="text" value="Made in Pakistan (Lahore Hub) • 1-Year Direct Service Warranty"/>
+<div class="col-span-1 flex justify-center">
+<button class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Key Engineering Highlights & Bullets -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">verified</span>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">3. Key Engineering Highlights &amp; Field Advantages</h2>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Prominent bullet points for e-commerce quick decision-making</span>
+</div>
+</div>
+<button class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md transition-colors" id="add-bullet-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Add Feature Bullet</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm" id="bullets-container">
+<!-- Bullet 1 -->
+<div class="bullet-item flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[20px] select-none">drag_indicator</span>
+<span class="text-tertiary font-bold text-body-md select-none">✓</span>
+<input class="flex-1 bg-transparent border-0 text-body-md font-body-md text-on-surface focus:outline-none" type="text" value="Zero-Battery DC Operation: Run 12V DC fans and LED tubes directly from daytime solar without battery"/>
+<button class="del-bullet-btn text-on-surface-variant hover:text-error p-1" title="Delete Highlight" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Bullet 2 -->
+<div class="bullet-item flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[20px] select-none">drag_indicator</span>
+<span class="text-tertiary font-bold text-body-md select-none">✓</span>
+<input class="flex-1 bg-transparent border-0 text-body-md font-body-md text-on-surface focus:outline-none" type="text" value="Dual Analog physical gauges withstand heavy lightning surges that blow digital LCDs"/>
+<button class="del-bullet-btn text-on-surface-variant hover:text-error p-1" title="Delete Highlight" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Bullet 3 -->
+<div class="bullet-item flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[20px] select-none">drag_indicator</span>
+<span class="text-tertiary font-bold text-body-md select-none">✓</span>
+<input class="flex-1 bg-transparent border-0 text-body-md font-body-md text-on-surface focus:outline-none" type="text" value="Tropicalized double epoxy conformal coated PCB preventing salt corrosion and humidity shorts"/>
+<button class="del-bullet-btn text-on-surface-variant hover:text-error p-1" title="Delete Highlight" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Bullet 4 -->
+<div class="bullet-item flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[20px] select-none">drag_indicator</span>
+<span class="text-tertiary font-bold text-body-md select-none">✓</span>
+<input class="flex-1 bg-transparent border-0 text-body-md font-body-md text-on-surface focus:outline-none" type="text" value="100% field serviceable with standard Pakistani electronics shop components"/>
+<button class="del-bullet-btn text-on-surface-variant hover:text-error p-1" title="Delete Highlight" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 4. Media & Schematics Upload -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">perm_media</span>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">4. Media, Video &amp; Hardware Schematics</h2>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Real product photographs with high-definition optical clarity</span>
+</div>
+</div>
+<button class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary shadow transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>+ Upload High-Res Product Image</span>
+</button>
+</div>
+<!-- YouTube Video Input -->
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface flex items-center gap-space-xs" for="yt-url">
+<span class="material-symbols-outlined text-error text-[18px]">smart_display</span>
+<span>YouTube Technical Demonstration / Unboxing URL</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full pl-10 pr-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-spec-code text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="yt-url" type="url" value="https://youtube.com/watch?v=asatek-sc5-1260-demo"/>
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">link</span>
+</div>
+</div>
+<!-- Image Gallery Grid -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-center justify-between text-label-uppercase font-label-uppercase text-on-surface-variant">
+<span>Product Gallery Previews (4 of 8 Slots Utilized)</span>
+<span class="text-tertiary">100% High-Res Ready</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+<!-- Photo 1: Front panel dual analog face (Primary) -->
+<div class="relative group rounded-lg overflow-hidden bg-surface-container shadow-sm flex flex-col">
+<div class="relative w-full h-36">
+<img class="w-full h-full object-cover" data-alt="Industrial frontal view of ASATEK SC5 solar charge controller featuring heavy-duty red metal casing with two clear glass analog gauges for Volts and Amperes. White crisp engineering typography with high contrast studio lighting on white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9wn_F2yaLZWlBtbqyMVoebKFmLkww-pN-ZZw8zc-UAkuHinX7U3c0t0D8GvQfde3S-inzRXdj_gQIbVFii16OwapGBo_KVq3k6vTSa-h-lUmuwCLAK_DZJ5qQ0jF_OmjQ80fRWOuvs5W5pOixicZW1K_c57wfwAoIecBT3JuTyzpfILikkbeOvw3yfazsspzPhIoXLHwORRAN1LHFBfXMIXn0mFFCgEKZxU4mqig"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-primary-container text-on-primary font-label-uppercase text-[10px]">PRIMARY</span>
+<div class="absolute inset-0 bg-on-surface/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary" type="button"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-error" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<div class="p-2 bg-surface-container-lowest flex flex-col">
+<span class="text-label-md font-label-md text-on-surface truncate">Dual Analog Front</span>
+<span class="text-spec-code font-spec-code text-on-surface-variant text-[11px]">Primary Catalog Shot</span>
+</div>
+</div>
+<!-- Photo 2: Heavy-duty terminal block & copper wiring -->
+<div class="relative group rounded-lg overflow-hidden bg-surface-container shadow-sm flex flex-col">
+<div class="relative w-full h-36">
+<img class="w-full h-full object-cover" data-alt="Macro close-up shot of industrial electrical terminal block inside ASATEK power electronics showing thick pure copper bus bars, brass screws, and solid high gauge heat-resistant wiring. Clean commercial photography with crisp focus on metallic terminals." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjI3rHwrswAL7XvkJ3Y_1we1VtHEwI_X2mX1lc0JMy6DRfZom98dn7fmqN0aufdQvWsosBL0Vff-Ne5fRF5hy1eLASOAzAguUjpJVPEJx02tjRxzi3BhhgOVLkiwOdXE09R1FZQXQqTATrsCS9kfK9mQL9URjaMyoC_e1PG9XehqUi7cDzD24IvOswWHsjBVkMm4aAOBnfg6VyQ0n-Jw2Zzc9XVHL0k57Yz7IU4S0"/>
+<div class="absolute inset-0 bg-on-surface/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary" type="button"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-error" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<div class="p-2 bg-surface-container-lowest flex flex-col">
+<span class="text-label-md font-label-md text-on-surface truncate">Brass Terminals</span>
+<span class="text-spec-code font-spec-code text-on-surface-variant text-[11px]">Component Detail</span>
+</div>
+</div>
+<!-- Photo 3: Exhaust fan cooling intake -->
+<div class="relative group rounded-lg overflow-hidden bg-surface-container shadow-sm flex flex-col">
+<div class="relative w-full h-36">
+<img class="w-full h-full object-cover" data-alt="Side profile shot of ASATEK charge controller showcasing electrostatic coated cooling vents with high-RPM ball bearing exhaust fan and extruded copper-core heatsink fins visible through the metal housing mesh under industrial studio spotlighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdddh3R-YQZwcZM5uZR4pq21h9wc1XlvYCmuqydw01jdlOwfpcC6NGUn7lzkIihctP6pK3bHv6U4FOSGG6NdRldh9GWjWufDqtM-v5-yU2AYxBWx8z3SNFpkbg4ipCvqGAn3nakJkedgMSzhLipclCCCnzO5FLd1P3Ym3UOlsQ18xv1RfXl5yPenhyMGQkN7D57Dh_2ihNrRzs7fxbcD1kTVnHU9zUTvuBLURGnqU"/>
+<div class="absolute inset-0 bg-on-surface/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary" type="button"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-error" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<div class="p-2 bg-surface-container-lowest flex flex-col">
+<span class="text-label-md font-label-md text-on-surface truncate">Exhaust Cooling</span>
+<span class="text-spec-code font-spec-code text-on-surface-variant text-[11px]">Thermal Vent Profile</span>
+</div>
+</div>
+<!-- Photo 4: Retail packaging & Urdu manual -->
+<div class="relative group rounded-lg overflow-hidden bg-surface-container shadow-sm flex flex-col">
+<div class="relative w-full h-36">
+<img class="w-full h-full object-cover" data-alt="Cardboard heavy duty packaging box of ASATEK solar unit with green Pakistani flag badge, alongside a printed warranty card and comprehensive Urdu language wiring instruction manual booklet on clean neutral studio surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs47yr7kyixOvZORzmb9AL6C51TsYFUc7qd-RbqXE2HrDuPHUFfOyxJDBj2_UEkB-7LysBKUjPCtp5nInb6hoE04oL0y6Qd0g-Vps7SLyLi409pBpW_PzAsDK2w49I4qXGq7cWb_vp5Lo7FMfIuwtv8j-n7cM93rjeNlOXegm5X0zNCNguwI7RaHAK9X4gFDxLvfKwwH_Aw9CflBrFEZrNbpWWYXc5pcWis2cUMH4"/>
+<div class="absolute inset-0 bg-on-surface/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-primary" type="button"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+<button class="p-1 rounded-full bg-surface-container-lowest text-on-surface hover:text-error" type="button"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+</div>
+</div>
+<div class="p-2 bg-surface-container-lowest flex flex-col">
+<span class="text-label-md font-label-md text-on-surface truncate">Retail Packaging</span>
+<span class="text-spec-code font-spec-code text-on-surface-variant text-[11px]">With Urdu Manual</span>
+</div>
+</div>
+</div>
+<!-- Drag and Drop Dropzone -->
+<div class="mt-space-sm p-space-lg rounded-xl bg-surface-container-low flex flex-col items-center justify-center text-center gap-space-xs hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant text-[36px]">add_photo_alternate</span>
+<span class="text-label-md font-label-md text-on-surface">Drag &amp; drop additional hardware photos or technical wiring schematics</span>
+<span class="text-spec-code font-spec-code text-on-surface-variant">PNG, JPG, or WEBP up to 15MB each. Resolution 2000x2000px recommended.</span>
+</div>
+</div>
+</section>
+</div>
+<!-- ==================== RIGHT COLUMN (30%) ==================== -->
+<div class="lg:col-span-3 flex flex-col gap-space-xl min-w-0">
+<!-- 1. Pricing & Commercials -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm pb-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">payments</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">1. Commercials &amp; Pricing</h2>
+</div>
+<!-- Direct Customer Price -->
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="price-retail">Direct Retail Price (PKR)</label>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-spec-code font-spec-code text-on-surface-variant">Rs.</span>
+<input class="w-full pl-10 pr-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-headline-sm font-headline-sm text-primary-container focus:outline-none focus:ring-2 focus:ring-primary-container" id="price-retail" type="text" value="4,500"/>
+</div>
+</div>
+<!-- Compare-at / MSRP Price -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="text-label-md font-label-md text-on-surface" for="price-msrp">Compare-at / MSRP (PKR)</label>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-spec-code text-spec-code font-bold">13% OFF</span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-spec-code font-spec-code text-on-surface-variant">Rs.</span>
+<input class="w-full pl-10 pr-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-spec-code text-on-surface line-through focus:outline-none focus:ring-2 focus:ring-primary-container" id="price-msrp" type="text" value="5,200"/>
+</div>
+</div>
+<!-- Wholesale / Bulk Rate -->
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="price-bulk">Dealer Bulk Rate (PKR)</label>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-spec-code font-spec-code text-on-surface-variant">Rs.</span>
+<input class="w-full pl-10 pr-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-spec-code text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="price-bulk" type="text" value="4,100"/>
+</div>
+<span class="text-spec-code font-spec-code text-on-surface-variant text-[11px]">Applied to verified installer &amp; distributor logins</span>
+</div>
+<!-- Sales Tax Status -->
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="tax-status">Sales Tax Documentation</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-body-sm font-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="tax-status">
+<option selected="" value="fbr-included">Tax Included (FBR Stamped Form IV)</option>
+<option value="exempt">Zero-Rated Solar Component Exempt</option>
+<option value="plus-tax">Standard GST (+18%) at Final Invoicing</option>
+</select>
+</div>
+<!-- COD Allowed Checkbox -->
+<div class="flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg mt-space-xs">
+<input checked="" class="w-4 h-4 rounded text-primary-container accent-primary-container focus:ring-primary-container cursor-pointer" id="cod-check" type="checkbox"/>
+<label class="flex flex-col cursor-pointer select-none" for="cod-check">
+<span class="text-label-md font-label-md text-on-surface">Cash on Delivery (COD) Allowed</span>
+<span class="text-spec-code font-spec-code text-tertiary">Free COD Nationwide Active</span>
+</label>
+</div>
+</section>
+<!-- 2. Inventory & Factory Allocation -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm pb-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">warehouse</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">2. Inventory &amp; Logistics</h2>
+</div>
+<!-- Stock and Threshold -->
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="inv-stock">Stock Units</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-headline-sm font-headline-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="inv-stock" type="number" value="142"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="inv-alert">Low Alert Limit</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-low font-spec-code text-headline-sm font-headline-sm text-error focus:outline-none focus:ring-2 focus:ring-primary-container" id="inv-alert" type="number" value="20"/>
+</div>
+</div>
+<!-- Primary Fulfillment Facility -->
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="facility-select">Primary Fulfillment Facility</label>
+<select class="w-full px-space-md py-2 rounded-lg bg-surface-container-low text-body-sm font-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="facility-select">
+<option selected="" value="sundar">Sundar Industrial Estate (Unit-4, Lahore)</option>
+<option value="hall-road">Hall Road Distribution Depot (Lahore Hub)</option>
+<option value="karachi">Saddar Electronics Hub (Karachi Warehouse)</option>
+<option value="rawalpindi">College Road Logistics Center (Rawalpindi)</option>
+</select>
+</div>
+<!-- Weight and Dimensions -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="text-label-uppercase font-label-uppercase text-on-surface-variant">Logistics Physical Measurements</span>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="text-label-uppercase font-label-uppercase text-on-surface-variant text-[10px]">Net Weight</span>
+<span class="text-spec-code font-spec-code text-on-surface font-bold">3.2 kg</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="text-label-uppercase font-label-uppercase text-on-surface-variant text-[10px]">Dimensions (L×W×H)</span>
+<span class="text-spec-code font-spec-code text-on-surface font-bold">260×210×115 mm</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Urdu Translation & Localization Meta -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">translate</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">3. Urdu Localization</h2>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-bold text-label-uppercase">اردو</span>
+</div>
+<!-- Urdu Product Name -->
+<div class="flex flex-col gap-space-xs">
+<label class="text-label-md font-label-md text-on-surface" for="urdu-name">Urdu Product Headline (اردو نام)</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-body-lg font-body-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container text-right" dir="rtl" id="urdu-name" type="text" value="اساٹیک SC5 VA-1260 سولر چارج کنٹرولر"/>
+</div>
+<!-- Urdu PDF Attachment Checkbox -->
+<div class="flex items-start gap-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<input checked="" class="w-4 h-4 mt-0.5 rounded text-primary-container accent-primary-container focus:ring-primary-container cursor-pointer" id="urdu-pdf-check" type="checkbox"/>
+<div class="flex flex-col">
+<label class="text-label-md font-label-md text-on-surface cursor-pointer select-none" for="urdu-pdf-check">
+              Include Urdu User Manual PDF
+            </label>
+<span class="text-spec-code font-spec-code text-tertiary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span>
+<span>ASATEK-SC5-Urdu-Manual.pdf attached</span>
+</span>
+</div>
+</div>
+</section>
+<!-- 4. Quick Danger Zone -->
+<section class="bg-error-container p-space-lg rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-error font-headline-sm text-headline-sm">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span>Catalog Danger Zone</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface">
+          Hiding this product will remove it from search and public catalog immediately. All associated wholesale links will return maintenance state.
+        </p>
+<button class="mt-space-xs inline-flex items-center justify-center gap-space-xs w-full py-2.5 rounded bg-error hover:bg-on-error-container text-on-error font-label-md text-label-md transition-colors shadow" type="button">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+<span>Archive or Delete Product</span>
+</button>
+</section>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic Specification Row Addition
+  const addSpecBtn = document.getElementById('add-spec-btn');
+  const specContainer = document.getElementById('spec-rows-container');
+
+  if (addSpecBtn && specContainer) {
+    addSpecBtn.addEventListener('click', () => {
+      const newRow = document.createElement('div');
+      newRow.className = 'spec-row grid grid-cols-12 gap-space-sm items-center px-space-md py-1.5 rounded bg-surface hover:bg-surface-container transition-colors';
+      newRow.innerHTML = `
+        <input type="text" placeholder="Parameter Name" class="col-span-4 px-space-sm py-1.5 rounded bg-surface-container-lowest text-label-md font-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" />
+        <input type="text" placeholder="Value and units" class="col-span-7 px-space-sm py-1.5 rounded bg-surface-container-lowest font-spec-code text-spec-code text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none" />
+        <div class="col-span-1 flex justify-center">
+          <button type="button" class="del-spec-btn text-on-surface-variant hover:text-error transition-colors p-1" title="Delete Row">
+            <span class="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+      `;
+      specContainer.appendChild(newRow);
+      attachDeleteHandler(newRow.querySelector('.del-spec-btn'));
+    });
+  }
+
+  function attachDeleteHandler(btn) {
+    if (btn) {
+      btn.addEventListener('click', function() {
+        const row = this.closest('.spec-row');
+        if (row) row.remove();
+      });
+    }
+  }
+
+  document.querySelectorAll('.del-spec-btn').forEach(attachDeleteHandler);
+
+  // Dynamic Feature Bullet Addition
+  const addBulletBtn = document.getElementById('add-bullet-btn');
+  const bulletsContainer = document.getElementById('bullets-container');
+
+  if (addBulletBtn && bulletsContainer) {
+    addBulletBtn.addEventListener('click', () => {
+      const newBullet = document.createElement('div');
+      newBullet.className = 'bullet-item flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg hover:bg-surface-container transition-colors';
+      newBullet.innerHTML = `
+        <span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[20px] select-none">drag_indicator</span>
+        <span class="text-tertiary font-bold text-body-md select-none">✓</span>
+        <input type="text" placeholder="Enter high-impact technical highlight..." class="flex-1 bg-transparent border-0 text-body-md font-body-md text-on-surface focus:outline-none" />
+        <button type="button" class="del-bullet-btn text-on-surface-variant hover:text-error p-1" title="Delete Highlight">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      `;
+      bulletsContainer.appendChild(newBullet);
+      attachBulletDeleteHandler(newBullet.querySelector('.del-bullet-btn'));
+    });
+  }
+
+  function attachBulletDeleteHandler(btn) {
+    if (btn) {
+      btn.addEventListener('click', function() {
+        const item = this.closest('.bullet-item');
+        if (item) item.remove();
+      });
+    }
+  }
+
+  document.querySelectorAll('.del-bullet-btn').forEach(attachBulletDeleteHandler);
+
+  // Mode Toggle (Edit Product vs New Product Mode)
+  const modeToggleBtn = document.getElementById('mode-toggle-btn');
+  const modeLabel = document.getElementById('mode-label');
+  let isEditMode = true;
+
+  if (modeToggleBtn && modeLabel) {
+    modeToggleBtn.addEventListener('click', () => {
+      isEditMode = !isEditMode;
+      if (!isEditMode) {
+        modeLabel.textContent = 'Switch to Edit Existing Mode';
+        document.querySelector('h1').textContent = 'Create New ASATEK Product Entry';
+        document.getElementById('prod-title').value = '';
+        document.getElementById('prod-model').value = '';
+        document.getElementById('prod-sku').value = 'AST-NEW-';
+      } else {
+        modeLabel.textContent = 'Switch to New Product Mode';
+        document.querySelector('h1').textContent = 'Edit Product: ASATEK SC5 VA-1260 Heavy-Duty PWM';
+        document.getElementById('prod-title').value = 'ASATEK SC5 VA-1260 Heavy-Duty 12V 60A PWM Solar Charge Controller with Dual Analog Meters';
+        document.getElementById('prod-model').value = 'SC5 VA-1260';
+        document.getElementById('prod-sku').value = 'AST-SC5-1260-PK';
+      }
+    });
+  }
+</script></main></div></body></html>

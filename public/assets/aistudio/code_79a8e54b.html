@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"background":"#fcf9f8","on-tertiary":"#ffffff","on-primary-fixed":"#410000","on-background":"#1c1b1b","surface-container-highest":"#e5e2e1","inverse-on-surface":"#f3f0ef","on-secondary-fixed-variant":"#930000","secondary-container":"#d83828","tertiary":"#005a1d","primary":"#9e0000","surface":"#fcf9f8","tertiary-fixed-dim":"#66df75","on-secondary-container":"#fffbff","secondary-fixed-dim":"#ffb4a8","surface-container-low":"#f6f3f2","on-tertiary-fixed":"#002106","on-secondary-fixed":"#410000","inverse-primary":"#ffb4a8","on-primary":"#ffffff","surface-dim":"#dcd9d9","on-primary-fixed-variant":"#930000","surface-container":"#f0eded","surface-container-lowest":"#ffffff","error-container":"#ffdad6","on-primary-container":"#ffdad4","on-surface":"#1c1b1b","surface-bright":"#fcf9f8","secondary":"#b41d11","on-tertiary-fixed-variant":"#00531a","inverse-surface":"#313030","surface-container-high":"#eae7e7","primary-fixed":"#ffdad4","secondary-fixed":"#ffdad4","on-surface-variant":"#5e3f3a","error":"#ba1a1a","outline-variant":"#e8bdb6","tertiary-container":"#007528","primary-fixed-dim":"#ffb4a8","on-secondary":"#ffffff","surface-variant":"#e5e2e1","on-error":"#ffffff","primary-container":"#cc0000","outline":"#926e69","on-tertiary-container":"#83fc8e","on-error-container":"#93000a","tertiary-fixed":"#83fc8e","surface-tint":"#c00000"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","gutter":"1.5rem","space-sm":"0.5rem","space-lg":"1.5rem","space-md":"1rem","margin-mobile":"1rem","gutter-mobile":"1rem","margin":"2rem","space-xl":"2.5rem"},"fontFamily":{"spec-code":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"display-hero-mobile":["Inter"],"headline-lg":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Inter"],"label-uppercase":["Inter"],"label-md":["Inter"],"display-hero":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"]},"fontSize":{"spec-code":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"display-hero-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"label-uppercase":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","fontWeight":"500"}],"display-hero":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)]"><div class="h-20 max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><img alt="ASATEK Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="products" href="#">Products</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="service-centers" href="#">Service Centers</a><a aria-current="page" class="transition-colors text-primary font-bold" data-path="customer-reviews" href="#">Reviews</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="faq" href="#">FAQ</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="about-contact" href="#">Contact</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="order-tracking" href="#">Track Order</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container-low rounded-lg p-space-xs"><button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-label-uppercase text-label-uppercase shadow-sm" type="button">EN</button><button class="px-space-sm py-1 rounded text-on-surface-variant font-label-uppercase text-label-uppercase hover:text-on-surface" type="button">اردو</button></div><a class="hidden sm:flex items-center gap-space-xs text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="tel:+923001234567"><span class="material-symbols-outlined text-primary text-[20px]">call</span><span class="font-spec-code text-spec-code">0300-1234567</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full">
+<!-- Top Ambient Glow Decorator -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[340px] bg-gradient-to-b from-primary/10 via-surface-container-high/40 to-transparent blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-24 -left-20 w-72 h-72 rounded-full bg-tertiary/5 blur-2xl pointer-events-none -z-10"></div>
+<!-- Editorial Header Section -->
+<section class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin pt-10 pb-8 lg:pt-14 lg:pb-12">
+<div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+<div class="max-w-3xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high text-primary font-spec-code text-spec-code mb-4 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            FIELD-TESTED HARDWARE INTELLIGENCE
+          </div>
+<h1 class="font-display-hero text-display-hero text-on-surface tracking-tight mb-3">
+            Customer Reviews &amp; Field Proof
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+            Real installation feedback, solar workshop photos, and customer testimonials from electricians, farmers, and homeowners across Pakistan.
+          </p>
+</div>
+<!-- Verified Guarantee Seal -->
+<div class="flex items-center gap-3 bg-surface-container-lowest p-4 rounded-xl shadow-sm self-start lg:self-auto">
+<div class="w-12 h-12 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div>
+<div class="font-label-uppercase text-label-uppercase text-tertiary">100% Nationwide Verified</div>
+<div class="font-spec-code text-spec-code text-on-surface font-bold">1,480+ Field Testimonials</div>
+</div>
+</div>
+</div>
+<!-- Key Performance Metrics Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-10">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute right-0 top-0 translate-x-3 -translate-y-3 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-uppercase text-label-uppercase text-on-surface-variant">AGGREGATE QUALITY SCORE</span>
+<div class="flex text-amber-500 text-sm">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-display-hero text-display-hero text-on-surface font-extrabold tracking-tight">4.9</span>
+<span class="font-headline-sm text-headline-sm text-on-surface-variant font-normal">/ 5.0</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Based on <span class="font-spec-code text-spec-code font-bold text-on-surface">1,480+</span> verified Pakistani customers &amp; certified solar installers.
+          </p>
+<div class="mt-4 pt-3 flex items-center justify-between text-tertiary">
+<span class="font-spec-code text-spec-code flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span> 98.7% Would Recommend
+            </span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">Audited Q1 2025</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute right-0 top-0 translate-x-3 -translate-y-3 w-24 h-24 bg-tertiary/5 rounded-full blur-xl group-hover:bg-tertiary/10 transition-colors"></div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-uppercase text-label-uppercase text-on-surface-variant">LOGISTICS INTEGRITY</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">local_shipping</span>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-display-hero text-display-hero text-on-surface font-extrabold tracking-tight">99.4%</span>
+<span class="font-headline-sm text-headline-sm text-tertiary font-medium">Safe Transit</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Zero-damage transit via Daewoo Cargo &amp; TCS with verified Cash on Delivery nationwide.
+          </p>
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant font-spec-code text-spec-code">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[16px]">pin_drop</span> 160+ Cities Served
+            </span>
+<span>COD Verified</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute right-0 top-0 translate-x-3 -translate-y-3 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-uppercase text-label-uppercase text-on-surface-variant">ENGINEERING STANDARDS</span>
+<span class="inline-flex items-center gap-1 font-spec-code text-spec-code text-primary bg-primary/10 px-2 py-0.5 rounded">
+              ISO 9001
+            </span>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-display-hero text-display-hero text-on-surface font-extrabold tracking-tight">100%</span>
+<span class="font-headline-sm text-headline-sm text-primary font-medium">Pakistani Build</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            18-gauge cold-rolled steel chassis, pure 99.9% electrolytic copper coils &amp; tropicalized conformal coatings.
+          </p>
+<div class="mt-4 pt-3 flex items-center justify-between text-tertiary font-spec-code text-spec-code">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified_user</span> 1-Year Full Warranty
+            </span>
+<span class="text-on-surface-variant">Lahore Factory</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Interactive Tag Filters & Search Bar Section -->
+<section class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin w-full pb-8">
+<div class="bg-surface-container-low p-4 lg:p-6 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+<!-- Filter Chips -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none" id="review-filters">
+<button class="filter-btn px-4 py-2 rounded-lg font-label-md text-label-md transition-all whitespace-nowrap bg-primary text-on-primary shadow-sm" data-category="all">
+          All Reviews (1,480)
+        </button>
+<button class="filter-btn px-4 py-2 rounded-lg font-label-md text-label-md transition-all whitespace-nowrap bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container shadow-sm" data-category="sc5-1260">
+          SC5 VA-1260 PWM
+        </button>
+<button class="filter-btn px-4 py-2 rounded-lg font-label-md text-label-md transition-all whitespace-nowrap bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container shadow-sm" data-category="sc5-2460">
+          SC5 VA-2460 Commercial
+        </button>
+<button class="filter-btn px-4 py-2 rounded-lg font-label-md text-label-md transition-all whitespace-nowrap bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container shadow-sm" data-category="sc6-hybrid">
+          SC6 3-in-1 Hybrid
+        </button>
+<button class="filter-btn px-4 py-2 rounded-lg font-label-md text-label-md transition-all whitespace-nowrap bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container shadow-sm" data-category="inverters">
+          Inverters &amp; UPS
+        </button>
+<button class="filter-btn px-4 py-2 rounded-lg font-label-md text-label-md transition-all whitespace-nowrap bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container shadow-sm" data-category="workshop">
+          Workshop Setups
+        </button>
+</div>
+<!-- Search & Sort Indicators -->
+<div class="flex items-center gap-3 shrink-0">
+<div class="relative w-full md:w-56">
+<input class="w-full bg-surface-container-lowest pl-9 pr-3 py-2 rounded-lg text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="review-search" placeholder="Search city, model, load..." type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-on-surface-variant text-[18px]">search</span>
+</div>
+<div class="hidden sm:flex items-center gap-1 font-spec-code text-spec-code text-on-surface-variant bg-surface-container-lowest px-3 py-2 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span> Verified Only
+        </div>
+</div>
+</div>
+</section>
+<!-- Masonry / Responsive Review Cards Grid -->
+<section class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin pb-16 w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter" id="reviews-container">
+<!-- Review Card 1: Engr. Farooq Rehman -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc5-1260 workshop">
+<div>
+<div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Agricultural solar tubewell pump setup in rural Punjab Pakistan, four ASATEK SC5 solar charge controllers mounted on heavy duty metal control panel under harsh direct desert sunlight with clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCufpOCo8yPziziObGdW0SfDv7olQI_jOVxfCC2lS7W-hFdBOdWP3-HE_nuJix3ArNyblqqakrEp5PVc4eSoahmytaUChp1v05LMS-seN-FjvC45Up-tIxQd86DFl7nihDBN5c7ubPGn7vh_sF5e50iRA6OziyVdfe6ccjBxkZraXLIo8_X84Se9ILGc3IK5spVEs_lxzyNdMKU4QX9WyOntyir1NzNed7DZWWgRFU"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded text-primary font-spec-code text-spec-code">
+              4x SC5 Units
+            </div>
+<div class="absolute bottom-2 right-2 bg-tertiary-container text-on-tertiary px-2 py-0.5 rounded font-spec-code text-spec-code flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">thermostat</span> 50°C Tested
+            </div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">14 Jan 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “Installed 4 units of SC5 VA-1260 on an agricultural solar tubewell project. Heavy steel body withstands 50°C summer heat without throttling.”
+          </p>
+<div class="bg-surface-container-low p-2.5 rounded-lg mb-4">
+<div class="font-label-uppercase text-label-uppercase text-on-surface-variant mb-1">FIELD METRICS</div>
+<div class="grid grid-cols-2 gap-2 text-on-surface font-spec-code text-spec-code">
+<div>Voc: <span class="font-bold">145V</span></div>
+<div>Current: <span class="font-bold">58.4A</span></div>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold font-spec-code">FR</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Engr. Farooq Rehman</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span> Rawalpindi
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" title="Verified Purchase">military_tech</span>
+</div>
+</article>
+<!-- Review Card 2: Mian Kamran Tariq -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc5-1260 workshop">
+<div>
+<div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up view of ASATEK solar inverter dual analog round voltmeter and ammeter needle dials lit with soft warm workshop light, mounted on industrial textured red metal housing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe2sLNsdX71qjEC22ReDynxRvcZI3s-WcTEV3zh6bg_zMLNm_NaADi-2srXPeH5l0Y1j2-_0XhKmmJmmsLLYloYdTZ1Gj5cr8M-dNVYVUEFvbFKiLN73FgF95X_lS9YjQQGpuErCwcps2UV6Ir8z0utzdhLN_dFotgyHWZg-ugpQC35nHgWTZR8sw4tL_M9U9_bGtBq3i50AqJPwUI_WwuaAiJWLAyRfnkTmuBqYw"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded text-primary font-spec-code text-spec-code">
+              Dual Analog Gauges
+            </div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">08 Feb 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “The dual analog meters are lifesavers. During load shedding surges, digital displays of cheap Chinese controllers blow out, but ASATEK gauges give accurate physical readings.”
+          </p>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="font-spec-code text-spec-code px-2 py-0.5 rounded bg-surface-container text-on-surface">Surge Proof</span>
+<span class="font-spec-code text-spec-code px-2 py-0.5 rounded bg-surface-container text-on-surface">Analog Needle</span>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-bold font-spec-code">KT</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Mian Kamran Tariq</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span> Johar Town, Lahore
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" title="Verified Purchase">check_circle</span>
+</div>
+</article>
+<!-- Review Card 3: Zubair Ahmed (Karachi) -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc5-2460 workshop">
+<div>
+<div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Electronics service workbench in Saddar Karachi Pakistan with tools, soldering iron, and ASATEK sealed power circuit board showing thick protective silicone conformal coating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfcZrX6hJ7FtfQ1pPSE_NgZsEI2-qoGRbUt-WSA1ol_fOIJbv2_HRBBQUIo40G4oXhGr7YPzUOwxyEM-FfSJuFVfR-DDmEbW__BdjdWLTf3AmPHP3vhWrkZrn8ZhiAr77iqM5yn-HdEChk6jmthqyEACrFgBAam0HCL0FGxhzw-VIAbhLUxrmFgzg1mzka0HQNJJ6_PP0Ize5hU8YAXiKRIbvclxiDAz7uoqJ9f8g"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded text-tertiary font-spec-code text-spec-code">
+              2 Years Operating
+            </div>
+<div class="absolute bottom-2 right-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded text-on-surface font-spec-code text-spec-code">
+              Coastal Salt Resistant
+            </div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">22 Jan 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “Karachi's coastal humidity corrodes standard electronics within months. ASATEK's powder-coated chassis and moisture-sealed PCB have worked for 2 years non-stop.”
+          </p>
+<div class="bg-surface-container-low p-2.5 rounded-lg mb-4">
+<div class="font-label-uppercase text-label-uppercase text-on-surface-variant mb-1">HARDWARE CHASSIS</div>
+<div class="font-spec-code text-spec-code text-on-surface">Double Epoxy Coated + Brass Terminals</div>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center font-bold font-spec-code">ZA</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Zubair Ahmed</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">store</span> Saddar, Karachi
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" title="Verified Wholesale Buyer">handshake</span>
+</div>
+</article>
+<!-- Review Card 4: Haji Gulzar Khan (Swabi, KPK) -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc6-hybrid">
+<div>
+<!-- Daewoo Parcel Delivery Badge visual -->
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">package_2</span>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Daewoo Cargo Express</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant">Waybill: DWO-984412-SWB</div>
+</div>
+</div>
+<span class="font-spec-code text-spec-code bg-tertiary/15 text-tertiary px-2 py-0.5 rounded font-bold">48h Delivery</span>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">02 Feb 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “Delivered via Daewoo Cargo within 48 hours. Paid cash on delivery. Excellent quality packaging and Urdu manual included.”
+          </p>
+<div class="bg-surface-container-low p-3 rounded-lg mb-4 flex items-center justify-between">
+<span class="font-spec-code text-spec-code text-on-surface-variant">اردو رہنمائی کتابچہ شامل ہے</span>
+<span class="material-symbols-outlined text-primary text-[18px]">menu_book</span>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold font-spec-code">GK</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Haji Gulzar Khan</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span> Swabi, KPK
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" title="COD Verified">payments</span>
+</div>
+</article>
+<!-- Review Card 5: Solar Tech Solutions (Faisalabad) -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc5-1260 sc6-hybrid">
+<div>
+<div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern rooftop solar inverter setup in Faisalabad Pakistan with organized conduit wiring, DC circuit breakers, and ASATEK SC6 hybrid controller" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBDECIS6ZLtcro87SkrLKZ2ejAEUESYWvF99Ssn5iB4ruSoNelzU0o-Tu-49Cf2DZAFZHMI0593K7r71F8JXfOn0DCx-Fyb7yQG9ahwCLfBbhmPz1f98cJKA6bACH-BfDzfJ4bdJcGnJsXGDJVjb6dCAXFWZ4zhQ8KOt98gk_XGxEijetwbklOsbz1549e6ieip2DxsjuQaStSngnYAcyTT_7blw5E4o9Ds4v3hGc"/>
+<div class="absolute top-2 left-2 bg-primary text-on-primary px-2 py-0.5 rounded font-spec-code text-spec-code font-bold">
+              Certified Installer
+            </div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">29 Jan 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “We exclusively recommend ASATEK controllers for domestic DC 12V fan and lighting setups. Zero warranty claims in 8 months across 60+ installations.”
+          </p>
+<div class="flex items-center gap-2 mb-4">
+<span class="font-spec-code text-spec-code bg-surface-container px-2 py-0.5 rounded text-on-surface">60+ Sites Active</span>
+<span class="font-spec-code text-spec-code bg-surface-container px-2 py-0.5 rounded text-tertiary">0% RMA Rate</span>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-surface-container text-on-surface flex items-center justify-center font-bold font-spec-code">ST</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Solar Tech Solutions</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">precision_manufacturing</span> Faisalabad
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" title="Authorized Dealership">verified</span>
+</div>
+</article>
+<!-- Review Card 6: Muhammad Nadeem (Multan Cantt) -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="inverters">
+<div>
+<!-- Inline SVG Thermal & Efficiency Metric Visual -->
+<div class="p-3 bg-surface-container-low rounded-lg mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-uppercase text-label-uppercase text-on-surface">TRANSFORMER THERMAL PROFILE</span>
+<span class="font-spec-code text-spec-code text-tertiary font-bold">38.2°C at 1000W</span>
+</div>
+<!-- Progress / Bar Graph representation -->
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-tertiary to-tertiary-container h-full rounded-full" style="width: 38%;"></div>
+</div>
+<div class="flex justify-between font-spec-code text-spec-code text-on-surface-variant mt-1">
+<span>Ambient 34°C</span>
+<span>Max Rated 85°C</span>
+</div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">19 Jan 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “1000W UPS transformer run cool even at full load. Best local engineering product.”
+          </p>
+<div class="font-spec-code text-spec-code text-on-surface-variant bg-surface-container-low p-2 rounded">
+            Configuration: Pure Sine Wave 1000VA / 12V DC
+          </div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold font-spec-code">MN</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Muhammad Nadeem</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span> Multan Cantt
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">engineering</span>
+</div>
+</article>
+<!-- Review Card 7: Malik Irfan (Sukkur, Sindh) -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc5-2460 inverters">
+<div>
+<div class="p-3 bg-tertiary/10 rounded-lg flex items-center gap-2.5 mb-4 text-tertiary">
+<span class="material-symbols-outlined text-[24px]">build_circle</span>
+<div>
+<div class="font-label-md text-label-md font-bold text-on-surface">10-Minute Rapid Repair</div>
+<div class="font-spec-code text-spec-code text-tertiary">Larkana Service Center Desk</div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">05 Jan 2025</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “Local warranty service center in Larkana replaced my fuse in 10 minutes. Superb after-sales support.”
+          </p>
+<div class="bg-surface-container-low p-2.5 rounded-lg mb-4">
+<div class="font-label-uppercase text-label-uppercase text-on-surface-variant mb-1">CLAIM RESOLUTION</div>
+<div class="font-spec-code text-spec-code text-on-surface">Over-the-counter ceramic fuse renewal (Zero PKR Charge)</div>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-bold font-spec-code">MI</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Malik Irfan</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span> Sukkur, Sindh
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" title="Warranty Claim Fulfilled">workspace_premium</span>
+</div>
+</article>
+<!-- Review Card 8: Dr. Asadullah (Quetta) -->
+<article class="review-card group bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col justify-between" data-category="sc5-1260 sc6-hybrid">
+<div>
+<div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Tubular deep cycle batteries banked together in a clean cold storage power room in Quetta Balochistan with red wiring cables connected to ASATEK hybrid charger" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkqjzeCiLbu49_JT_896bq7ZRpZr5l6rTPq-WnHSdaUjuiJ-hVFA3W_rwzN2GUVUiLt7ef9X3F5nA9X1YVQR9c2Tj0919-cXdaFv-qmfDvOKsspu4Zj81hd0krtFLA-Mw7jjwFRk77709fA4I9hJLhfQOD3deHdGi4n_u7xYoCVCuqNyW1mDWyhimLQKymJe-VK0G-ntrnQbmej8lr_XMhEbDqeyyBEXEe8mhZZ08"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded text-primary font-spec-code text-spec-code">
+              Sub-Zero Temperature
+            </div>
+<div class="absolute bottom-2 right-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-0.5 rounded text-tertiary font-spec-code text-spec-code">
+              Tubular Battery Mode
+            </div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">27 Dec 2024</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-4 leading-relaxed">
+            “Working seamlessly with tubular batteries in cold winters.”
+          </p>
+<div class="bg-surface-container-low p-2.5 rounded-lg mb-4">
+<div class="font-label-uppercase text-label-uppercase text-on-surface-variant mb-1">CLIMATE CONDITIONS</div>
+<div class="font-spec-code text-spec-code text-on-surface">-4°C Winter Nights / Auto Temp Compensation</div>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-between bg-surface-container-low/40 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold font-spec-code">DA</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Dr. Asadullah</div>
+<div class="font-spec-code text-spec-code text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span> Quetta
+              </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">medical_services</span>
+</div>
+</article>
+</div>
+<!-- Empty State for Filters (hidden by default) -->
+<div class="hidden flex-col items-center justify-center py-16 text-center" id="no-reviews">
+<span class="material-symbols-outlined text-[48px] text-on-surface-variant mb-2">find_in_page</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">No Field Reviews Found</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Try resetting the filter chips or search for different hardware keywords.</p>
+<button class="mt-4 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md" onclick="document.querySelector('[data-category=all]').click()">
+        Reset All Filters
+      </button>
+</div>
+</section>
+<!-- Interactive Hardware Breakdown & Verified Submission Flow -->
+<section class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin pb-16 w-full">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Ratings breakdown card -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Rating Breakdown</h3>
+<div class="flex flex-col gap-3">
+<!-- 5 Star -->
+<div class="flex items-center gap-3">
+<span class="font-spec-code text-spec-code w-12 text-on-surface">5 Star</span>
+<div class="grow bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92%;"></div>
+</div>
+<span class="font-spec-code text-spec-code w-10 text-right text-on-surface-variant">92%</span>
+</div>
+<!-- 4 Star -->
+<div class="flex items-center gap-3">
+<span class="font-spec-code text-spec-code w-12 text-on-surface">4 Star</span>
+<div class="grow bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary/70 h-full rounded-full" style="width: 6.8%;"></div>
+</div>
+<span class="font-spec-code text-spec-code w-10 text-right text-on-surface-variant">6.8%</span>
+</div>
+<!-- 3 Star -->
+<div class="flex items-center gap-3">
+<span class="font-spec-code text-spec-code w-12 text-on-surface">3 Star</span>
+<div class="grow bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary/40 h-full rounded-full" style="width: 0.9%;"></div>
+</div>
+<span class="font-spec-code text-spec-code w-10 text-right text-on-surface-variant">0.9%</span>
+</div>
+<!-- 2 Star -->
+<div class="flex items-center gap-3">
+<span class="font-spec-code text-spec-code w-12 text-on-surface">2 Star</span>
+<div class="grow bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-surface-container-high h-full rounded-full" style="width: 0.2%;"></div>
+</div>
+<span class="font-spec-code text-spec-code w-10 text-right text-on-surface-variant">0.2%</span>
+</div>
+<!-- 1 Star -->
+<div class="flex items-center gap-3">
+<span class="font-spec-code text-spec-code w-12 text-on-surface">1 Star</span>
+<div class="grow bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-surface-container-high h-full rounded-full" style="width: 0.1%;"></div>
+</div>
+<span class="font-spec-code text-spec-code w-10 text-right text-on-surface-variant">0.1%</span>
+</div>
+</div>
+<div class="mt-6 pt-4 bg-surface-container-low p-3 rounded-lg flex items-center justify-between text-on-surface font-spec-code text-spec-code">
+<span>Warranty Claims Processed:</span>
+<span class="font-bold text-tertiary">&lt; 0.4% Nationwide</span>
+</div>
+</div>
+<!-- Real Field Installations Gallery Preview -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div>
+<span class="font-label-uppercase text-label-uppercase text-primary">LIVE FROM THE WORKBENCH</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Customer Setup Highlights</h3>
+</div>
+<span class="font-spec-code text-spec-code text-on-surface-variant">Updated Today</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+<div class="relative group rounded-lg overflow-hidden h-28 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="Close up photograph of neat copper terminal lugs securely bolted to an ASATEK power inverter inside a workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo__y6zKrhy1sa8xSACGdqTWTwRQNOKlUkMMWMEoTa3UDsxIOPw9ub66H7IVsxKG1jkX2WaIughorRvyFPuApnek-1gElMxdzdkREOlMXS3Fp80ME8HWYfIbR3RexKOtL9Vwry011MnwIq4QeJ-PvUgUcaVxHy1H_0ZNX_3FVRZTIRPdcBd_n1u8Lv9kdDOB2YGR39p8x7itGrkTdsYqCg-2Z9WAqvy5VCH9rppqo"/>
+<span class="absolute bottom-1 left-1.5 bg-on-surface/80 text-surface font-spec-code text-spec-code px-1.5 py-0.5 rounded text-[11px]">Lahore</span>
+</div>
+<div class="relative group rounded-lg overflow-hidden h-28 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="Solar technician measuring DC voltage with digital multimeter on ASATEK SC5 solar controller at farmhouse in Rahim Yar Khan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ_G-Bl-lXYMHDRy1BNhXK1vLEqm4iIJLcttT12zn-00qn44DuN5itmy26jhpwb3l0OMrDSUk9IL23sLv0rmDza1cibUn7B8DEtqQ-nf3C6xSoNqq7d1lBo5ZAaV62kD_OYej2H2LmNRtj4GV0lcCSnhEKdV3DBs2Q_EoDxHnW8nPm0IFDnxgFW-lDvVm0zslB1diO0A213iMIuSqFq9qepYJSmRrlXP9mT7Qk4ek"/>
+<span class="absolute bottom-1 left-1.5 bg-on-surface/80 text-surface font-spec-code text-spec-code px-1.5 py-0.5 rounded text-[11px]">R.Y. Khan</span>
+</div>
+<div class="relative group rounded-lg overflow-hidden h-28 bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="Industrial battery room with heavy cables and pure copper wire coils powering an uninterruptible power supply in Sialkot factory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJZRL_1rA1VKVdhXN1YLBJnNnKwkrBWiFL33idaoWGfcq-p4IV715MSJ3MdZIwl3zhy6l7e8iHDW7FT7Vtrt2Z0rdUX1PrI0Ska2xItggdmPWdDp6z8IaGZNlXljvKpAYkizTfZkK-UkgYsU8fq0OVyAtQWeqUEgqiVq8l5VjNp4Fuf7ok_iRWYLiTmjk5lZIAvISOoms3Z9oVe8UfWE6tYtbmeu3d6XOneFPN0y0"/>
+<span class="absolute bottom-1 left-1.5 bg-on-surface/80 text-surface font-spec-code text-surface font-spec-code px-1.5 py-0.5 rounded text-[11px]">Sialkot</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-on-surface-variant font-body-sm text-body-sm">
+<span>All installation images undergo serial number verification prior to publishing.</span>
+<span class="font-spec-code text-spec-code text-primary font-bold">1,820+ Photos Archived</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Submit Review CTA Banner -->
+<section class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin pb-20 w-full">
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-surface-container-high via-surface-container-low to-surface-container p-6 sm:p-10 shadow-md">
+<!-- Decorative background wave / gear pattern -->
+<div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-tertiary/10 blur-3xl pointer-events-none"></div>
+<div class="absolute top-0 right-1/4 w-40 h-40 rounded-full bg-primary/5 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+<div class="max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary/15 text-tertiary font-spec-code text-spec-code mb-3 font-bold">
+<span class="material-symbols-outlined text-[16px]">redeem</span> PKR 500 REWARD PROGRAM
+          </div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-2">
+            Are you using ASATEK electronics?
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+            Share your setup photo on WhatsApp and get a <strong class="text-tertiary font-bold">PKR 500 discount</strong> on your next order. Join our installer community today.
+          </p>
+<div class="mt-4 flex flex-wrap items-center gap-4 text-on-surface-variant font-spec-code text-spec-code">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-tertiary text-[18px]">photo_camera</span> 1 Photo of Controller</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-tertiary text-[18px]">speed</span> City &amp; Amp Load</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-tertiary text-[18px]">verified</span> Instant Voucher Code</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+<a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-tertiary-container hover:bg-tertiary text-on-tertiary font-label-md text-label-md font-bold shadow-[0_4px_16px_rgba(0,117,40,0.35)] transition-all hover:scale-105 active:scale-95" href="https://wa.me/923001234567?text=Assalam-o-Alaikum!%20I%20want%20to%20submit%20my%20ASATEK%20installation%20photo%20for%20PKR%20500%20discount." rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[22px]">chat</span>
+<span>Send Setup on WhatsApp</span>
+</a>
+<a class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-surface-container-lowest hover:bg-surface text-on-surface font-label-md text-label-md font-bold shadow-sm transition-all" href="tel:+923001234567">
+<span class="material-symbols-outlined text-primary text-[20px]">call</span>
+<span>0300-1234567</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Client-side Interactive Filter Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.review-card');
+      const searchInput = document.getElementById('review-search');
+      const noReviewsMsg = document.getElementById('no-reviews');
+
+      let currentCategory = 'all';
+      let searchQuery = '';
+
+      function applyFilters() {
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const categories = card.getAttribute('data-category') || '';
+          const cardText = card.innerText.toLowerCase();
+
+          const matchesCategory = (currentCategory === 'all') || categories.includes(currentCategory);
+          const matchesSearch = !searchQuery || cardText.includes(searchQuery.toLowerCase());
+
+          if (matchesCategory && matchesSearch) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (visibleCount === 0) {
+          noReviewsMsg.classList.remove('hidden');
+          noReviewsMsg.classList.add('flex');
+        } else {
+          noReviewsMsg.classList.add('hidden');
+          noReviewsMsg.classList.remove('flex');
+        }
+      }
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => {
+            b.classList.remove('bg-primary', 'text-on-primary');
+            b.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+          });
+
+          btn.classList.add('bg-primary', 'text-on-primary');
+          btn.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+
+          currentCategory = btn.getAttribute('data-category');
+          applyFilters();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value.trim();
+          applyFilters();
+        });
+      }
+    });
+  </script>
+</div></main><aside class="fixed bottom-6 right-6 z-50"><a class="flex items-center gap-space-sm bg-tertiary-container hover:bg-tertiary text-on-tertiary px-space-lg py-space-sm rounded-full shadow-[0_4px_16px_rgba(0,117,40,0.35)] transition-all hover:scale-105 active:scale-95" href="https://wa.me/923001234567" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[24px]">chat</span><span class="font-label-md text-label-md font-bold tracking-wide">WhatsApp</span></a></aside><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.04)] pt-space-xl pb-space-lg"><div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm mb-space-xs"><img alt="ASATEK Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Pakistan's trusted power electronics brand since 2021. Designing rugged solar MPPTs, pure sine wave inverters, and high-efficiency chargers.</p><div class="flex items-center gap-space-sm mt-space-sm"><span class="inline-flex items-center gap-1 text-tertiary font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px]">verified</span>ISO 9001 Compliant</span></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Quick Navigation</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Home Overview</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Hardware Catalog</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Customer Reviews</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Technical Support FAQ</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Track Order</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Customer Support</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Service Centers Network</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Warranty Policy &amp; Claims</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">User Manuals &amp; Schematics</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Wholesale &amp; Dealership</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Contact &amp; Assistance</h3><div class="flex flex-col gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">location_on</span><span>Industrial Estate, Lahore, Pakistan</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">call</span><span class="font-spec-code text-spec-code">+92 300 1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[18px]">chat</span><span class="font-spec-code text-spec-code">WhatsApp: 0300-1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">mail</span><span class="font-spec-code text-spec-code">support@asatek.pk</span></div></div></div></div><div class="pt-space-md bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 ASATEK Pakistan. All rights reserved. Made in Pakistan 🇵🇰</p><div class="flex items-center gap-space-md font-label-md text-label-md text-on-surface-variant"><span class="flex items-center gap-1 font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px] text-tertiary">shield</span>1-Year Nationwide Warranty</span></div></div></div></footer></body></html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"background":"#fcf9f8","on-tertiary":"#ffffff","on-primary-fixed":"#410000","on-background":"#1c1b1b","surface-container-highest":"#e5e2e1","inverse-on-surface":"#f3f0ef","on-secondary-fixed-variant":"#930000","secondary-container":"#d83828","tertiary":"#005a1d","primary":"#9e0000","surface":"#fcf9f8","tertiary-fixed-dim":"#66df75","on-secondary-container":"#fffbff","secondary-fixed-dim":"#ffb4a8","surface-container-low":"#f6f3f2","on-tertiary-fixed":"#002106","on-secondary-fixed":"#410000","inverse-primary":"#ffb4a8","on-primary":"#ffffff","surface-dim":"#dcd9d9","on-primary-fixed-variant":"#930000","surface-container":"#f0eded","surface-container-lowest":"#ffffff","error-container":"#ffdad6","on-primary-container":"#ffdad4","on-surface":"#1c1b1b","surface-bright":"#fcf9f8","secondary":"#b41d11","on-tertiary-fixed-variant":"#00531a","inverse-surface":"#313030","surface-container-high":"#eae7e7","primary-fixed":"#ffdad4","secondary-fixed":"#ffdad4","on-surface-variant":"#5e3f3a","error":"#ba1a1a","outline-variant":"#e8bdb6","tertiary-container":"#007528","primary-fixed-dim":"#ffb4a8","on-secondary":"#ffffff","surface-variant":"#e5e2e1","on-error":"#ffffff","primary-container":"#cc0000","outline":"#926e69","on-tertiary-container":"#83fc8e","on-error-container":"#93000a","tertiary-fixed":"#83fc8e","surface-tint":"#c00000"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","gutter":"1.5rem","space-sm":"0.5rem","space-lg":"1.5rem","space-md":"1rem","margin-mobile":"1rem","gutter-mobile":"1rem","margin":"2rem","space-xl":"2.5rem"},"fontFamily":{"spec-code":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"display-hero-mobile":["Inter"],"headline-lg":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Inter"],"label-uppercase":["Inter"],"label-md":["Inter"],"display-hero":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"]},"fontSize":{"spec-code":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"display-hero-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"label-uppercase":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","fontWeight":"500"}],"display-hero":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)]"><div class="h-20 max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><img alt="ASATEK Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="transition-colors text-primary font-bold" data-path="products" href="#">Products</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="service-centers" href="#">Service Centers</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="reviews" href="#">Reviews</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="faq" href="#">FAQ</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="contact" href="#">Contact</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container-low rounded-lg p-space-xs"><button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-label-uppercase text-label-uppercase shadow-sm" type="button">EN</button><button class="px-space-sm py-1 rounded text-on-surface-variant font-label-uppercase text-label-uppercase hover:text-on-surface" type="button">اردو</button></div><a class="hidden sm:flex items-center gap-space-xs text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="tel:+923001234567"><span class="material-symbols-outlined text-primary text-[20px]">call</span><span class="font-spec-code text-spec-code">0300-1234567</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full">
+<!-- Top Visual Accent Strip & Breadcrumb -->
+<section class="w-full bg-surface-container-low py-space-sm">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span>Home</span>
+</a>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Order</a>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<span class="text-primary font-bold">Checkout</span>
+</nav>
+</div>
+</section>
+<!-- Hero Header Minimalist Banner -->
+<section class="w-full bg-surface pt-space-lg pb-space-md">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-sm">
+<div>
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded bg-tertiary/10 text-tertiary font-spec-code text-spec-code mb-space-xs">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+<span>EXPRESS DISPATCH • ALL PAKISTAN COD</span>
+</div>
+<h1 class="font-display-hero text-headline-lg lg:text-display-hero text-on-surface tracking-tight font-extrabold">
+            Place Your Order
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">
+            Fast Cash on Delivery across Pakistan. No account or pre-payment required.
+          </p>
+</div>
+<!-- Trust Badges Desktop Bar -->
+<div class="hidden lg:flex items-center gap-space-lg text-on-surface-variant">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-uppercase text-label-uppercase text-on-surface">100% Genuine</span>
+<span class="font-spec-code text-[11px] text-on-surface-variant">Factory Inspected</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-uppercase text-label-uppercase text-on-surface">Pay on Delivery</span>
+<span class="font-spec-code text-[11px] text-on-surface-variant">Check Package First</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Two-Column Checkout Layout -->
+<section class="w-full pb-space-xl">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Form Sections (7 cols) -->
+<form class="lg:col-span-7 flex flex-col gap-space-lg" id="orderForm" onsubmit="event.preventDefault(); handleOrderSubmit();">
+<!-- Section 1: Product Selection & Live Units -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-space-md lg:p-space-lg relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary"></div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-on-primary font-spec-code text-spec-code font-bold">1</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Hardware Details</h2>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary bg-tertiary-fixed/40 px-2 py-0.5 rounded">In Stock</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="productSelect">
+                  Choose ASATEK Power Unit
+                </label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg py-3 px-space-md pr-10 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary" id="productSelect">
+<option data-code="SC5-1260" data-name="ASATEK SC5 VA-1260 (12V 60A)" selected="" value="4500">
+                      ASATEK SC5 VA-1260 — PKR 4,500 (12V / 60A Solar MPPT)
+                    </option>
+<option data-code="SMP-80A" data-name="ASATEK Solar Max Pro MPPT 80A" value="7800">
+                      ASATEK Solar Max Pro MPPT 80A — PKR 7,800 (Voc 150V)
+                    </option>
+<option data-code="PSW-1200" data-name="ASATEK Pure Sine Wave Inverter 1.2kVA" value="16500">
+                      ASATEK Pure Sine Wave Inverter 1.2kVA — PKR 16,500 (Hybrid UPS)
+                    </option>
+<option data-code="ISC-1230" data-name="ASATEK Industrial Smart Charger 12V 30A" value="3200">
+                      ASATEK Industrial Smart Charger 12V 30A — PKR 3,200
+                    </option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[20px]">
+                    arrow_drop_down
+                  </span>
+</div>
+</div>
+<!-- Product Visual Snapshot + Interactive Stepper -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md w-full sm:w-auto">
+<div class="w-16 h-16 rounded-lg bg-surface-container-high overflow-hidden flex-shrink-0 flex items-center justify-center p-1 shadow-sm">
+<img class="w-full h-full object-cover rounded" data-alt="Rugged industrial ASATEK solar charge controller heavy duty red casing with heat sink cooling fins and clean digital LED voltage readout screen" id="productImage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh7Y2_xJqJrh9tScOk0ime0_MG0IgGOEYUrkZbgMdisxIiUdY6cx5rOXfUGNlTiMGKj_yGLN9QKoPmnCc7tncqGGVZxC50hkgkLF8hQbA08sbvfiK0Ln1Kb3IRxB3TXLzbMYJxRDmQvp4GEwpunZkhh1l8l8FCEcsj9oYNnEmU3RrwCXwUZdoDIrxGYhbN2Ev4-xKG3ZmbjieMwm8jdqETTpPhossohNE0yRes7BY"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface font-bold truncate" id="productCardName">ASATEK SC5 VA-1260</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">SKU: <span class="text-primary font-bold" id="productCardSku">SC5-1260</span></span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">Unit Price: PKR <span id="unitPriceDisplay">4,500</span></span>
+</div>
+</div>
+<!-- Quantity Stepper -->
+<div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-space-md">
+<span class="font-label-md text-label-md text-on-surface-variant sm:hidden">Quantity:</span>
+<div class="flex items-center bg-surface-container-lowest rounded-lg shadow-sm p-1">
+<button aria-label="Decrease quantity" class="w-9 h-9 flex items-center justify-center rounded text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 disabled:opacity-40" id="btnDecrement" type="button">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="w-10 text-center font-spec-code text-body-md font-bold text-on-surface" id="qtyDisplay">1</span>
+<button aria-label="Increase quantity" class="w-9 h-9 flex items-center justify-center rounded text-on-surface hover:bg-surface-container-high transition-colors active:scale-95" id="btnIncrement" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Contact Information -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-space-md lg:p-space-lg relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-secondary-container"></div>
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="flex items-center justify-center w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container font-spec-code text-spec-code font-bold">2</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Customer Contact Information</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Required for courier verification and dispatch call.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Full Name -->
+<div class="sm:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="fullName">
+                  Full Name <span class="text-primary">*</span>
+</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg py-3 px-space-md pl-10 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60" id="fullName" placeholder="Muhammad Ali" required="" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
+                    person
+                  </span>
+</div>
+</div>
+<!-- Phone Number -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="phonePrimary">
+                  Mobile / Phone Number <span class="text-primary">*</span>
+</label>
+<div class="relative flex items-center">
+<div class="absolute left-3 flex items-center gap-1.5 pointer-events-none">
+<span class="text-[16px] leading-none">🇵🇰</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant font-bold">+92</span>
+</div>
+<input class="w-full bg-surface-container-low text-on-surface font-spec-code text-body-md rounded-lg py-3 pr-space-md pl-20 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/50" id="phonePrimary" pattern="[0-9\-+ ]{10,14}" placeholder="0300-1234567" required="" type="tel"/>
+</div>
+<span class="block mt-1 font-body-sm text-[12px] text-on-surface-variant">We will call this number before packing.</span>
+</div>
+<!-- WhatsApp Number -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="phoneWhatsapp">
+                  WhatsApp Contact Number <span class="text-tertiary">*</span>
+</label>
+<div class="relative flex items-center">
+<div class="absolute left-3 flex items-center gap-1 pointer-events-none text-tertiary">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</div>
+<input class="w-full bg-surface-container-low text-on-surface font-spec-code text-body-md rounded-lg py-3 pr-space-md pl-10 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-tertiary placeholder:text-on-surface-variant/50" id="phoneWhatsapp" placeholder="0300-1234567" required="" type="tel"/>
+</div>
+<!-- Same As Phone Checkbox -->
+<div class="mt-2 flex items-center gap-2">
+<input checked="" class="w-4 h-4 rounded text-tertiary accent-tertiary focus:ring-0 cursor-pointer" id="sameAsPhone" type="checkbox"/>
+<label class="font-label-md text-[13px] text-on-surface cursor-pointer select-none" for="sameAsPhone">
+                    Same as mobile phone number
+                  </label>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Delivery Address -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-space-md lg:p-space-lg relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="flex items-center justify-center w-7 h-7 rounded-full bg-primary-container text-on-primary font-spec-code text-spec-code font-bold">3</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Delivery Address &amp; Location</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dispatched via TCS, Leopards, or Trax Express.</p>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Full Street Address -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="streetAddress">
+                  Complete Street Address / House / Shop No. <span class="text-primary">*</span>
+</label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg p-space-md focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60" id="streetAddress" placeholder="House/Shop No., Street Number, Sector/Mohalla, Industrial Area" required="" rows="2"></textarea>
+</div>
+</div>
+<!-- City and Province Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="cityName">
+                    City / Tehsil <span class="text-primary">*</span>
+</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg py-3 px-space-md pl-10 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60" id="cityName" placeholder="e.g. Lahore, Karachi, Multan" required="" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
+                      location_city
+                    </span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="provinceSelect">
+                    Province / Region <span class="text-primary">*</span>
+</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg py-3 px-space-md pr-10 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary" id="provinceSelect" required="">
+<option disabled="" selected="" value="">Select Province</option>
+<option value="Punjab">Punjab</option>
+<option value="Sindh">Sindh</option>
+<option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+<option value="Balochistan">Balochistan</option>
+<option value="Islamabad Capital">Islamabad Capital</option>
+<option value="Azad Kashmir">Azad Kashmir</option>
+<option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[20px]">
+                      arrow_drop_down
+                    </span>
+</div>
+</div>
+</div>
+<!-- Nearest Landmark / Google Pin -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="landmark">
+                  Nearest Landmark or Google Maps Pin URL <span class="font-spec-code text-[12px] text-on-surface-variant">(Optional)</span>
+</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg py-3 px-space-md pl-10 focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60" id="landmark" placeholder="e.g. Near Shell Pump, Hall Road, or Google Pin Link" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">
+                    pin_drop
+                  </span>
+</div>
+</div>
+<!-- Special Instructions -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-space-xs" for="deliveryNotes">
+                  Special Delivery Instructions / Time Preference
+                </label>
+<textarea class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg p-space-md focus:bg-surface-container-lowest transition-all focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-on-surface-variant/60" id="deliveryNotes" placeholder="e.g. Please deliver after 2 PM, or leave with security gate" rows="2"></textarea>
+</div>
+</div>
+</div>
+<!-- Mobile Only Submit Button -->
+<div class="lg:hidden">
+<button class="w-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-body-md py-4 rounded-xl shadow-lg flex items-center justify-center gap-space-sm font-bold active:scale-[0.98] transition-all" type="submit">
+<span class="material-symbols-outlined">shopping_cart_checkout</span>
+<span>Place Order (Cash on Delivery)</span>
+</button>
+</div>
+</form>
+<!-- Right Column: Sticky Order Summary Card (5 cols) -->
+<div class="lg:col-span-5 lg:sticky lg:top-24 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl p-space-md lg:p-space-lg relative overflow-hidden">
+<!-- Header Badge -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">receipt_long</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Order Summary</h3>
+</div>
+<span class="font-spec-code text-spec-code px-2 py-0.5 rounded bg-surface-container-high text-on-surface">COD PK</span>
+</div>
+<!-- Item Details Row -->
+<div class="flex items-start justify-between gap-space-md pb-space-md bg-surface-container-low/50 rounded-lg p-space-sm">
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm font-bold text-on-surface leading-tight" id="summaryItemName">
+                  ASATEK SC5 VA-1260 (12V 60A)
+                </span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-spec-code text-[12px] text-on-surface-variant">Qty: <span class="font-bold text-on-surface" id="summaryQty">1</span></span>
+<span class="text-outline">•</span>
+<span class="font-spec-code text-[12px] text-tertiary">Industrial Grade</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-spec-code text-body-md font-bold text-on-surface">
+                  PKR <span id="summarySubtotal">4,500</span>
+</span>
+</div>
+</div>
+<!-- Fee Breakdown Table -->
+<div class="flex flex-col gap-space-xs py-space-md font-body-sm text-body-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Subtotal</span>
+<span class="font-spec-code text-spec-code text-on-surface">PKR <span id="summaryItemPrice">4,500</span></span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span>Nationwide Courier Fee</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" title="Tracked surface delivery with insurance">info</span>
+</span>
+<span class="font-spec-code text-spec-code text-on-surface">PKR <span id="summaryDeliveryFee">350</span></span>
+</div>
+<div class="flex items-center justify-between text-tertiary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Transit Insurance Included</span>
+</span>
+<span class="font-spec-code text-[12px] font-bold">FREE</span>
+</div>
+</div>
+<!-- Total Calculation Section -->
+<div class="bg-surface-container-high/60 rounded-lg p-space-md mb-space-md">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-label-uppercase text-label-uppercase text-on-surface-variant block">Total Payable</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Pay courier when package arrives</span>
+</div>
+<div class="text-right">
+<span class="font-spec-code text-headline-sm lg:text-headline-md font-extrabold text-primary tracking-tight">
+                    PKR <span id="summaryTotal">4,850</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Payment Method Radio Selection (Locked to COD) -->
+<div class="mb-space-md">
+<span class="font-label-uppercase text-[11px] text-on-surface-variant block mb-space-xs">Payment Method</span>
+<label class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="w-4 h-4 accent-primary text-primary" name="paymentMethod" type="radio" value="COD"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface flex items-center gap-1.5">
+                      Cash on Delivery (COD) <span>🇵🇰</span>
+</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Safe, easy, and reliable delivery across Pakistan</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">check_circle</span>
+</label>
+</div>
+<!-- Primary Submit Action Desktop -->
+<div class="hidden lg:block mb-space-md">
+<button class="w-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-body-md py-4 rounded-lg shadow-md hover:shadow-lg flex items-center justify-center gap-space-sm font-bold active:scale-[0.98] transition-all" onclick="document.getElementById('orderForm').requestSubmit();" type="button">
+<span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+<span>Place Order (Cash on Delivery)</span>
+</button>
+</div>
+<!-- Dispatch Verification Note -->
+<div class="bg-surface-container-low rounded-lg p-space-sm mb-space-md flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0">phone_in_talk</span>
+<p class="font-body-sm text-[12px] text-on-surface-variant leading-relaxed">
+                After placing your order, an ASATEK technician will call or message your WhatsApp within 2 hours to confirm your address before handing the parcel to the courier.
+              </p>
+</div>
+<!-- Trust Points Matrix -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+<span class="font-label-md text-[13px] text-on-surface">Verified Genuine ASATEK Power Electronics</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-tertiary text-[18px]">shield</span>
+<span class="font-label-md text-[13px] text-on-surface">1-Year Full Nationwide Replacement Warranty</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-tertiary text-[18px]">headset_mic</span>
+<span class="font-label-md text-[13px] text-on-surface">Direct Factory Technical Support via WhatsApp</span>
+</div>
+</div>
+</div>
+<!-- Assistance Mini Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</div>
+<div>
+<span class="font-label-uppercase text-[11px] text-on-surface-variant block">Need Help Ordering?</span>
+<span class="font-spec-code text-spec-code font-bold text-on-surface">Call 0300-1234567</span>
+</div>
+</div>
+<a class="bg-surface-container-high hover:bg-surface-container text-primary font-label-uppercase text-label-uppercase px-3 py-2 rounded-lg font-bold transition-colors" href="tel:+923001234567">
+              Direct Dial
+            </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Success Confirmation Modal -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/60 backdrop-blur-sm hidden items-center justify-center p-margin-mobile" id="orderSuccessModal">
+<div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full p-space-lg shadow-2xl relative animate-in fade-in zoom-in duration-200">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary mx-auto mb-space-md">
+<span class="material-symbols-outlined text-[36px]">task_alt</span>
+</div>
+<div class="text-center mb-space-lg">
+<span class="font-spec-code text-spec-code text-tertiary font-bold tracking-widest block mb-1">ORDER CONFIRMED #PK-<span id="confirmedOrderId">8829</span></span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-extrabold">Shukriya! Order Received</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Your order for <strong class="text-on-surface" id="modalItemSummary">ASATEK Unit</strong> has been registered.
+        </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md mb-space-lg flex flex-col gap-2 font-body-sm text-body-sm">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Customer:</span>
+<span class="font-bold text-on-surface" id="modalCustomerName">Muhammad Ali</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Shipping To:</span>
+<span class="font-bold text-on-surface" id="modalCityDest">Lahore, Punjab</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Amount on Delivery:</span>
+<span class="font-spec-code font-bold text-primary" id="modalFinalPayable">PKR 4,850</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<a class="w-full bg-tertiary hover:bg-tertiary-container text-on-tertiary font-label-md text-body-md py-3.5 rounded-lg font-bold flex items-center justify-center gap-2 transition-all" href="https://wa.me/923001234567" id="modalWhatsAppConfirmBtn" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span>Instant WhatsApp Confirmation</span>
+</a>
+<button class="w-full bg-surface-container-high hover:bg-surface-container text-on-surface font-label-md text-label-md py-3 rounded-lg transition-colors" onclick="closeSuccessModal()" type="button">
+          Return to Hardware Catalog
+        </button>
+</div>
+</div>
+</div>
+<script>
+    (function initOrderCalculations() {
+      const productSelect = document.getElementById('productSelect');
+      const btnDecrement = document.getElementById('btnDecrement');
+      const btnIncrement = document.getElementById('btnIncrement');
+      const qtyDisplay = document.getElementById('qtyDisplay');
+      
+      const productCardName = document.getElementById('productCardName');
+      const productCardSku = document.getElementById('productCardSku');
+      const unitPriceDisplay = document.getElementById('unitPriceDisplay');
+      
+      const summaryItemName = document.getElementById('summaryItemName');
+      const summaryQty = document.getElementById('summaryQty');
+      const summarySubtotal = document.getElementById('summarySubtotal');
+      const summaryItemPrice = document.getElementById('summaryItemPrice');
+      const summaryTotal = document.getElementById('summaryTotal');
+      const deliveryFeeEl = document.getElementById('summaryDeliveryFee');
+      
+      const sameAsPhone = document.getElementById('sameAsPhone');
+      const phonePrimary = document.getElementById('phonePrimary');
+      const phoneWhatsapp = document.getElementById('phoneWhatsapp');
+
+      let currentQty = 1;
+      const courierFee = 350;
+
+      function updateCalculations() {
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+        const unitPrice = parseInt(selectedOption.value, 10);
+        const productName = selectedOption.getAttribute('data-name');
+        const productSku = selectedOption.getAttribute('data-code');
+
+        // Update product card view
+        productCardName.textContent = productName;
+        productCardSku.textContent = productSku;
+        unitPriceDisplay.textContent = unitPrice.toLocaleString();
+
+        // Update summary item info
+        summaryItemName.textContent = productName;
+        summaryQty.textContent = currentQty;
+        
+        const subtotal = unitPrice * currentQty;
+        const total = subtotal + courierFee;
+
+        summarySubtotal.textContent = subtotal.toLocaleString();
+        summaryItemPrice.textContent = subtotal.toLocaleString();
+        deliveryFeeEl.textContent = courierFee.toLocaleString();
+        summaryTotal.textContent = total.toLocaleString();
+
+        btnDecrement.disabled = currentQty <= 1;
+      }
+
+      btnDecrement.addEventListener('click', () => {
+        if (currentQty > 1) {
+          currentQty--;
+          qtyDisplay.textContent = currentQty;
+          updateCalculations();
+        }
+      });
+
+      btnIncrement.addEventListener('click', () => {
+        currentQty++;
+        qtyDisplay.textContent = currentQty;
+        updateCalculations();
+      });
+
+      productSelect.addEventListener('change', () => {
+        updateCalculations();
+      });
+
+      // Synchronize WhatsApp input when checkbox is active
+      phonePrimary.addEventListener('input', () => {
+        if (sameAsPhone.checked) {
+          phoneWhatsapp.value = phonePrimary.value;
+        }
+      });
+
+      sameAsPhone.addEventListener('change', () => {
+        if (sameAsPhone.checked) {
+          phoneWhatsapp.value = phonePrimary.value;
+          phoneWhatsapp.readOnly = true;
+          phoneWhatsapp.classList.add('opacity-70');
+        } else {
+          phoneWhatsapp.readOnly = false;
+          phoneWhatsapp.classList.remove('opacity-70');
+        }
+      });
+
+      // Handle initial checkbox state
+      if (sameAsPhone.checked) {
+        phoneWhatsapp.readOnly = true;
+        phoneWhatsapp.classList.add('opacity-70');
+      }
+
+      // Initial compute
+      updateCalculations();
+
+      // Form Submit & Modal logic
+      window.handleOrderSubmit = function() {
+        const orderId = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('confirmedOrderId').textContent = orderId;
+        
+        const nameVal = document.getElementById('fullName').value || 'Customer';
+        const cityVal = document.getElementById('cityName').value || 'Pakistan';
+        const provinceVal = document.getElementById('provinceSelect').value || '';
+        const totalVal = document.getElementById('summaryTotal').textContent;
+        const productName = productSelect.options[productSelect.selectedIndex].getAttribute('data-name');
+
+        document.getElementById('modalCustomerName').textContent = nameVal;
+        document.getElementById('modalCityDest').textContent = cityVal + (provinceVal ? ', ' + provinceVal : '');
+        document.getElementById('modalFinalPayable').textContent = 'PKR ' + totalVal;
+        document.getElementById('modalItemSummary').textContent = productName + ' (' + currentQty + ' unit' + (currentQty > 1 ? 's' : '') + ')';
+
+        const waText = encodeURIComponent(`Salam ASATEK! I placed COD Order #PK-${orderId} for ${productName} (Qty: ${currentQty}). Total: PKR ${totalVal}. Name: ${nameVal}, City: ${cityVal}. Please dispatch soon.`);
+        document.getElementById('modalWhatsAppConfirmBtn').href = `https://wa.me/923001234567?text=${waText}`;
+
+        const modal = document.getElementById('orderSuccessModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      };
+
+      window.closeSuccessModal = function() {
+        const modal = document.getElementById('orderSuccessModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    })();
+  </script>
+</div></main><aside class="fixed bottom-6 right-6 z-50"><a class="flex items-center gap-space-sm bg-tertiary-container hover:bg-tertiary text-on-tertiary px-space-lg py-space-sm rounded-full shadow-[0_4px_16px_rgba(0,117,40,0.35)] transition-all hover:scale-105 active:scale-95" href="https://wa.me/923001234567" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[24px]">chat</span><span class="font-label-md text-label-md font-bold tracking-wide">WhatsApp</span></a></aside><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.04)] pt-space-xl pb-space-lg"><div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm mb-space-xs"><img alt="ASATEK Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Pakistan's trusted power electronics brand since 2021. Designing rugged solar MPPTs, pure sine wave inverters, and high-efficiency chargers.</p><div class="flex items-center gap-space-sm mt-space-sm"><span class="inline-flex items-center gap-1 text-tertiary font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px]">verified</span>ISO 9001 Compliant</span></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Quick Navigation</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Home Overview</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Hardware Catalog</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Customer Reviews</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Technical Support FAQ</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Customer Support</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Service Centers Network</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Warranty Policy &amp; Claims</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">User Manuals &amp; Schematics</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Wholesale &amp; Dealership</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Contact &amp; Assistance</h3><div class="flex flex-col gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">location_on</span><span>Industrial Estate, Lahore, Pakistan</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">call</span><span class="font-spec-code text-spec-code">+92 300 1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[18px]">chat</span><span class="font-spec-code text-spec-code">WhatsApp: 0300-1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">mail</span><span class="font-spec-code text-spec-code">support@asatek.pk</span></div></div></div></div><div class="pt-space-md bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 ASATEK Pakistan. All rights reserved. Made in Pakistan 🇵🇰</p><div class="flex items-center gap-space-md font-label-md text-label-md text-on-surface-variant"><span class="flex items-center gap-1 font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px] text-tertiary">shield</span>1-Year Nationwide Warranty</span></div></div></div></footer></body></html>

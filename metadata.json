@@ -1,0 +1,8 @@
+{
+  "name": "Remix ASATEK Pakistan",
+  "description": "Pakistan\u0027s trusted power electronics shop and manufacturer: solar charge controllers, pure sine wave UPS/inverters, battery chargers, COD ordering, and service center network.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

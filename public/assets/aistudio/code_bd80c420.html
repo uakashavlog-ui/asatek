@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"background":"#fcf9f8","on-tertiary":"#ffffff","on-primary-fixed":"#410000","on-background":"#1c1b1b","surface-container-highest":"#e5e2e1","inverse-on-surface":"#f3f0ef","on-secondary-fixed-variant":"#930000","secondary-container":"#d83828","tertiary":"#005a1d","primary":"#9e0000","surface":"#fcf9f8","tertiary-fixed-dim":"#66df75","on-secondary-container":"#fffbff","secondary-fixed-dim":"#ffb4a8","surface-container-low":"#f6f3f2","on-tertiary-fixed":"#002106","on-secondary-fixed":"#410000","inverse-primary":"#ffb4a8","on-primary":"#ffffff","surface-dim":"#dcd9d9","on-primary-fixed-variant":"#930000","surface-container":"#f0eded","surface-container-lowest":"#ffffff","error-container":"#ffdad6","on-primary-container":"#ffdad4","on-surface":"#1c1b1b","surface-bright":"#fcf9f8","secondary":"#b41d11","on-tertiary-fixed-variant":"#00531a","inverse-surface":"#313030","surface-container-high":"#eae7e7","primary-fixed":"#ffdad4","secondary-fixed":"#ffdad4","on-surface-variant":"#5e3f3a","error":"#ba1a1a","outline-variant":"#e8bdb6","tertiary-container":"#007528","primary-fixed-dim":"#ffb4a8","on-secondary":"#ffffff","surface-variant":"#e5e2e1","on-error":"#ffffff","primary-container":"#cc0000","outline":"#926e69","on-tertiary-container":"#83fc8e","on-error-container":"#93000a","tertiary-fixed":"#83fc8e","surface-tint":"#c00000"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","gutter":"1.5rem","space-sm":"0.5rem","space-lg":"1.5rem","space-md":"1rem","margin-mobile":"1rem","gutter-mobile":"1rem","margin":"2rem","space-xl":"2.5rem"},"fontFamily":{"spec-code":["JetBrains Mono"],"body-md":["Inter"],"body-lg":["Inter"],"display-hero-mobile":["Inter"],"headline-lg":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Inter"],"label-uppercase":["Inter"],"label-md":["Inter"],"display-hero":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"]},"fontSize":{"spec-code":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"display-hero-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"label-uppercase":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","fontWeight":"500"}],"display-hero":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"800"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)]"><div class="h-20 max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><img alt="ASATEK Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary font-bold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="transition-colors text-primary font-bold" data-path="products" href="#">Products</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="service-centers" href="#">Service Centers</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="reviews" href="#">Reviews</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="faq" href="#">FAQ</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="contact" href="#">Contact</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container-low rounded-lg p-space-xs"><button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-label-uppercase text-label-uppercase shadow-sm" type="button">EN</button><button class="px-space-sm py-1 rounded text-on-surface-variant font-label-uppercase text-label-uppercase hover:text-on-surface" type="button">اردو</button></div><a class="hidden sm:flex items-center gap-space-xs text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="tel:+923001234567"><span class="material-symbols-outlined text-primary text-[20px]">call</span><span class="font-spec-code text-spec-code">0300-1234567</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full">
+<!-- Top Command & Breadcrumb Strip -->
+<div class="w-full bg-surface-container-low shadow-sm">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin py-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Products Hardware Catalog</span>
+<span class="mx-space-xs text-outline-variant font-spec-code">/</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">PWR-PK-2025</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1 font-spec-code text-spec-code text-tertiary">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>All Units Pakistan QC Tested</span>
+</div>
+<span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">Direct Dispatch from Lahore Hub</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Catalog Sub-Header -->
+<div class="w-full bg-surface-container-lowest shadow-sm mb-space-lg">
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin py-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs mb-space-xs">
+<span class="font-label-uppercase text-label-uppercase bg-surface-container text-primary px-space-xs py-0.5 rounded">COMMERCIAL &amp; RESIDENTIAL</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant tracking-wider">DOC-REF: ASTK-HW-06</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-extrabold flex items-center gap-space-sm">
+            Hardware Catalog &amp; Inventory
+            <span class="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse"></span>
+</h1>
+</div>
+<!-- Integrated Quick Search & Filter Status -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm w-full lg:w-auto">
+<div class="relative w-full sm:w-80">
+<input class="w-full bg-surface-container-low pl-10 pr-space-md py-2.5 rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm" id="catalog-search" placeholder="Search model, wattage, code..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">search</span>
+</div>
+<div class="bg-surface-container-high px-space-md py-2.5 rounded-lg flex items-center justify-between gap-space-sm">
+<span class="font-spec-code text-spec-code text-on-surface-variant">STATUS:</span>
+<span class="font-spec-code text-spec-code text-primary font-bold" id="product-count">Showing 6 units</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Catalog Workspace -->
+<div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin w-full mb-space-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Sidebar: Precision Filters Panel -->
+<aside class="lg:col-span-3 w-full flex flex-col gap-space-md sticky top-24">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between pb-space-sm bg-surface-container-low -mx-space-lg -mt-space-lg p-space-md rounded-t-xl">
+<div class="flex items-center gap-space-xs text-on-surface font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-primary text-[22px]">tune</span>
+<span>Hardware Filters</span>
+</div>
+<button class="text-primary hover:text-secondary font-spec-code text-spec-code flex items-center gap-0.5 hover:underline" id="reset-filters-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+              Reset
+            </button>
+</div>
+<!-- Category Selector -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-uppercase text-label-uppercase text-on-surface-variant tracking-wider flex items-center justify-between">
+<span>Category</span>
+<span class="font-spec-code text-[11px] text-tertiary">READY TO SHIP</span>
+</label>
+<div class="flex flex-col gap-1.5 mt-space-xs">
+<label class="category-radio-group flex items-center justify-between p-2 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<input checked="" class="accent-primary" name="category" type="radio" value="all"/>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">All Categories</span>
+</div>
+<span class="font-spec-code text-spec-code bg-surface-container-highest px-1.5 py-0.5 rounded text-on-surface-variant font-bold">6</span>
+</label>
+<label class="category-radio-group flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<input class="accent-primary" name="category" type="radio" value="solar"/>
+<span class="font-body-sm text-body-sm text-on-surface">Solar Charge Controllers</span>
+</div>
+<span class="font-spec-code text-spec-code bg-surface-container-highest px-1.5 py-0.5 rounded text-on-surface-variant font-bold">4</span>
+</label>
+<label class="category-radio-group flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<input class="accent-primary" name="category" type="radio" value="inverter"/>
+<span class="font-body-sm text-body-sm text-on-surface">UPS / Inverters</span>
+</div>
+<span class="font-spec-code text-spec-code bg-surface-container-highest px-1.5 py-0.5 rounded text-on-surface-variant font-bold">1</span>
+</label>
+<label class="category-radio-group flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<input class="accent-primary" name="category" type="radio" value="charger"/>
+<span class="font-body-sm text-body-sm text-on-surface">Battery Chargers</span>
+</div>
+<span class="font-spec-code text-spec-code bg-surface-container-highest px-1.5 py-0.5 rounded text-on-surface-variant font-bold">1</span>
+</label>
+<label class="category-radio-group flex items-center justify-between p-2 rounded-lg hover:bg-surface-container-low transition-colors opacity-60 cursor-not-allowed">
+<div class="flex items-center gap-space-xs">
+<input class="accent-primary" disabled="" name="category" type="radio" value="parts"/>
+<span class="font-body-sm text-body-sm text-on-surface">Parts &amp; Accessories</span>
+</div>
+<span class="font-spec-code text-spec-code bg-surface-container-highest px-1.5 py-0.5 rounded text-on-surface-variant font-bold">0</span>
+</label>
+</div>
+</div>
+<!-- Voltage Filter Chips -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-uppercase text-label-uppercase text-on-surface-variant tracking-wider">System Voltage (DC)</label>
+<div class="grid grid-cols-3 gap-space-xs mt-space-xs">
+<button class="voltage-chip px-space-xs py-2 rounded-lg font-spec-code text-spec-code text-center bg-primary text-on-primary font-bold shadow-sm transition-all" data-voltage="12V" type="button">12V</button>
+<button class="voltage-chip px-space-xs py-2 rounded-lg font-spec-code text-spec-code text-center bg-surface-container hover:bg-surface-container-high text-on-surface font-bold transition-all" data-voltage="24V" type="button">24V</button>
+<button class="voltage-chip px-space-xs py-2 rounded-lg font-spec-code text-spec-code text-center bg-surface-container hover:bg-surface-container-high text-on-surface font-bold transition-all" data-voltage="48V" type="button">48V</button>
+</div>
+</div>
+<!-- Price Range Slider -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-uppercase text-label-uppercase text-on-surface-variant tracking-wider">Max Budget (PKR)</label>
+<span class="font-spec-code text-spec-code text-primary font-bold" id="price-readout">PKR 25,000</span>
+</div>
+<input class="w-full accent-primary h-2 bg-surface-container-highest rounded-lg cursor-pointer my-space-xs" id="price-range" max="25000" min="2000" step="500" type="range" value="25000"/>
+<div class="flex items-center justify-between font-spec-code text-[11px] text-on-surface-variant">
+<span>PKR 2,000</span>
+<span>PKR 25,000</span>
+</div>
+</div>
+<!-- Sort Dropdown -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-uppercase text-label-uppercase text-on-surface-variant tracking-wider" for="catalog-sort">Sort Architecture</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low appearance-none px-space-md py-2.5 rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm pr-10" id="catalog-sort">
+<option value="featured">Featured Hardware</option>
+<option value="price-asc">Price: Low to High</option>
+<option value="price-desc">Price: High to Low</option>
+<option value="newest">Newest Releases</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-on-surface-variant text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Quick Stock & Warranty Badge Widget -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-tertiary text-[20px]">bolt</span>
+<span>Industrial Grade Build</span>
+</div>
+<p class="font-body-sm text-[12px] leading-relaxed text-on-surface-variant">
+              Heavy copper transformers, aluminum thermal dissipation heatsinks, and anti-sulfation charging profiles.
+            </p>
+</div>
+</div>
+</aside>
+<!-- Right Column: Products Display Grid -->
+<section class="lg:col-span-9 flex flex-col gap-space-lg">
+<!-- Filter Summary Bar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center flex-wrap gap-space-xs">
+<span class="font-label-uppercase text-[11px] text-on-surface-variant font-bold">Active Scope:</span>
+<span class="bg-surface-container-high text-on-surface font-spec-code text-[12px] px-2 py-0.5 rounded flex items-center gap-1">
+              PKR ≤ 25k
+            </span>
+<span class="bg-surface-container-high text-on-surface font-spec-code text-[12px] px-2 py-0.5 rounded flex items-center gap-1">
+              Commercial Stock
+            </span>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-spec-code text-[12px] px-2 py-0.5 rounded flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Instant Courier Dispatched
+            </span>
+</div>
+<div class="flex items-center gap-space-xs font-spec-code text-spec-code text-on-surface-variant">
+<span>GRID: 3-COL</span>
+<span class="material-symbols-outlined text-primary text-[18px]">grid_view</span>
+</div>
+</div>
+<!-- 3-Column Industrial Products Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter" id="products-container">
+<!-- Product 1 -->
+<article class="product-card bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group" data-category="solar" data-price="4500" data-voltage="12V">
+<div class="relative bg-surface-container-high p-space-md flex items-center justify-center min-h-[220px] overflow-hidden">
+<span class="absolute top-3 left-3 z-10 bg-primary text-on-primary font-spec-code text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">
+                PWM HEAVY-DUTY
+              </span>
+<span class="absolute top-3 right-3 z-10 bg-surface-container-lowest text-on-surface font-spec-code text-[11px] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> In Stock
+              </span>
+<img class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK SC5 VA-1260 Solar Charge Controller front view showing rugged crimson metal casing, clear dual analog/digital voltmeter and ammeter displays, heavy duty screw terminals, professional studio lighting, sleek commercial engineering aesthetic, made in Pakistan." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAiaUvkH7d23Koat_Nj2GcEmXGywJ6EFfh39uK4JCHRDpJM4dAARuKzDVQ0BmtonhG8ql8J4iDvBuM3LwpxK6dyPRoDQxeqUdAkS5MK_XCMOfgAhJ_VtJ4rwz1u2X4RA21qB0DQ3mTH1SW1BFc8EnMAc35QMxMtCciELZTomurCTgo0MtNVVSdUp8eMX20G-m2lrc8t3-PmiQjc-WuBOaE5b5arzn5Qg9d1L83uu0"/>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">SOLAR CHARGE CONTROLLER</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">12V / 60A</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-extrabold group-hover:text-primary transition-colors">
+                  ASATEK SC5 VA-1260
+                </h2>
+<!-- Specs Breakdown -->
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Control Tech:</span>
+<span class="font-spec-code text-spec-code text-on-surface font-bold">12V 60A PWM</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Monitoring:</span>
+<span class="font-spec-code text-spec-code text-on-surface">Dual Meters (V/A)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Chassis:</span>
+<span class="font-spec-code text-spec-code text-on-surface">Metallic Casing</span>
+</div>
+</div>
+</div>
+<!-- Price and Actions -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-spec-code text-spec-code text-on-surface-variant block text-[11px]">Direct Trade Rate</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PKR 4,500</span>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary font-bold bg-tertiary-fixed/30 px-2 py-0.5 rounded">1-Yr Warranty</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="w-full bg-primary hover:bg-secondary active:scale-95 text-on-primary font-label-md text-label-md font-bold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    Order Now
+                  </button>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1" type="button">
+                    Details
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 2 -->
+<article class="product-card bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group" data-category="solar" data-price="5200" data-voltage="24V">
+<div class="relative bg-surface-container-high p-space-md flex items-center justify-center min-h-[220px] overflow-hidden">
+<span class="absolute top-3 left-3 z-10 bg-secondary-container text-on-secondary-container font-spec-code text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">
+                HIGH VOLTAGE PWM
+              </span>
+<span class="absolute top-3 right-3 z-10 bg-surface-container-lowest text-on-surface font-spec-code text-[11px] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> In Stock
+              </span>
+<img class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK SC5 VA-2460 Solar Charge Controller side angle showing rear cooling exhaust fan, heavy gauge terminal block, industrial textured red metal housing with clear ASATEK branding, sharp focus on dual LCD display screen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNEZhqsOcZVSjX6rktl7eQu_Xi7dBHM4XMRJ6FvLYK-GAoX6eIt8hScCDDCGCo1ELBsKODCLOxsEpusyLlexvtbzVZcyBHuR8yohA7pjjT14rIVRAkVp6I22PlkAjePTzpKG6qRY_3fgY2hs2_NyOTFlE2F41LPKaRh2fN1X_nFxE8DVxG89FxN7Sx-lvWM5WQwD0xDUN9V5UBDs720hBVhF3pEYYxI5PxIX7iPYc"/>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">SOLAR CHARGE CONTROLLER</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">24V / 60A</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-extrabold group-hover:text-primary transition-colors">
+                  ASATEK SC5 VA-2460
+                </h2>
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Control Tech:</span>
+<span class="font-spec-code text-spec-code text-on-surface font-bold">24V 60A PWM</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Monitoring:</span>
+<span class="font-spec-code text-spec-code text-on-surface">Dual Display Panel</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Thermal:</span>
+<span class="font-spec-code text-spec-code text-tertiary font-bold">Active Fan Cooled</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-spec-code text-spec-code text-on-surface-variant block text-[11px]">Direct Trade Rate</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PKR 5,200</span>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary font-bold bg-tertiary-fixed/30 px-2 py-0.5 rounded">1-Yr Warranty</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="w-full bg-primary hover:bg-secondary active:scale-95 text-on-primary font-label-md text-label-md font-bold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    Order Now
+                  </button>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1" type="button">
+                    Details
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 3 -->
+<article class="product-card bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group" data-category="solar" data-price="3800" data-voltage="12V">
+<div class="relative bg-surface-container-high p-space-md flex items-center justify-center min-h-[220px] overflow-hidden">
+<span class="absolute top-3 left-3 z-10 bg-surface-container text-on-surface font-spec-code text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">
+                COMPACT 3-IN-1
+              </span>
+<span class="absolute top-3 right-3 z-10 bg-surface-container-lowest text-on-surface font-spec-code text-[11px] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> In Stock
+              </span>
+<img class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK SC6-1230 3-in-1 Solar Charge Controller front view showcasing twin dual USB charging ports, DC load output switch, digital backlit display, red-and-charcoal robust industrial chassis designed for home solar backup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYGo4hfzfD7qoYMue424vuJCu2Ya61TVBXendjsW-1Dc0TLeZey1OyY7566DTvqR2wAApbV84HKm9tb5K7lyNgPDgRGjtWxOpsi2ebqbk4IKLn5kbCrvVs9kZh2U6rV1nGj1WGNA3NfzElj9uWu5CibchbUvAim_Mdbwp36jpNPjUN7MIEFTTg6xS_GsQG54a7udKpl_TPb-ouJ0OLTxJQ3qbXcrgo7TH0ad4qvBQ"/>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">SOLAR CHARGE CONTROLLER</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">12V / 30A</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-extrabold group-hover:text-primary transition-colors">
+                  ASATEK SC6-1230 3-in-1
+                </h2>
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Control Tech:</span>
+<span class="font-spec-code text-spec-code text-on-surface font-bold">12V 30A PWM</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">DC Output:</span>
+<span class="font-spec-code text-spec-code text-on-surface">Integrated DC Load</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Connectivity:</span>
+<span class="font-spec-code text-spec-code text-primary font-bold">Dual USB Ports</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-spec-code text-spec-code text-on-surface-variant block text-[11px]">Direct Trade Rate</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PKR 3,800</span>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary font-bold bg-tertiary-fixed/30 px-2 py-0.5 rounded">1-Yr Warranty</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="w-full bg-primary hover:bg-secondary active:scale-95 text-on-primary font-label-md text-label-md font-bold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    Order Now
+                  </button>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1" type="button">
+                    Details
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 4 -->
+<article class="product-card bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group" data-category="solar" data-price="4200" data-voltage="24V">
+<div class="relative bg-surface-container-high p-space-md flex items-center justify-center min-h-[220px] overflow-hidden">
+<span class="absolute top-3 left-3 z-10 bg-surface-container text-on-surface font-spec-code text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">
+                PROTECTED CIRCUIT
+              </span>
+<span class="absolute top-3 right-3 z-10 bg-surface-container-lowest text-on-surface font-spec-code text-[11px] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> In Stock
+              </span>
+<img class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK SC6-2430 3-in-1 Solar Charge Controller unit in vivid crimson industrial casing, crisp macro view of circuit status indicators, clear digital current and voltage readouts, clean white studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHyJVbvdBOoNKxDR4Lofepl4WQYIYB8z73jYzDlvJuXR6jfBftL55RtcbeQfQEUgEOhMJ8TjElWmCjWguf7Y_Axt95iM6LSDK2BTIWK8TMSGXO2_nI3UGm5ti6oIdfsr_-bxRf1q86FSI20qDlQWYQBZXODUtorHU3axz8_5zSLJ6BBH6GEudP2Eq39qoAUVNv2rC0tUBfNLhMt6v9Q3FjXKl9by9JdrUQ8jVgGM8"/>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">SOLAR CHARGE CONTROLLER</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">24V / 30A</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-extrabold group-hover:text-primary transition-colors">
+                  ASATEK SC6-2430 3-in-1
+                </h2>
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Control Tech:</span>
+<span class="font-spec-code text-spec-code text-on-surface font-bold">24V 30A PWM</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Display:</span>
+<span class="font-spec-code text-spec-code text-on-surface">Dual Metering Panel</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Safety:</span>
+<span class="font-spec-code text-spec-code text-tertiary font-bold">Reverse Protection</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-spec-code text-spec-code text-on-surface-variant block text-[11px]">Direct Trade Rate</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PKR 4,200</span>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary font-bold bg-tertiary-fixed/30 px-2 py-0.5 rounded">1-Yr Warranty</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="w-full bg-primary hover:bg-secondary active:scale-95 text-on-primary font-label-md text-label-md font-bold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    Order Now
+                  </button>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1" type="button">
+                    Details
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 5 -->
+<article class="product-card bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group" data-category="inverter" data-price="18000" data-voltage="12V">
+<div class="relative bg-surface-container-high p-space-md flex items-center justify-center min-h-[220px] overflow-hidden">
+<span class="absolute top-3 left-3 z-10 bg-primary text-on-primary font-spec-code text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">
+                HEAVY INVERTER
+              </span>
+<span class="absolute top-3 right-3 z-10 bg-surface-container-lowest text-on-surface font-spec-code text-[11px] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> In Stock
+              </span>
+<img class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK UPS 1000W Inverter front 3/4 perspective, bold metallic steel casing with cooling louvers, heavy-duty battery connection lugs, power switch, AC outlet, clear LED indicator row, Pakistan local manufacturing engineering style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7ytXEgQN8p9p3kKO-XBTlX4tc-iHDhs_yOjtlPTdVR_E8Q5qvwtaco93btUqGIZSghvZ_YMG8WYt3NY5zmpsxx3lpTDAL2pYh_ITBfZSlftzTN7obklJFXPSlu-3WMOs5FpA-FINcfrIy1uakxauqmRChzvjj2hdMngJEztp6ALgP1DOhvXCGrYtAiodJl_Hodz9CB-pTiFEMKb5eCTAOON_m-ZrD7KSOyFHADFY"/>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">UPS / INVERTER SYSTEM</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">1000W / 12V</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-extrabold group-hover:text-primary transition-colors">
+                  ASATEK UPS 1000W Inverter
+                </h2>
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Waveform:</span>
+<span class="font-spec-code text-spec-code text-on-surface font-bold">Modified Sine Wave</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Core Tech:</span>
+<span class="font-spec-code text-spec-code text-on-surface">Heavy Transformer</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Solar Support:</span>
+<span class="font-spec-code text-spec-code text-tertiary font-bold">Hybrid Direct Ready</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-spec-code text-spec-code text-on-surface-variant block text-[11px]">Direct Trade Rate</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PKR 18,000</span>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary font-bold bg-tertiary-fixed/30 px-2 py-0.5 rounded">1-Yr Warranty</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="w-full bg-primary hover:bg-secondary active:scale-95 text-on-primary font-label-md text-label-md font-bold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    Order Now
+                  </button>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1" type="button">
+                    Details
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 6 -->
+<article class="product-card bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group" data-category="charger" data-price="2500" data-voltage="12V">
+<div class="relative bg-surface-container-high p-space-md flex items-center justify-center min-h-[220px] overflow-hidden">
+<span class="absolute top-3 left-3 z-10 bg-surface-container text-on-surface font-spec-code text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">
+                FLOAT CHARGER
+              </span>
+<span class="absolute top-3 right-3 z-10 bg-surface-container-lowest text-on-surface font-spec-code text-[11px] px-2 py-0.5 rounded shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> In Stock
+              </span>
+<img class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300" data-alt="ASATEK Battery Charger 12V 20A commercial benchtop device with heavy duty copper winding transformer visible inside perforated red casing, heavy red and black crocodile clamps, analogue needle ammeter, clean lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1MpRm0pmFiAE7Sx2xaz62sCNlc4lep6UmO0F-jZzK4P6g7IIJuuglhBw_vb-vmpiZQ-PLMDPeyx6PZAQbL-OvyR8af1tUAv3N_dQWozeeqx9gdViGCecpQmCVTih6-5md5OI1kd4PWkC8HzGk50iXQzr5Sun0sIoI7xe2OIO2j5lDGuh9Fl5yhnToBPi8mjoxAmeQaHSxi1WepYag7bRVVhuEqFsz887bpicHkQw"/>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-uppercase text-label-uppercase text-primary font-bold tracking-wider">BATTERY CHARGER</span>
+<span class="font-spec-code text-spec-code text-on-surface-variant">12V / 20A</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-extrabold group-hover:text-primary transition-colors">
+                  ASATEK Charger 12V 20A
+                </h2>
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Type:</span>
+<span class="font-spec-code text-spec-code text-on-surface font-bold">Auto Float Charger</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Internal Coil:</span>
+<span class="font-spec-code text-spec-code text-on-surface">100% Copper Winding</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant font-medium">Safety Alert:</span>
+<span class="font-spec-code text-spec-code text-tertiary font-bold">Reverse Polarity Alarm</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-spec-code text-spec-code text-on-surface-variant block text-[11px]">Direct Trade Rate</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PKR 2,500</span>
+</div>
+<span class="font-spec-code text-spec-code text-tertiary font-bold bg-tertiary-fixed/30 px-2 py-0.5 rounded">1-Yr Warranty</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="w-full bg-primary hover:bg-secondary active:scale-95 text-on-primary font-label-md text-label-md font-bold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                    Order Now
+                  </button>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1" type="button">
+                    Details
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Catalog Technical Trust Banner -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[28px]">precision_manufacturing</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Need Bulk Distribution or Dealership Quotation?</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">We supply wholesale carton lots across all 4 provinces with certified bill of lading.</p>
+</div>
+</div>
+<button class="bg-surface-container-lowest hover:bg-surface-container text-primary font-label-md text-label-md font-bold px-space-lg py-2.5 rounded-lg shadow-sm whitespace-nowrap transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+            Contact Commercial Desk
+          </button>
+</div>
+<!-- Industrial Pagination Architecture -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-xs font-spec-code text-spec-code text-on-surface-variant">
+<span>SHOWING:</span>
+<span class="text-on-surface font-bold">1 - 6</span>
+<span>OF</span>
+<span class="text-on-surface font-bold">6 ITEMS</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface-variant opacity-50 cursor-not-allowed font-spec-code text-spec-code flex items-center gap-1" disabled="" type="button">
+<span class="material-symbols-outlined text-[16px]">west</span>
+              Prev
+            </button>
+<span class="w-9 h-9 rounded-lg bg-primary text-on-primary font-spec-code text-spec-code font-bold flex items-center justify-center shadow-sm">
+              1
+            </span>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface-variant opacity-50 cursor-not-allowed font-spec-code text-spec-code flex items-center gap-1" disabled="" type="button">
+              Next
+              <span class="material-symbols-outlined text-[16px]">east</span>
+</button>
+</div>
+<div class="font-label-uppercase text-[11px] text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            All specifications verified for Pakistani grid standards
+          </div>
+</div>
+</section>
+</div>
+</div>
+<!-- Interactive Filtering & Sorting Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('catalog-search');
+      const sortSelect = document.getElementById('catalog-sort');
+      const priceSlider = document.getElementById('price-range');
+      const priceReadout = document.getElementById('price-readout');
+      const resetBtn = document.getElementById('reset-filters-btn');
+      const productCount = document.getElementById('product-count');
+      const categoryRadios = document.querySelectorAll('input[name="category"]');
+      const voltageChips = document.querySelectorAll('.voltage-chip');
+      const cards = Array.from(document.querySelectorAll('.product-card'));
+
+      let activeCategory = 'all';
+      let activeVoltage = null;
+
+      function updateCatalog() {
+        const query = searchInput.value.toLowerCase().trim();
+        const maxPrice = parseInt(priceSlider.value, 10);
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const title = card.querySelector('h2').textContent.toLowerCase();
+          const specs = card.querySelector('.bg-surface-container-low').textContent.toLowerCase();
+          const cardCat = card.getAttribute('data-category');
+          const cardPrice = parseInt(card.getAttribute('data-price'), 10);
+          const cardVolt = card.getAttribute('data-voltage');
+
+          const matchesQuery = !query || title.includes(query) || specs.includes(query);
+          const matchesCategory = activeCategory === 'all' || cardCat === activeCategory;
+          const matchesPrice = cardPrice <= maxPrice;
+          const matchesVoltage = !activeVoltage || cardVolt === activeVoltage;
+
+          if (matchesQuery && matchesCategory && matchesPrice && matchesVoltage) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        productCount.textContent = `Showing ${visibleCount} units`;
+      }
+
+      function sortCatalog() {
+        const container = document.getElementById('products-container');
+        const criteria = sortSelect.value;
+        const visibleCards = Array.from(cards);
+
+        visibleCards.sort((a, b) => {
+          const priceA = parseInt(a.getAttribute('data-price'), 10);
+          const priceB = parseInt(b.getAttribute('data-price'), 10);
+          if (criteria === 'price-asc') return priceA - priceB;
+          if (criteria === 'price-desc') return priceB - priceA;
+          return 0; // default featured
+        });
+
+        visibleCards.forEach(card => container.appendChild(card));
+      }
+
+      // Voltage chip click handler
+      voltageChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const volt = chip.getAttribute('data-voltage');
+          if (activeVoltage === volt) {
+            activeVoltage = null;
+            chip.classList.remove('bg-primary', 'text-on-primary');
+            chip.classList.add('bg-surface-container', 'text-on-surface');
+          } else {
+            voltageChips.forEach(c => {
+              c.classList.remove('bg-primary', 'text-on-primary');
+              c.classList.add('bg-surface-container', 'text-on-surface');
+            });
+            activeVoltage = volt;
+            chip.classList.remove('bg-surface-container', 'text-on-surface');
+            chip.classList.add('bg-primary', 'text-on-primary');
+          }
+          updateCatalog();
+        });
+      });
+
+      // Category filter handler
+      categoryRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          activeCategory = e.target.value;
+          updateCatalog();
+        });
+      });
+
+      // Price slider
+      priceSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        priceReadout.textContent = `PKR ${val.toLocaleString()}`;
+        updateCatalog();
+      });
+
+      // Search & Sort listeners
+      searchInput.addEventListener('input', updateCatalog);
+      sortSelect.addEventListener('change', () => {
+        sortCatalog();
+        updateCatalog();
+      });
+
+      // Reset action
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        priceSlider.value = 25000;
+        priceReadout.textContent = 'PKR 25,000';
+        sortSelect.value = 'featured';
+        activeCategory = 'all';
+        document.querySelector('input[name="category"][value="all"]').checked = true;
+        activeVoltage = null;
+        voltageChips.forEach(c => {
+          c.classList.remove('bg-primary', 'text-on-primary');
+          c.classList.add('bg-surface-container', 'text-on-surface');
+        });
+        sortCatalog();
+        updateCatalog();
+      });
+    });
+  </script>
+</div></main><aside class="fixed bottom-6 right-6 z-50"><a class="flex items-center gap-space-sm bg-tertiary-container hover:bg-tertiary text-on-tertiary px-space-lg py-space-sm rounded-full shadow-[0_4px_16px_rgba(0,117,40,0.35)] transition-all hover:scale-105 active:scale-95" href="https://wa.me/923001234567" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined text-[24px]">chat</span><span class="font-label-md text-label-md font-bold tracking-wide">WhatsApp</span></a></aside><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.04)] pt-space-xl pb-space-lg"><div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm mb-space-xs"><img alt="ASATEK Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCS_NdCnK_cdXXaJhbSVgTi_KRHA1YQchAy5mB4Q19vFt6frvAgctILwMfJd1aRA3qoDB3sEEXXDQkMHkZhASYYvefrlJE4lBtUG3kVfXiFWI398VZGz4XKTDhYSP9x63Vrxrig8arwtINRTrMw7Hm773-1k7kiHbvRWG5haoMzwRH4G83WMFN55RRfZBuCBb9lL_zJEnk1jeXU7KJ4UxW_KR4edGp-SX1o2Ld3ya2N"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">ASATEK</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Pakistan's trusted power electronics brand since 2021. Designing rugged solar MPPTs, pure sine wave inverters, and high-efficiency chargers.</p><div class="flex items-center gap-space-sm mt-space-sm"><span class="inline-flex items-center gap-1 text-tertiary font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px]">verified</span>ISO 9001 Compliant</span></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Quick Navigation</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Home Overview</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Hardware Catalog</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Customer Reviews</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Technical Support FAQ</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Customer Support</h3><ul class="flex flex-col gap-space-xs"><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Service Centers Network</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Warranty Policy &amp; Claims</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">User Manuals &amp; Schematics</a></li><li class="font-body-sm text-body-sm"><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Wholesale &amp; Dealership</a></li></ul></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-uppercase text-label-uppercase text-on-surface">Contact &amp; Assistance</h3><div class="flex flex-col gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">location_on</span><span>Industrial Estate, Lahore, Pakistan</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">call</span><span class="font-spec-code text-spec-code">+92 300 1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[18px]">chat</span><span class="font-spec-code text-spec-code">WhatsApp: 0300-1234567</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">mail</span><span class="font-spec-code text-spec-code">support@asatek.pk</span></div></div></div></div><div class="pt-space-md bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 ASATEK Pakistan. All rights reserved. Made in Pakistan 🇵🇰</p><div class="flex items-center gap-space-md font-label-md text-label-md text-on-surface-variant"><span class="flex items-center gap-1 font-spec-code text-spec-code"><span class="material-symbols-outlined text-[16px] text-tertiary">shield</span>1-Year Nationwide Warranty</span></div></div></div></footer></body></html>
