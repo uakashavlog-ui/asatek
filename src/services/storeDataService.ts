@@ -139,7 +139,8 @@ function mapOrderRow(row: DbRow, itemsByOrderId: Map<string, DbRow[]>): Order {
     id,
     customerName: String(row.customer_name ?? row.customerName ?? ''),
     phone: String(row.phone ?? ''),
-    whatsapp: String(row.whatsapp ?? row.phone ?? ''),
+    whatsapp: String(row.whatsapp_number ?? row.whatsapp ?? row.phone ?? ''),
+    orderNumber: String(row.order_number ?? row.id ?? ''),
     address: String(row.address ?? ''),
     city: String(row.city ?? ''),
     province: String(row.province ?? ''),
@@ -242,8 +243,6 @@ export async function fetchStoreDataRemote(): Promise<Partial<StoreDataSnapshot>
     faqsRes,
   ] = await Promise.allSettled([
     supabase.from(SUPABASE_TABLES.products).select('*'),
-    supabase.from(SUPABASE_TABLES.orders).select('*'),
-    supabase.from(SUPABASE_TABLES.orderItems).select('*'),
     supabase.from(SUPABASE_TABLES.reviews).select('*'),
     supabase.from(SUPABASE_TABLES.serviceCenters).select('*'),
     supabase.from(SUPABASE_TABLES.faqs).select('*').order('order_index', { ascending: true }),
@@ -255,20 +254,6 @@ export async function fetchStoreDataRemote(): Promise<Partial<StoreDataSnapshot>
     partial.products = (productsRes.value.data as DbRow[]).map(mapProductRow);
   }
 
-  const itemsByOrderId = new Map<string, DbRow[]>();
-  if (orderItemsRes.status === 'fulfilled' && !orderItemsRes.value.error && Array.isArray(orderItemsRes.value.data)) {
-    for (const item of orderItemsRes.value.data as DbRow[]) {
-      const orderId = String(item.order_id ?? item.orderId ?? '');
-      if (!orderId) continue;
-      const existing = itemsByOrderId.get(orderId) ?? [];
-      existing.push(item);
-      itemsByOrderId.set(orderId, existing);
-    }
-  }
-
-  if (ordersRes.status === 'fulfilled' && !ordersRes.value.error && Array.isArray(ordersRes.value.data) && ordersRes.value.data.length > 0) {
-    partial.orders = (ordersRes.value.data as DbRow[]).map((row) => mapOrderRow(row, itemsByOrderId));
-  }
 
   if (reviewsRes.status === 'fulfilled' && !reviewsRes.value.error && Array.isArray(reviewsRes.value.data) && reviewsRes.value.data.length > 0) {
     partial.reviews = (reviewsRes.value.data as DbRow[]).map(mapReviewRow);
@@ -285,63 +270,95 @@ export async function fetchStoreDataRemote(): Promise<Partial<StoreDataSnapshot>
   return partial;
 }
 
+export interface TrackedOrderStatus {
+  order_number: string;
+  status: OrderStatus;
+  created_at: string;
+  updated_at: string;
+  tracking_number: string | null;
+  courier_name: string | null;
+  expected_delivery: string | null;
+}
+
+export async function fetchOrdersRemote(): Promise<Order[]> {
+  if (!supabase) throw new Error('Order database is not configured.');
+  const [{ data: orderRows, error: ordersError }, { data: itemRows, error: itemsError }] =
+    await Promise.all([
+      supabase.from(SUPABASE_TABLES.orders).select('*').order('created_at', { ascending: false }),
+      supabase.from(SUPABASE_TABLES.orderItems).select('*'),
+    ]);
+  if (ordersError) throw ordersError;
+  if (itemsError) throw itemsError;
+  const itemsByOrderId = new Map<string, DbRow[]>();
+  for (const item of (itemRows ?? []) as DbRow[]) {
+    const key = String(item.order_id ?? '');
+    itemsByOrderId.set(key, [...(itemsByOrderId.get(key) ?? []), item]);
+  }
+  return ((orderRows ?? []) as DbRow[]).map((row) => mapOrderRow(row, itemsByOrderId));
+}
+
+export async function fetchTrackedOrdersByPhone(phone: string): Promise<TrackedOrderStatus[]> {
+  if (!supabase) throw new Error('Order tracking is temporarily unavailable.');
+  const { data, error } = await supabase.rpc('track_orders_by_phone', { p_phone: phone });
+  if (error) throw error;
+  return (data ?? []) as TrackedOrderStatus[];
+}
+
 export async function createOrderRemote(order: Order): Promise<void> {
-  if (!supabase) return;
-  try {
-    const { error: orderErr } = await supabase.from(SUPABASE_TABLES.orders).insert({
+  if (!supabase) throw new Error('Order submission is unavailable. Please try again later.');
+  const { error } = await supabase.rpc('submit_customer_order', {
+    p_order: {
       id: order.id,
+      order_number: order.orderNumber || order.id,
       customer_name: order.customerName,
       phone: order.phone,
-      whatsapp: order.whatsapp,
+      whatsapp_number: order.whatsapp,
       address: order.address,
       city: order.city,
       province: order.province,
-      landmark: order.landmark ?? null,
-      instructions: order.instructions ?? null,
+      country: 'Pakistan',
+      status: order.status,
+      notes: order.instructions ?? '',
+      created_at: order.createdAt,
+      updated_at: order.updatedAt,
+      payment_method: order.paymentMethod,
       shipping_fee: order.shippingFee,
       total_amount: order.totalAmount,
-      payment_method: order.paymentMethod,
-      status: order.status,
-      courier_name: order.courierName ?? null,
-      tracking_number: order.trackingNumber ?? null,
-      serial_number: order.serialNumber ?? null,
-      expected_delivery: order.expectedDelivery ?? null,
+      courier_name: order.courierName ?? '',
+      tracking_number: order.trackingNumber ?? '',
+      serial_number: order.serialNumber ?? '',
+      expected_delivery: order.expectedDelivery ?? '',
       history: order.history,
-    });
-    if (orderErr) return;
-
-    await supabase.from(SUPABASE_TABLES.orderItems).insert({
-      order_id: order.id,
+      landmark: order.landmark ?? '',
+      instructions: order.instructions ?? '',
+    },
+    p_item: {
       product_id: order.productId,
-      product_sku: order.productSku,
       product_name: order.productName,
+      product_sku: order.productSku,
       quantity: order.quantity,
       unit_price: order.unitPrice,
       line_total: order.unitPrice * order.quantity,
-    });
-  } catch {
-    // Graceful fallback: local state retains the order when tables are not yet created
-  }
+    },
+  });
+  if (error) throw error;
 }
 
 export async function updateOrderRemote(
   orderId: string,
   patch: Partial<Order>
 ): Promise<void> {
-  if (!supabase) return;
-  try {
-    const dbPatch: DbRow = {};
-    if (patch.status !== undefined) dbPatch.status = patch.status;
-    if (patch.courierName !== undefined) dbPatch.courier_name = patch.courierName;
-    if (patch.trackingNumber !== undefined) dbPatch.tracking_number = patch.trackingNumber;
-    if (patch.address !== undefined) dbPatch.address = patch.address;
-    if (patch.city !== undefined) dbPatch.city = patch.city;
-    if (patch.province !== undefined) dbPatch.province = patch.province;
-    if (patch.history !== undefined) dbPatch.history = patch.history;
-    await supabase.from(SUPABASE_TABLES.orders).update(dbPatch).eq('id', orderId);
-  } catch {
-    // Graceful fallback when Supabase tables are not provisioned yet
-  }
+  if (!supabase) throw new Error('Order database is not configured.');
+  const dbPatch: DbRow = { updated_at: new Date().toISOString() };
+  if (patch.status !== undefined) dbPatch.status = patch.status;
+  if (patch.courierName !== undefined) dbPatch.courier_name = patch.courierName;
+  if (patch.trackingNumber !== undefined) dbPatch.tracking_number = patch.trackingNumber;
+  if (patch.address !== undefined) dbPatch.address = patch.address;
+  if (patch.city !== undefined) dbPatch.city = patch.city;
+  if (patch.province !== undefined) dbPatch.province = patch.province;
+  if (patch.history !== undefined) dbPatch.history = patch.history;
+  const { error } = await supabase.from(SUPABASE_TABLES.orders).update(dbPatch).eq('id', orderId);
+  if (error) throw error;
 }
 
 export async function upsertProductRemote(product: Product): Promise<void> {
