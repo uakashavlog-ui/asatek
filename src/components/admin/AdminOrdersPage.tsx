@@ -11,6 +11,7 @@ export const AdminOrdersPage: React.FC = () => {
   const [provinceFilter, setProvinceFilter] = useState('All');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [manualModalOpen, setManualModalOpen] = useState(false);
+  const [manualError, setManualError] = useState<string | null>(null);
   const [manualForm, setManualForm] = useState({
     productId: products[0]?.id || 'sc5-va1260',
     quantity: 1,
@@ -50,15 +51,21 @@ export const AdminOrdersPage: React.FC = () => {
     setSelectedIds([]);
   };
 
-  const handleManualSubmit = (e: React.FormEvent) => {
+  const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!manualForm.customerName.trim() || !manualForm.phone.trim() || !manualForm.city.trim()) return;
-    placeOrder({
-      ...manualForm,
-      whatsapp: manualForm.phone,
-      address: manualForm.address || `${manualForm.city} Direct Phone Booking`,
-      status: 'Confirmed',
-    });
+    try {
+      await placeOrder({
+        ...manualForm,
+        whatsapp: manualForm.phone,
+        address: manualForm.address || `${manualForm.city} Direct Phone Booking`,
+        status: 'Confirmed',
+      });
+      setManualError(null);
+    } catch (error) {
+      setManualError(error instanceof Error ? error.message : 'Could not save this order.');
+      return;
+    }
     setManualModalOpen(false);
     setManualForm({
       productId: products[0]?.id || 'sc5-va1260',
@@ -83,7 +90,7 @@ export const AdminOrdersPage: React.FC = () => {
         </div>
         <button
           type="button"
-          onClick={() => setManualModalOpen(true)}
+          onClick={() => { setManualError(null); setManualModalOpen(true); }}
           className="px-4 py-2.5 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-bold flex items-center gap-1.5 self-start"
         >
           <span className="material-symbols-outlined text-[18px]">add_call</span>
@@ -269,7 +276,8 @@ export const AdminOrdersPage: React.FC = () => {
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
-            <form onSubmit={handleManualSubmit} className="flex flex-col gap-3">
+            {manualError && <p role="alert" className="text-xs text-error font-semibold">{manualError}</p>}
+          <form onSubmit={handleManualSubmit} className="flex flex-col gap-3">
               <select
                 value={manualForm.productId}
                 onChange={(e) => setManualForm({ ...manualForm, productId: e.target.value })}
