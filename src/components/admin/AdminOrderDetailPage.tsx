@@ -1,337 +1,108 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { buildWhatsAppUrl, formatPkr } from '../../utils/storeLogic';
-import { ConfirmDialog } from '../modals/ConfirmDialog';
+
+const statusClass = (status: string) => {
+  switch (status) {
+    case 'Pending': return 'bg-amber-100 text-amber-800';
+    case 'Confirmed': return 'bg-red-100 text-red-800';
+    case 'Skipped': return 'bg-slate-100 text-slate-700';
+    case 'Cancelled': return 'bg-rose-100 text-rose-800';
+    default: return 'bg-gray-100 text-gray-700';
+  }
+};
+
+const statusMessage = (status: string) => {
+  switch (status) {
+    case 'Confirmed': return 'confirmed';
+    case 'Skipped': return 'on hold';
+    case 'Cancelled': return 'cancelled';
+    default: return 'pending';
+  }
+};
 
 export const AdminOrderDetailPage: React.FC = () => {
-  const {
-    orders,
-    selectedOrderId,
-    updateOrderStatus,
-    updateOrderAddress,
-    appendOrderNote,
-    navigate,
-  } = useStore();
+  const { orders, selectedOrderId, updateOrderStatus, navigate } = useStore();
+  const order = orders.find((item) => item.id === selectedOrderId);
+  const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState('');
 
-  const order = orders.find((o) => o.id === selectedOrderId) || orders[0];
+  if (!order) return <div className="p-6"><button onClick={() => navigate('admin-orders')} className="text-sm font-bold text-primary hover:underline">← Back to Orders</button><p className="mt-4 text-sm text-on-surface-variant">Order not found.</p></div>;
 
-  const [courierInput, setCourierInput] = useState(order?.courierName || 'Leopards Courier');
-  const [trackingInput, setTrackingInput] = useState(order?.trackingNumber || '');
-  const [noteInput, setNoteInput] = useState('');
-  const [cancelModalOpen, setCancelModalOpen] = useState(false);
-  const [editAddrOpen, setEditAddrOpen] = useState(false);
-  const [addrForm, setAddrForm] = useState({
-    address: order?.address || '',
-    city: order?.city || '',
-    province: order?.province || '',
-  });
+  const date = new Date(order.createdAt);
+  const readableDate = Number.isNaN(date.getTime()) ? order.createdAt : date.toLocaleString('en-PK', { day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+  const whatsappNumber = order.whatsapp?.trim() || order.phone;
+  const message = `Assalam o Alaikum ${order.customerName}, your ASATEK order ${order.orderNumber || order.id} for ${order.productName} x ${order.quantity} is ${statusMessage(order.status)}. Thank you!`;
+  const statusOptions = ['Pending', 'Confirmed', 'Skipped', 'Cancelled'] as const;
 
-  if (!order) return null;
-
-  const handleSaveAddress = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!addrForm.address.trim() || !addrForm.city.trim()) return;
-    updateOrderAddress(order.id, addrForm.address, addrForm.city, addrForm.province);
-    setEditAddrOpen(false);
+  const changeStatus = async (nextStatus: typeof statusOptions[number]) => {
+    if (saving || order.status === nextStatus) return;
+    if (nextStatus === 'Cancelled' && !window.confirm('Are you sure you want to cancel this order?')) return;
+    setSaving(true);
+    setToast('');
+    try {
+      await updateOrderStatus(order.id, nextStatus);
+      setToast(`Order status updated to ${nextStatus}.`);
+    } catch (error) {
+      setToast(error instanceof Error ? error.message : 'Could not update order status.');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleNoteSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!noteInput.trim()) return;
-    appendOrderNote(order.id, noteInput);
-    setNoteInput('');
-  };
+  const Detail = ({ label, value }: { label: string; value?: string }) => (
+    <div><dt className="text-xs text-on-surface-variant">{label}</dt><dd className="mt-0.5 text-sm font-semibold text-on-surface break-words">{value?.trim() || '—'}</dd></div>
+  );
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <button
-          type="button"
-          onClick={() => navigate('admin-orders')}
-          className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
-        >
-          <span>← Back to Orders Queue</span>
-        </button>
-
-        <div className="flex items-center gap-2 no-print">
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest text-xs font-semibold flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-[16px]">print</span>
-            <span>Print Dispatch Slip</span>
-          </button>
+    <div className="flex flex-col gap-5">
+      <button type="button" onClick={() => navigate('admin-orders')} className="self-start text-sm font-bold text-primary hover:underline">← Back to Orders</button>
+      <section className="rounded-xl border border-surface-container bg-white p-5 shadow-sm">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-xl font-extrabold text-on-surface">{order.orderNumber || order.id}</h1>
+          <span className={`rounded-full px-3 py-1 text-xs font-bold ${statusClass(order.status)}`}>{order.status}</span>
         </div>
+        <p className="mt-2 text-sm text-on-surface-variant">{readableDate}</p>
+      </section>
+
+      <section className="rounded-xl border border-surface-container bg-white p-5 shadow-sm">
+        <h2 className="mb-4 text-base font-bold text-on-surface">Customer Details</h2>
+        <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Detail label="Name" value={order.customerName} />
+          <Detail label="Phone" value={order.phone} />
+          <Detail label="WhatsApp" value={order.whatsapp || order.phone} />
+          <Detail label="Full Address" value={order.address} />
+          <Detail label="City" value={order.city} />
+          <Detail label="Province" value={order.province} />
+          <Detail label="Country" value={order.country || 'Pakistan'} />
+          <Detail label="ZIP Code" value={order.zipCode} />
+          <Detail label="Location / Landmark" value={[order.location, order.landmark].filter(Boolean).join(' · ')} />
+        </dl>
+      </section>
+
+      <section className="rounded-xl border border-surface-container bg-white p-5 shadow-sm">
+        <h2 className="mb-4 text-base font-bold text-on-surface">Order Items</h2>
+        <div className="flex flex-wrap items-start justify-between gap-3 border-b border-surface-container pb-3">
+          <div><p className="text-sm font-semibold text-on-surface">{order.productName}</p><p className="text-xs text-on-surface-variant">Quantity: {order.quantity}</p></div>
+          <p className="text-sm font-semibold">{formatPkr(order.unitPrice * order.quantity)}</p>
+        </div>
+        <div className="mt-3 flex justify-between text-sm"><span className="text-on-surface-variant">Delivery charges</span><span>{formatPkr(order.shippingFee)}</span></div>
+        <div className="mt-3 flex justify-between border-t border-surface-container pt-3 text-base font-extrabold"><span>Total</span><span className="text-primary">{formatPkr(order.totalAmount)}</span></div>
+      </section>
+
+      <section className="rounded-xl border border-red-200 bg-white p-5 shadow-sm">
+        <h2 className="mb-3 text-base font-bold text-on-surface">Order Status</h2>
+        <div className="mb-4 flex flex-wrap items-center gap-2"><span className="text-sm text-on-surface-variant">Current status:</span><span className={`rounded-full px-3 py-1 text-xs font-bold ${statusClass(order.status)}`}>{order.status}</span></div>
+        <div className="flex flex-wrap gap-2">
+          {statusOptions.map((status) => <button key={status} type="button" disabled={saving || order.status === status} onClick={() => void changeStatus(status)} className={`rounded-lg border px-4 py-2 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-45 ${order.status === status ? 'border-red-700 bg-red-700 text-white' : 'border-red-200 bg-white text-red-800 hover:bg-red-50'}`}>{status}</button>)}
+        </div>
+        {toast && <p role="status" className={`mt-3 text-sm font-semibold ${toast.startsWith('Could not') ? 'text-red-700' : 'text-green-700'}`}>{toast}</p>}
+      </section>
+
+      <div className="flex flex-wrap gap-3">
+        <a href={buildWhatsAppUrl(message, whatsappNumber)} target="_blank" rel="noreferrer" className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#28A745] px-5 py-3 text-sm font-extrabold text-white hover:bg-[#218838]"><span className="material-symbols-outlined">chat</span>WhatsApp Customer</a>
+        <a href={`tel:${order.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-5 py-3 text-sm font-bold text-red-800"><span className="material-symbols-outlined">call</span>Call</a>
       </div>
-
-      {/* Order Header Card matching Stitch code_bc3890b0.html */}
-      <div className="bg-surface-container-lowest rounded-xl border border-surface-container p-6 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <div className="flex flex-wrap items-center gap-2.5 mb-1">
-            <h1 className="text-headline-md font-extrabold font-spec-code text-on-surface">{order.id}</h1>
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-bold ${
-                order.status === 'Pending'
-                  ? 'bg-secondary-fixed text-on-secondary-fixed'
-                  : order.status === 'Confirmed'
-                  ? 'bg-primary-fixed text-on-primary-fixed'
-                  : order.status === 'Cancelled'
-                  ? 'bg-error-container text-on-error-container'
-                  : 'bg-tertiary-fixed text-on-tertiary-fixed'
-              }`}
-            >
-              {order.status}
-            </span>
-          </div>
-          <p className="text-xs text-on-surface-variant font-spec-code">
-            Created: {order.createdAt} · Updated: {order.updatedAt} · Payment: {order.paymentMethod}
-          </p>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 no-print">
-          <a
-            href={buildWhatsAppUrl(
-              `Assalam-o-Alaikum ${order.customerName}, regarding your ASATEK order ${order.id} (${order.productName}, ${formatPkr(order.totalAmount)}).`,
-              order.whatsapp
-            )}
-            target="_blank"
-            rel="noreferrer"
-            className="px-4 py-2 rounded-lg bg-[#28A745] text-white text-xs font-bold flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-[16px]">chat</span>
-            <span>WhatsApp Customer</span>
-          </a>
-          <a
-            href={`tel:${order.phone}`}
-            className="px-4 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest text-xs font-bold flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-[16px] text-primary">call</span>
-            <span>Call {order.phone}</span>
-          </a>
-        </div>
-      </div>
-
-      {/* Dispatch Operation Protocol Controls */}
-      <div className="bg-surface-container-lowest rounded-xl border border-surface-container p-6 shadow-sm no-print">
-        <h2 className="text-base font-bold text-on-surface mb-3">Dispatch Operation Protocol</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-          <div>
-            <label htmlFor="detail-courier" className="text-xs font-semibold text-on-surface-variant block mb-1">
-              Courier Partner
-            </label>
-            <select
-              id="detail-courier"
-              value={courierInput}
-              onChange={(e) => setCourierInput(e.target.value)}
-              className="w-full rounded-lg border border-outline-variant px-3 py-2 text-xs font-semibold"
-            >
-              <option value="Leopards Courier">Leopards Courier</option>
-              <option value="TCS Express">TCS Express</option>
-              <option value="Trax Logistics">Trax Logistics</option>
-              <option value="M&P Express">M&amp;P Express</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="detail-awb" className="text-xs font-semibold text-on-surface-variant block mb-1">
-              Airway Bill / Tracking CN
-            </label>
-            <input
-              id="detail-awb"
-              type="text"
-              value={trackingInput}
-              onChange={(e) => setTrackingInput(e.target.value)}
-              placeholder="e.g. TC-88349105-LHE"
-              className="w-full rounded-lg border border-outline-variant px-3 py-2 text-xs font-spec-code"
-            />
-          </div>
-          <div className="flex items-end">
-            <button
-              type="button"
-              onClick={() =>
-                updateOrderStatus(
-                  order.id,
-                  'Shipped',
-                  `Dispatched via ${courierInput} (${trackingInput || 'AWB-GENERATED'}).`,
-                  courierInput,
-                  trackingInput || `AST-${Date.now().toString().slice(-6)}`
-                )
-              }
-              className="w-full py-2 px-4 rounded-lg bg-tertiary hover:bg-tertiary-container text-on-tertiary text-xs font-bold"
-            >
-              Generate Waybill &amp; Mark Shipped
-            </button>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-2.5 pt-3 border-t border-surface-container">
-          <button
-            type="button"
-            onClick={() => updateOrderStatus(order.id, 'Confirmed', 'Order confirmed & unit allocated from Lahore QA.')}
-            className="px-4 py-2 rounded-lg bg-primary text-on-primary text-xs font-bold"
-          >
-            Confirm Order &amp; Allocate Stock
-          </button>
-          <button
-            type="button"
-            onClick={() => setCancelModalOpen(true)}
-            className="px-4 py-2 rounded-lg bg-error-container text-on-error-container text-xs font-bold ml-auto"
-          >
-            Cancel Order
-          </button>
-        </div>
-      </div>
-
-      {/* 2-Column Manifest + Timeline */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div className="lg:col-span-5 flex flex-col gap-5">
-          <div className="bg-surface-container-lowest rounded-xl border border-surface-container p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base font-bold text-on-surface">Consignee &amp; Shipping Destination</h2>
-              <button
-                type="button"
-                onClick={() => {
-                  setAddrForm({ address: order.address, city: order.city, province: order.province });
-                  setEditAddrOpen(true);
-                }}
-                className="text-xs font-semibold text-primary hover:underline no-print"
-              >
-                Edit Address
-              </button>
-            </div>
-            <div className="text-xs flex flex-col gap-1.5">
-              <div>
-                <strong className="text-sm text-on-surface block">{order.customerName}</strong>
-                <span className="font-spec-code text-on-surface-variant">Mobile: {order.phone}</span>
-              </div>
-              <p className="text-on-surface mt-1">
-                {order.address}, {order.city}, {order.province}
-              </p>
-              {order.landmark && (
-                <p className="text-on-surface-variant">Landmark: {order.landmark}</p>
-              )}
-              {order.instructions && (
-                <p className="p-2 rounded bg-surface-container-low text-on-surface-variant mt-1">
-                  Note: {order.instructions}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="bg-surface-container-lowest rounded-xl border border-surface-container p-5 shadow-sm">
-            <h2 className="text-base font-bold text-on-surface mb-3">Hardware Manifest &amp; Bill</h2>
-            <div className="flex flex-col gap-2 text-xs">
-              <div className="flex justify-between">
-                <span className="font-semibold text-on-surface">
-                  {order.quantity}× {order.productName}
-                </span>
-                <span className="font-spec-code">{formatPkr(order.unitPrice * order.quantity)}</span>
-              </div>
-              <div className="flex justify-between text-on-surface-variant">
-                <span>SKU / Serial</span>
-                <span className="font-spec-code">{order.productSku} · {order.serialNumber || 'Pending'}</span>
-              </div>
-              <div className="flex justify-between text-on-surface-variant">
-                <span>Nationwide Freight</span>
-                <span className="font-spec-code">{formatPkr(order.shippingFee)}</span>
-              </div>
-              <div className="pt-2 border-t border-surface-container flex justify-between font-bold text-sm">
-                <span>Total {order.paymentMethod}</span>
-                <span className="font-spec-code text-primary">{formatPkr(order.totalAmount)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Consignment Audit Log */}
-        <div className="lg:col-span-7 bg-surface-container-lowest rounded-xl border border-surface-container p-5 shadow-sm flex flex-col gap-4">
-          <h2 className="text-base font-bold text-on-surface">Consignment Audit Log</h2>
-
-          <form onSubmit={handleNoteSubmit} className="flex gap-2 no-print">
-            <input
-              type="text"
-              value={noteInput}
-              onChange={(e) => setNoteInput(e.target.value)}
-              placeholder="Append internal verification or courier note..."
-              aria-label="Internal audit note"
-              className="flex-1 rounded-lg border border-outline-variant px-3 py-2 text-xs"
-            />
-            <button type="submit" className="px-4 py-2 rounded-lg bg-primary text-on-primary text-xs font-bold">
-              Append Note
-            </button>
-          </form>
-
-          <div className="flex flex-col gap-3">
-            {order.history.map((entry, idx) => (
-              <div key={`${entry.status}-${idx}`} className="p-3 rounded-lg bg-surface-container-low border border-surface-container text-xs">
-                <div className="flex items-center justify-between font-semibold">
-                  <span className="text-on-surface">{entry.status}</span>
-                  <span className="font-spec-code text-on-surface-variant">{entry.timestamp}</span>
-                </div>
-                <p className="text-on-surface-variant mt-1">{entry.note}</p>
-                <span className="text-[11px] font-spec-code text-primary block mt-1">Actor: {entry.actor}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Edit Address Modal */}
-      {editAddrOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4" role="dialog" aria-modal="true">
-          <div className="w-full max-w-md rounded-xl bg-surface-container-lowest border border-surface-container p-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-on-surface mb-3">Update Shipping Destination</h3>
-            <form onSubmit={handleSaveAddress} className="flex flex-col gap-3">
-              <textarea
-                required
-                rows={2}
-                value={addrForm.address}
-                onChange={(e) => setAddrForm({ ...addrForm, address: e.target.value })}
-                className="rounded-lg border border-outline-variant px-3 py-2 text-sm"
-              />
-              <input
-                required
-                type="text"
-                value={addrForm.city}
-                onChange={(e) => setAddrForm({ ...addrForm, city: e.target.value })}
-                className="rounded-lg border border-outline-variant px-3 py-2 text-sm"
-              />
-              <input
-                required
-                type="text"
-                value={addrForm.province}
-                onChange={(e) => setAddrForm({ ...addrForm, province: e.target.value })}
-                className="rounded-lg border border-outline-variant px-3 py-2 text-sm"
-              />
-              <div className="flex justify-end gap-2 mt-2">
-                <button
-                  type="button"
-                  onClick={() => setEditAddrOpen(false)}
-                  className="px-4 py-2 rounded-lg border border-outline-variant text-xs font-semibold"
-                >
-                  Cancel
-                </button>
-                <button type="submit" className="px-4 py-2 rounded-lg bg-primary text-on-primary text-xs font-bold">
-                  Save Address
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      <ConfirmDialog
-        open={cancelModalOpen}
-        title={`Cancel Order ${order.id}?`}
-        description="Are you sure you want to mark this order as Cancelled? This will record an audit entry and stop courier booking."
-        confirmLabel="Confirm Cancellation"
-        variant="danger"
-        onConfirm={() => {
-          updateOrderStatus(order.id, 'Cancelled', 'Cancelled by Admin Supervisor via Order Detail.');
-          setCancelModalOpen(false);
-        }}
-        onCancel={() => setCancelModalOpen(false)}
-      />
     </div>
   );
 };
