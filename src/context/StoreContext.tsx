@@ -534,7 +534,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           },
           ...o.history,
         ];
-        void updateOrderRemote(orderId, { address, city, province, history: nextHistory });
+        void updateOrderRemote(orderId, { address, city, province, history: nextHistory }).catch((error) => console.error('Unable to save order address:', error));
         return {
           ...o,
           address,
@@ -567,7 +567,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           },
           ...o.history,
         ];
-        void updateOrderRemote(orderId, { history: nextHistory });
+        void updateOrderRemote(orderId, { history: nextHistory }).catch((error) => console.error('Unable to save order note:', error));
         return {
           ...o,
           updatedAt: `Today, ${nowStr}`,
