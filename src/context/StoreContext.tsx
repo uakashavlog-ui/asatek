@@ -19,7 +19,6 @@ import {
   applyAdminAuthGuard,
   calculateOrderTotals,
   deriveBrandPalette,
-  generateNextOrderId,
   resolveRouteFromLocation,
   routeToPath,
   STANDARD_COD_SHIPPING_PKR,
