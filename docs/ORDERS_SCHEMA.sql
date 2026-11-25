@@ -11,7 +11,7 @@ create table if not exists public.orders (
   country text not null default 'Pakistan',
   zip_code text,
   location text,
-  status text not null default 'Pending' check (status in ('Pending','Confirmed','Skipped','Shipped','Cancelled')),
+  status text not null default 'Pending' check (status in ('Pending','Confirmed','Skipped','Shipped','Delivered','Cancelled')),
   notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
@@ -29,7 +29,7 @@ create table if not exists public.orders (
 
 do $$ begin
   alter table public.orders drop constraint if exists orders_status_check;
-  alter table public.orders add constraint orders_status_check check (status in ('Pending','Confirmed','Skipped','Shipped','Cancelled'));
+  alter table public.orders add constraint orders_status_check check (status in ('Pending','Confirmed','Skipped','Shipped','Delivered','Cancelled'));
 exception when others then null; end $$;
 
 create table if not exists public.order_items (
