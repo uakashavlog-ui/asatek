@@ -75,7 +75,7 @@ create policy "Admins can manage orders" on public.orders for all to authenticat
 drop policy if exists "Guests can submit order items" on public.order_items;
 create policy "Guests can submit order items" on public.order_items for insert to anon with check (true);
 drop policy if exists "Admins can manage order items" on public.order_items;
-create policy "Admins can manage order items" on public.order_items for all to authenticated using (auth.uid() is not null) with check (auth.uid() is not null);
+create policy "Admins can manage order items" on public.order_items for all to authenticated using (public.is_order_admin()) with check (public.is_order_admin());
 
 create or replace function public.submit_customer_order(p_order jsonb, p_item jsonb)
 returns text language plpgsql security invoker set search_path = public, pg_temp as $$
