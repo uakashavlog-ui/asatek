@@ -145,11 +145,11 @@ export const AdminDashboardPage: React.FC = () => {
           <div className="flex items-start justify-between">
             <div>
               <span className="text-label-uppercase text-on-surface-variant block">Confirmed</span>
-              <span className="text-headline-lg font-extrabold text-tertiary tabular-nums mt-1 block">
+              <span className="text-headline-lg font-extrabold text-primary tabular-nums mt-1 block">
                 {stats.confirmedOrShipped}
               </span>
             </div>
-            <div className="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+            <div className="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
               <span className="material-symbols-outlined text-[22px]">local_shipping</span>
             </div>
           </div>
