@@ -281,7 +281,7 @@ export const AdminSettingsPage: React.FC = () => {
                 <h2 className="text-headline-sm font-bold text-on-surface">Branding</h2>
               </div>
               <span className="text-xs text-on-surface-variant font-spec-code">
-                JPG, PNG, WEBP, SVG (Logo/Favicon) · Max 2 MB
+                JPG, PNG, WEBP, SVG (Logo/Favicon) · Max 45 MB
               </span>
             </div>
 

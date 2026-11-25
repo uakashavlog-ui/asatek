@@ -2,13 +2,13 @@
 -- Safe to run in Supabase SQL Editor on existing projects (uses IF NOT EXISTS / ADD COLUMN IF NOT EXISTS).
 -- No service-role key is used or stored in frontend code.
 
--- 1. Storage Bucket: site-assets (Public Read, 2 MB Max, JPG/PNG/WEBP/SVG)
+-- 1. Storage Bucket: site-assets (Public Read, 45 MB Max, JPG/PNG/WEBP/SVG)
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
   'site-assets',
   'site-assets',
   TRUE,
-  2097152,
+  47185920,
   ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']
 )
 ON CONFLICT (id) DO UPDATE SET

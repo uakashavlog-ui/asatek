@@ -243,7 +243,7 @@ export function deriveBrandPalette(primaryHex: string) {
   };
 }
 
-export const SITE_ASSET_MAX_BYTES = 2 * 1024 * 1024; // 2 MB
+export const SITE_ASSET_MAX_BYTES = 45 * 1024 * 1024; // 45 MB upload ceiling
 export const STANDARD_IMAGE_MIME_TYPES = [
   'image/png',
   'image/jpeg',
@@ -283,11 +283,8 @@ export function validateSiteAssetFile(
       ? 'Unsupported image format. Allowed formats: JPG, PNG, WebP, or SVG.'
       : 'Unsupported image format. Allowed formats: JPG, PNG, or WebP.';
   }
-  if (file.size <= 0) {
-    return 'The selected image file appears to be empty.';
-  }
   if (file.size > SITE_ASSET_MAX_BYTES) {
-    return 'Image exceeds the 2 MB file size limit. Please choose a smaller file.';
+    return 'Image is larger than the 45 MB upload limit. Please choose a file smaller than 45 MB.';
   }
   return null;
 }

@@ -165,25 +165,63 @@ function readFileAsDataUrl(file: File): Promise<string> {
   });
 }
 
+async function optimizeRasterImage(file: File): Promise<File> {
+  const extensionHint = file.name.split('.').pop()?.toLowerCase();
+  if (file.type === 'image/svg+xml' || extensionHint === 'svg') return file;
+
+  const bitmap = await createImageBitmap(file);
+  const needsOptimization = bitmap.width > 1920 || file.size > 2 * 1024 * 1024;
+  if (!needsOptimization) {
+    bitmap.close();
+    return file;
+  }
+
+  const scale = Math.min(1, 1920 / bitmap.width);
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  const context = canvas.getContext('2d');
+  if (!context) {
+    bitmap.close();
+    throw new Error('Your browser could not prepare this image for upload. Please try another image.');
+  }
+  context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+
+  const outputType = file.type === 'image/png' || extensionHint === 'png'
+    ? 'image/png'
+    : file.type === 'image/webp' || extensionHint === 'webp'
+      ? 'image/webp'
+      : 'image/jpeg';
+  const quality = outputType === 'image/png' ? undefined : 0.85;
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (result) => result ? resolve(result) : reject(new Error('Image compression failed. Please try a different image.')),
+      outputType,
+      quality
+    );
+  });
+  const dot = file.name.lastIndexOf('.');
+  const baseName = dot > 0 ? file.name.slice(0, dot) : file.name;
+  const extension = outputType === 'image/png' ? 'png' : outputType === 'image/webp' ? 'webp' : 'jpg';
+  return new File([blob], baseName + '.' + extension, { type: outputType, lastModified: Date.now() });
+}
+
 export async function uploadSiteAsset(
   file: File,
   slot: SiteAssetSlot
 ): Promise<string> {
   const allowSvg = slot === 'logo' || slot === 'favicon';
   const fileError = validateSiteAssetFile(
-    {
-      name: file.name,
-      type: file.type,
-      size: file.size,
-    },
+    { name: file.name, type: file.type, size: file.size },
     { allowSvg }
   );
-  if (fileError) {
-    throw new Error(fileError);
-  }
+  if (fileError) throw new Error(fileError);
+
+  const optimizedFile = await optimizeRasterImage(file);
 
   if (supabase) {
-    const safeExt = (file.name.split('.').pop() || 'png')
+    const safeExt = (optimizedFile.name.split('.').pop() || 'png')
       .toLowerCase()
       .replace(/[^a-z0-9]/g, '');
     const uniqueSuffix = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -191,12 +229,12 @@ export async function uploadSiteAsset(
     const uploadOptions = {
       cacheControl: '3600',
       upsert: true,
-      contentType: file.type || 'application/octet-stream',
+      contentType: optimizedFile.type || 'application/octet-stream',
     };
 
     let { error } = await supabase.storage
       .from(SITE_ASSETS_BUCKET)
-      .upload(objectPath, file, uploadOptions);
+      .upload(objectPath, optimizedFile, uploadOptions);
 
     if (error && /bucket.*not.*found/i.test(error.message)) {
       const { error: createErr } = await supabase.storage.createBucket(SITE_ASSETS_BUCKET, {
@@ -227,5 +265,5 @@ export async function uploadSiteAsset(
     return publicUrlData.publicUrl;
   }
 
-  return readFileAsDataUrl(file);
+  return readFileAsDataUrl(optimizedFile);
 }

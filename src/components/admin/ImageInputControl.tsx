@@ -191,7 +191,7 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
   const acceptAttr = allowSvg
     ? '.jpg,.jpeg,.png,.webp,.svg,image/jpeg,image/png,image/webp,image/svg+xml'
     : '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp';
-  const formatHint = allowSvg ? 'JPG, PNG, WEBP, SVG · Max 2 MB' : 'JPG, PNG, WEBP · Max 2 MB';
+  const formatHint = allowSvg ? 'JPG, PNG, WEBP, SVG · Max 45 MB' : 'JPG, PNG, WEBP · Max 45 MB';
 
   return (
     <div className={`rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-3 ${compact ? 'p-3' : 'p-4'}`}>
