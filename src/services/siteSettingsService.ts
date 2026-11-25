@@ -170,12 +170,7 @@ async function optimizeRasterImage(file: File): Promise<File> {
   if (file.type === 'image/svg+xml' || extensionHint === 'svg') return file;
 
   const bitmap = await createImageBitmap(file);
-  const needsOptimization = bitmap.width > 1920 || file.size > 2 * 1024 * 1024;
-  if (!needsOptimization) {
-    bitmap.close();
-    return file;
-  }
-
+  // Re-encode raster images for smaller uploads; SVG files bypass this path.
   const scale = Math.min(1, 1920 / bitmap.width);
   const canvas = document.createElement('canvas');
   canvas.width = Math.max(1, Math.round(bitmap.width * scale));
