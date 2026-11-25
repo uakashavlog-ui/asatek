@@ -236,8 +236,6 @@ export async function fetchStoreDataRemote(): Promise<Partial<StoreDataSnapshot>
 
   const [
     productsRes,
-    ordersRes,
-    orderItemsRes,
     reviewsRes,
     centersRes,
     faqsRes,
@@ -253,7 +251,6 @@ export async function fetchStoreDataRemote(): Promise<Partial<StoreDataSnapshot>
   if (productsRes.status === 'fulfilled' && !productsRes.value.error && Array.isArray(productsRes.value.data) && productsRes.value.data.length > 0) {
     partial.products = (productsRes.value.data as DbRow[]).map(mapProductRow);
   }
-
 
   if (reviewsRes.status === 'fulfilled' && !reviewsRes.value.error && Array.isArray(reviewsRes.value.data) && reviewsRes.value.data.length > 0) {
     partial.reviews = (reviewsRes.value.data as DbRow[]).map(mapReviewRow);
