@@ -61,17 +61,25 @@ alter table public.order_admins enable row level security;
 revoke all on public.order_admins from public, anon, authenticated;
 insert into public.order_admins (user_id) select id from auth.users on conflict (user_id) do nothing;
 
-create or replace function public.is_order_admin()
+create schema if not exists private;
+revoke all on schema private from public, anon;
+grant usage on schema private to authenticated;
+
+create or replace function private.is_order_admin()
 returns boolean language sql security definer set search_path = pg_catalog, public stable as $admin$
   select exists (select 1 from public.order_admins where user_id = (select auth.uid()));
 $admin$;
-revoke all on function public.is_order_admin() from public, anon;
-grant execute on function public.is_order_admin() to authenticated;
+revoke all on function private.is_order_admin() from public, anon;
+grant execute on function private.is_order_admin() to authenticated;
+
+drop policy if exists "Order admin allowlist is private" on public.order_admins;
+create policy "Order admin allowlist is private" on public.order_admins
+for all to anon, authenticated using (false) with check (false);
 
 drop policy if exists "Guests can submit orders" on public.orders;
 create policy "Guests can submit orders" on public.orders for insert to anon with check (true);
 drop policy if exists "Admins can manage orders" on public.orders;
-create policy "Admins can manage orders" on public.orders for all to authenticated using (public.is_order_admin()) with check (public.is_order_admin());
+create policy "Admins can manage orders" on public.orders for all to authenticated using (private.is_order_admin()) with check (private.is_order_admin());
 drop policy if exists "Guests can submit order items" on public.order_items;
 create policy "Guests can submit order items" on public.order_items for insert to anon with check (true);
 drop policy if exists "Admins can manage order items" on public.order_items;
