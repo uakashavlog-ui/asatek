@@ -156,7 +156,10 @@ function syncBrowserUrl(route: PageRoute, replace = false): void {
 }
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [storeData, setStoreData] = useState<StoreDataSnapshot>(() => loadLocalStoreSnapshot());
+  const [storeData, setStoreData] = useState<StoreDataSnapshot>(() => {
+    const snapshot = loadLocalStoreSnapshot();
+    return supabase ? { ...snapshot, orders: [] } : snapshot;
+  });
   const [route, setRoute] = useState<PageRoute>(() =>
     resolveRouteFromLocation(window.location.pathname, window.location.hash)
   );
