@@ -1,29 +1,56 @@
 import React, { useMemo, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import type { OrderStatus } from '../../types/asatek';
-import { buildWhatsAppUrl, computeOrderStats, formatPkr } from '../../utils/storeLogic';
+import {
+  buildAdminOrderWhatsAppMessage,
+  buildWhatsAppUrl,
+  computeOrderStats,
+  formatPkr,
+  getOrderStatusBadgeClass,
+  sortOrdersNewestFirst,
+} from '../../utils/storeLogic';
 
 export const AdminDashboardPage: React.FC = () => {
-  const { orders, products, serviceCenters, siteSettings, navigate, setSelectedOrderId, setSelectedProductId } =
-    useStore();
+  const {
+    orders,
+    products,
+    serviceCenters,
+    siteSettings,
+    navigate,
+    setSelectedOrderId,
+    setSelectedProductId,
+    refreshOrders,
+    ordersSyncing,
+    lastOrdersSyncAt,
+  } = useStore();
   const [statusTab, setStatusTab] = useState<'all' | OrderStatus>('all');
-  const [syncMessage, setSyncMessage] = useState('Just now');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const stats = useMemo(() => computeOrderStats(orders), [orders]);
+  const sortedOrders = useMemo(() => sortOrdersNewestFirst(orders), [orders]);
+  const stats = useMemo(() => computeOrderStats(sortedOrders), [sortedOrders]);
 
   const filteredOrders = useMemo(() => {
-    if (statusTab === 'all') return orders;
-    return orders.filter((o) => o.status === statusTab);
-  }, [orders, statusTab]);
+    const q = searchQuery.trim().toLowerCase();
+    return sortedOrders.filter((o) => {
+      if (statusTab !== 'all' && o.status !== statusTab) return false;
+      if (q) {
+        const hay = `${o.id} ${o.customerName} ${o.phone} ${o.city} ${o.productName}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [sortedOrders, statusTab, searchQuery]);
 
   const handleExportCsv = () => {
-    const headers = ['OrderID', 'Customer', 'Phone', 'City', 'Province', 'Product', 'Qty', 'TotalPKR', 'Payment', 'Status'];
-    const rows = orders.map((o) => [
+    const headers = ['OrderID', 'Customer', 'Phone', 'City', 'Province', 'Country', 'ZIP', 'Product', 'Qty', 'TotalPKR', 'Payment', 'Status'];
+    const rows = sortedOrders.map((o) => [
       o.id,
       `"${o.customerName}"`,
       o.phone,
       `"${o.city}"`,
       `"${o.province}"`,
+      `"${o.country || 'Pakistan'}"`,
+      `"${o.zipCode || ''}"`,
       `"${o.productName}"`,
       o.quantity,
       o.totalAmount,
@@ -79,11 +106,12 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             type="button"
-            onClick={() => setSyncMessage(new Date().toLocaleTimeString('en-PK'))}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-low border border-surface-container font-spec-code text-xs text-on-surface"
+            onClick={() => void refreshOrders()}
+            disabled={ordersSyncing}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-low border border-surface-container font-spec-code text-xs text-on-surface hover:bg-surface-container"
           >
             <span className="material-symbols-outlined text-[16px] text-tertiary">sync</span>
-            <span>Synced: {syncMessage}</span>
+            <span>{ordersSyncing ? 'Syncing...' : `Synced: ${lastOrdersSyncAt || 'Live'}`}</span>
           </button>
           <button
             type="button"
@@ -265,6 +293,10 @@ export const AdminDashboardPage: React.FC = () => {
                   <strong className="text-tertiary">{stats.confirmedOrShipped}</strong>
                 </div>
                 <div className="flex justify-between">
+                  <span>On Hold</span>
+                  <strong className="text-amber-700">{stats.onHoldOrders}</strong>
+                </div>
+                <div className="flex justify-between">
                   <span>Cancelled</span>
                   <strong className="text-error">{stats.cancelledOrders}</strong>
                 </div>
@@ -307,21 +339,31 @@ export const AdminDashboardPage: React.FC = () => {
           </button>
         </div>
 
-        <div className="px-5 py-3 bg-surface-container-low/50 flex flex-wrap items-center gap-1.5 border-b border-surface-container">
-          {(['all', 'Pending', 'Confirmed', 'Shipped', 'Cancelled'] as const).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setStatusTab(tab)}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
-                statusTab === tab
-                  ? 'bg-surface-container-lowest text-primary shadow-sm border border-surface-container'
-                  : 'text-on-surface-variant hover:text-on-surface'
-              }`}
-            >
-              {tab === 'all' ? `All (${orders.length})` : tab}
-            </button>
-          ))}
+        <div className="px-5 py-3 bg-surface-container-low/50 flex flex-col md:flex-row md:items-center justify-between gap-2.5 border-b border-surface-container">
+          <div className="flex flex-wrap items-center gap-1.5">
+            {(['all', 'Pending', 'Confirmed', 'Shipped', 'On Hold', 'Cancelled'] as const).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setStatusTab(tab)}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                  statusTab === tab
+                    ? 'bg-surface-container-lowest text-primary shadow-sm border border-surface-container'
+                    : 'text-on-surface-variant hover:text-on-surface'
+                }`}
+              >
+                {tab === 'all' ? `All (${sortedOrders.length})` : tab}
+              </button>
+            ))}
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search order #, customer, phone, or city..."
+            aria-label="Search Dashboard Orders"
+            className="w-full md:w-64 rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+          />
         </div>
 
         <div className="overflow-x-auto">
@@ -337,54 +379,69 @@ export const AdminDashboardPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-container">
-              {filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-surface-container-low/60 transition-colors">
-                  <td className="py-3 px-4 font-spec-code font-bold text-on-surface">
-                    {order.id}
-                    <div className="text-[11px] font-normal text-on-surface-variant">{order.paymentMethod}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="font-semibold text-on-surface">{order.customerName}</div>
-                    <div className="font-spec-code text-xs text-on-surface-variant">
-                      {order.city}, {order.province}
-                    </div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="font-medium text-on-surface">{order.productName}</div>
-                    <div className="font-spec-code text-xs text-on-surface-variant">Qty: {order.quantity}</div>
-                  </td>
-                  <td className="py-3 px-4 font-spec-code font-bold text-on-surface whitespace-nowrap">
-                    {formatPkr(order.totalAmount)}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span
-                      className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                        order.status === 'Pending'
-                          ? 'bg-secondary-fixed text-on-secondary-fixed'
-                          : order.status === 'Confirmed'
-                          ? 'bg-primary-fixed text-on-primary-fixed'
-                          : order.status === 'Cancelled'
-                          ? 'bg-error-container text-on-error-container'
-                          : 'bg-tertiary-fixed text-on-tertiary-fixed'
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-right">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedOrderId(order.id);
-                        navigate('admin-order-detail', { orderId: order.id });
-                      }}
-                      className="px-3 py-1.5 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-semibold"
-                    >
-                      View &amp; Process
-                    </button>
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-10 px-4 text-center text-xs text-on-surface-variant">
+                    No customer orders match the current view yet. New checkout orders will appear here automatically.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-surface-container-low/60 transition-colors">
+                    <td className="py-3 px-4 font-spec-code font-bold text-primary">
+                      {order.id}
+                      <div className="text-[11px] font-normal text-on-surface-variant">{order.createdAt || order.paymentMethod}</div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-on-surface">{order.customerName}</div>
+                      <div className="font-spec-code text-xs text-on-surface-variant">
+                        {order.city}, {order.province}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-medium text-on-surface">{order.productName}</div>
+                      <div className="font-spec-code text-xs text-on-surface-variant">Qty: {order.quantity}</div>
+                    </td>
+                    <td className="py-3 px-4 font-spec-code font-bold text-on-surface whitespace-nowrap">
+                      {formatPkr(order.totalAmount)}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${getOrderStatusBadgeClass(
+                          order.status
+                        )}`}
+                      >
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <div className="inline-flex items-center justify-end gap-2">
+                        <a
+                          href={buildWhatsAppUrl(
+                            buildAdminOrderWhatsAppMessage(order, siteSettings.site_name),
+                            order.whatsapp || order.phone
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2.5 py-1.5 rounded-lg bg-[#28A745] hover:bg-[#1e7e34] text-white text-xs font-semibold"
+                        >
+                          WhatsApp
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedOrderId(order.id);
+                            navigate('admin-order-detail', { orderId: order.id });
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-semibold"
+                        >
+                          View &amp; Process
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

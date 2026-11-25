@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { ASSETS } from '../../data/seedData';
-import { buildWhatsAppUrl, formatDisplayIntlPhone, formatPkr } from '../../utils/storeLogic';
+import {
+  buildCustomerWhatsAppOrderMessage,
+  buildWhatsAppUrl,
+  formatDisplayIntlPhone,
+  formatPkr,
+} from '../../utils/storeLogic';
 import { SafeImage } from '../common/SafeImage';
 
 export const ProductDetailPage: React.FC = () => {
@@ -238,7 +243,13 @@ export const ProductDetailPage: React.FC = () => {
 
             <a
               href={buildWhatsAppUrl(
-                `Assalam-o-Alaikum ${siteSettings.site_name}, I want to order ${qty}x ${product.name} (${product.sku}) at ${formatPkr(product.price * qty)}.`,
+                buildCustomerWhatsAppOrderMessage({
+                  siteName: siteSettings.site_name,
+                  productName: product.name,
+                  productSku: product.sku,
+                  quantity: qty,
+                  unitPrice: product.price,
+                }),
                 siteSettings.whatsapp_number
               )}
               target="_blank"
@@ -246,7 +257,7 @@ export const ProductDetailPage: React.FC = () => {
               className="w-full py-2.5 px-4 rounded-lg bg-[#28A745] hover:bg-[#1e7e34] text-white font-semibold text-sm flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined text-[18px]">chat</span>
-              <span>Order via WhatsApp ({formatDisplayIntlPhone(siteSettings.whatsapp_number)})</span>
+              <span>Order on WhatsApp ({formatDisplayIntlPhone(siteSettings.whatsapp_number)})</span>
             </a>
 
             <div className="flex items-center justify-between text-xs text-on-surface-variant pt-1">

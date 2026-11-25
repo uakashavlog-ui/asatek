@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
 Uploaded branding, hero, product, and review media (`logo`, `favicon`, `hero`, `products`, `reviews`) are stored in the **`site-assets`** bucket.
 
 - **Allowed MIME Types**: `image/jpeg`, `image/png`, `image/webp`, `image/svg+xml` (SVG enforced for logo & favicon only in the admin UI)
-- **Max File Size**: `2 MB` (`2097152` bytes)
+- **Bucket Size Limit**: `NULL` (removed per-bucket 2 MB cap so it inherits the Supabase project global upload limit: **50 MB** on Free plan, configurable up to **50 GB** on Pro+ plans). Browser uploads auto-resize raster photos to max width `1920px` at quality `0.85` (preserving PNG transparency and leaving SVG untouched) and enforce a **45 MB** client-side storage safety limit.
 - **Public Read**: Enabled (so storefront header/footer/hero/product/review assets load fast without signed URLs)
 
 See [`docs/SUPABASE_SETUP.sql`](./SUPABASE_SETUP.sql) for the complete idempotent SQL script covering `storage.buckets`, `storage.objects`, `site_settings`, `products`, and `reviews`.
@@ -94,12 +94,12 @@ VALUES (
   'site-assets',
   'site-assets',
   TRUE,
-  2097152,
+  NULL,
   ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']
 )
 ON CONFLICT (id) DO UPDATE SET
   public = EXCLUDED.public,
-  file_size_limit = EXCLUDED.file_size_limit,
+  file_size_limit = NULL,
   allowed_mime_types = EXCLUDED.allowed_mime_types;
 ```
 
@@ -160,4 +160,17 @@ CREATE POLICY "Admins can delete site-assets"
   TO authenticated
   USING (bucket_id = 'site-assets' AND auth.uid() IS NOT NULL);
 ```
+
+---
+
+## 5. Tables: `public.orders` & `public.order_items` + Order RLS Rules
+
+See [`docs/SUPABASE_SETUP.sql`](./SUPABASE_SETUP.sql) for the full DDL and RLS script.
+
+- **`orders`** stores customer checkout details (`id`, `order_number`, `customer_name`, `phone`, `whatsapp_number`, `address`, `city`, `province`, `country`, `zip_code`, `location`, `landmark`, `instructions`), totals (`shipping_fee`, `total_amount`), `payment_method`, `status` (`Pending`, `Confirmed`, `Shipped`, `On Hold`, `Cancelled`), courier tracking (`courier_name`, `tracking_number`), `history` JSONB audit trail, and timestamps (`created_at`, `updated_at`).
+- **`order_items`** stores normalized line items referencing `orders(id)` (`order_id`, `product_id`, `product_sku`, `product_name`, `quantity`, `unit_price`, `line_total`).
+- **RLS Access Rules**:
+  - **Guests (`anon`)**: Allowed `INSERT` into `orders` (`status = 'Pending'`) and `order_items`, and `EXECUTE` on the scoped `track_orders_by_phone(TEXT)` RPC (which returns only orders matching the supplied phone number or exact `#AST-...` order reference). Guests cannot `SELECT`, `UPDATE`, or `DELETE` arbitrary orders.
+  - **Authenticated Admins (`authenticated`)**: Full `SELECT`, `INSERT`, `UPDATE`, and `DELETE` on `orders` and `order_items` (`auth.uid() IS NOT NULL`).
+
 

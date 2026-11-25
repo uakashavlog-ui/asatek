@@ -11,7 +11,30 @@ export const AdminProductFormPage: React.FC = () => {
 
   const [form, setForm] = useState<Product>(() =>
     existing
-      ? { ...existing, specs: [...existing.specs], features: [...existing.features], images: [...existing.images] }
+      ? {
+          ...existing,
+          name: existing.name ?? '',
+          sku: existing.sku ?? '',
+          urduName: existing.urduName ?? '',
+          subtitle: existing.subtitle ?? '',
+          amperageOrWatts: existing.amperageOrWatts ?? '',
+          description: existing.description ?? '',
+          urduDescription: existing.urduDescription ?? '',
+          warehouseLocation: existing.warehouseLocation ?? '',
+          price: Number.isFinite(existing.price) ? existing.price : 0,
+          msrp: Number.isFinite(existing.msrp) ? existing.msrp : 0,
+          wholesalePrice: Number.isFinite(existing.wholesalePrice) ? existing.wholesalePrice : 0,
+          stockCount: Number.isFinite(existing.stockCount) ? existing.stockCount : 0,
+          weightKg: Number.isFinite(existing.weightKg) ? existing.weightKg : 0,
+          codEligible: Boolean(existing.codEligible),
+          specs: Array.isArray(existing.specs)
+            ? existing.specs.map((s) => ({ parameter: s.parameter ?? '', value: s.value ?? '' }))
+            : [],
+          features: Array.isArray(existing.features)
+            ? existing.features.map((f) => f ?? '')
+            : [],
+          images: Array.isArray(existing.images) ? [...existing.images] : [],
+        }
       : {
           id: `ast-${Date.now().toString().slice(-5)}`,
           sku: `AST-NEW-${Date.now().toString().slice(-4)}`,

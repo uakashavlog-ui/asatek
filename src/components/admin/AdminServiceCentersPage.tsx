@@ -59,7 +59,15 @@ export const AdminServiceCentersPage: React.FC = () => {
   };
 
   const openEdit = (center: ServiceCenter) => {
-    setForm({ ...center });
+    setForm({
+      ...center,
+      city: center.city ?? '',
+      name: center.name ?? '',
+      address: center.address ?? '',
+      leadEngineer: center.leadEngineer ?? '',
+      phone: center.phone ?? '',
+      whatsapp: center.whatsapp ?? '',
+    });
     setDrawerOpen(true);
   };
 

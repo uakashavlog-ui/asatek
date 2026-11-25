@@ -50,7 +50,14 @@ export const AdminFaqPage: React.FC = () => {
   };
 
   const openEdit = (item: FaqItem) => {
-    setForm({ ...item });
+    setForm({
+      ...item,
+      questionEn: item.questionEn ?? '',
+      answerEn: item.answerEn ?? '',
+      questionUr: item.questionUr ?? '',
+      answerUr: item.answerUr ?? '',
+      published: Boolean(item.published),
+    });
     setModalOpen(true);
   };
 
