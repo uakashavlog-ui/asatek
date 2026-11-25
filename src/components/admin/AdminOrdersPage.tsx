@@ -1,10 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import type { OrderStatus } from '../../types/asatek';
-import { buildWhatsAppUrl, computeOrderStats, formatPkr } from '../../utils/storeLogic';
+import {
+  buildAdminOrderWhatsAppMessage,
+  buildWhatsAppUrl,
+  computeOrderStats,
+  formatOrderWhatsAppPhone,
+  formatPkr,
+  getOrderStatusBadgeClass,
+  PRIMARY_ORDER_STATUSES,
+  sortOrdersNewestFirst,
+} from '../../utils/storeLogic';
 
 export const AdminOrdersPage: React.FC = () => {
-  const { orders, products, placeOrder, updateOrderStatus, navigate, setSelectedOrderId } = useStore();
+  const { orders, products, siteSettings, placeOrder, updateOrderStatus, navigate, setSelectedOrderId } = useStore();
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'All' | OrderStatus>('All');
@@ -23,22 +32,23 @@ export const AdminOrdersPage: React.FC = () => {
     paymentMethod: 'COD' as 'COD' | 'Bank Transfer',
   });
 
-  const stats = useMemo(() => computeOrderStats(orders), [orders]);
+  const sortedOrders = useMemo(() => sortOrdersNewestFirst(orders), [orders]);
+  const stats = useMemo(() => computeOrderStats(sortedOrders), [sortedOrders]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return orders.filter((o) => {
+    return sortedOrders.filter((o) => {
       if (statusFilter !== 'All' && o.status !== statusFilter) return false;
       if (provinceFilter !== 'All' && !o.province.toLowerCase().includes(provinceFilter.toLowerCase())) {
         return false;
       }
       if (q) {
-        const hay = `${o.id} ${o.customerName} ${o.phone} ${o.city} ${o.productName}`.toLowerCase();
+        const hay = `${o.id} ${o.orderNumber || ''} ${o.customerName} ${o.phone} ${o.city} ${o.productName}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [orders, search, statusFilter, provinceFilter]);
+  }, [sortedOrders, search, statusFilter, provinceFilter]);
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -46,7 +56,7 @@ export const AdminOrdersPage: React.FC = () => {
 
   const handleBulkConfirm = () => {
     for (const id of selectedIds) {
-      updateOrderStatus(id, 'Confirmed', 'Batch verified from Orders queue.');
+      void updateOrderStatus(id, 'Confirmed');
     }
     setSelectedIds([]);
   };
@@ -85,7 +95,7 @@ export const AdminOrdersPage: React.FC = () => {
         <div>
           <h1 className="text-headline-md font-extrabold text-on-surface">Orders Management</h1>
           <p className="text-body-sm text-on-surface-variant">
-            Verify COD phone bookings, assign courier airway bills, and manage nationwide dispatches.
+            Verify customer COD orders, update statuses, and contact buyers on WhatsApp.
           </p>
         </div>
         <button
@@ -101,16 +111,16 @@ export const AdminOrdersPage: React.FC = () => {
       {/* 4 KPI Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container">
-          <span className="text-xs text-on-surface-variant block">Total Queue</span>
+          <span className="text-xs text-on-surface-variant block">Total Orders</span>
           <strong className="text-2xl font-extrabold tabular-nums">{stats.totalOrders}</strong>
         </div>
         <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container">
-          <span className="text-xs text-secondary font-semibold block">Pending Verification</span>
-          <strong className="text-2xl font-extrabold text-secondary tabular-nums">{stats.pendingOrders}</strong>
+          <span className="text-xs text-amber-800 font-semibold block">Pending</span>
+          <strong className="text-2xl font-extrabold text-amber-800 tabular-nums">{stats.pendingOrders}</strong>
         </div>
         <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container">
-          <span className="text-xs text-tertiary font-semibold block">Confirmed</span>
-          <strong className="text-2xl font-extrabold text-tertiary tabular-nums">{stats.confirmedOrShipped}</strong>
+          <span className="text-xs text-emerald-800 font-semibold block">Confirmed</span>
+          <strong className="text-2xl font-extrabold text-emerald-800 tabular-nums">{stats.confirmedOrders}</strong>
         </div>
         <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container">
           <span className="text-xs text-on-surface-variant block">Pipeline Value</span>
@@ -158,7 +168,7 @@ export const AdminOrdersPage: React.FC = () => {
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-1.5">
-            {(['All', 'Pending', 'Confirmed', 'Skipped', 'Cancelled'] as const).map((st) => (
+            {(['All', ...PRIMARY_ORDER_STATUSES] as const).map((st) => (
               <button
                 key={st}
                 type="button"
@@ -198,72 +208,86 @@ export const AdminOrdersPage: React.FC = () => {
                 <th className="py-3 px-4">Order ID</th>
                 <th className="py-3 px-4">Customer &amp; Phone</th>
                 <th className="py-3 px-4">City / Province</th>
-                <th className="py-3 px-4">Hardware</th>
+                <th className="py-3 px-4">Product</th>
                 <th className="py-3 px-4">Amount</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-container">
-              {filtered.map((order) => (
-                <tr key={order.id} className="hover:bg-surface-container-low/60">
-                  <td className="py-3 px-3">
-                    <input
-                      type="checkbox"
-                      aria-label={`Select order ${order.id}`}
-                      checked={selectedIds.includes(order.id)}
-                      onChange={() => toggleSelect(order.id)}
-                      className="accent-[#9e0000]"
-                    />
-                  </td>
-                  <td className="py-3 px-4 font-spec-code font-bold text-primary">{order.id}</td>
-                  <td className="py-3 px-4">
-                    <div className="font-semibold text-on-surface">{order.customerName}</div>
-                    <div className="font-spec-code text-xs text-on-surface-variant">{order.phone}</div>
-                    <a href={buildWhatsAppUrl(`Assalam o Alaikum ${order.customerName}, your ASATEK order ${order.orderNumber || order.id} for ${order.productName} x ${order.quantity} is ${order.status === 'Confirmed' ? 'confirmed' : order.status === 'Skipped' ? 'on hold' : order.status === 'Cancelled' ? 'cancelled' : order.status.toLowerCase()}. Thank you!`, order.whatsapp || order.phone)} target="_blank" rel="noreferrer" className="mt-1 inline-flex rounded-md bg-[#28A745] px-2 py-1 text-[11px] font-bold text-white">WhatsApp</a>
-                  </td>
-                  <td className="py-3 px-4 text-xs">
-                    <div className="font-semibold text-on-surface">{order.city}</div>
-                    <div className="text-on-surface-variant">{order.province}</div>
-                  </td>
-                  <td className="py-3 px-4 text-xs">
-                    <div className="font-semibold text-on-surface">{order.productName}</div>
-                    <div className="font-spec-code text-on-surface-variant">Qty: {order.quantity}</div>
-                  </td>
-                  <td className="py-3 px-4 font-spec-code font-bold whitespace-nowrap">
-                    {formatPkr(order.totalAmount)}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                        order.status === 'Pending'
-                          ? 'bg-secondary-fixed text-on-secondary-fixed'
-                          : order.status === 'Confirmed'
-                          ? 'bg-primary-fixed text-on-primary-fixed'
-                          : order.status === 'Skipped'
-                          ? 'bg-slate-100 text-slate-700'
-                          : order.status === 'Cancelled'
-                          ? 'bg-error-container text-on-error-container'
-                          : 'bg-tertiary-fixed text-on-tertiary-fixed'
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-right">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedOrderId(order.id);
-                        navigate('admin-order-detail', { orderId: order.id });
-                      }}
-                      className="px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold"
-                    >
-                      Manage
-                    </button>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-10 px-4 text-center text-xs text-on-surface-variant">
+                    No customer orders match the current filter.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filtered.map((order) => (
+                  <tr key={order.id} className="hover:bg-surface-container-low/60">
+                    <td className="py-3 px-3">
+                      <input
+                        type="checkbox"
+                        aria-label={`Select order ${order.id}`}
+                        checked={selectedIds.includes(order.id)}
+                        onChange={() => toggleSelect(order.id)}
+                        className="accent-[#9e0000]"
+                      />
+                    </td>
+                    <td className="py-3 px-4 font-spec-code font-bold text-primary">
+                      {order.orderNumber || order.id}
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-on-surface">{order.customerName}</div>
+                      <div className="font-spec-code text-xs text-on-surface-variant">{order.phone}</div>
+                    </td>
+                    <td className="py-3 px-4 text-xs">
+                      <div className="font-semibold text-on-surface">{order.city}</div>
+                      <div className="text-on-surface-variant">{order.province}</div>
+                    </td>
+                    <td className="py-3 px-4 text-xs">
+                      <div className="font-semibold text-on-surface">{order.productName}</div>
+                      <div className="font-spec-code text-on-surface-variant">Qty: {order.quantity}</div>
+                    </td>
+                    <td className="py-3 px-4 font-spec-code font-bold whitespace-nowrap">
+                      {formatPkr(order.totalAmount)}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${getOrderStatusBadgeClass(
+                          order.status
+                        )}`}
+                      >
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <div className="inline-flex items-center justify-end gap-2">
+                        <a
+                          href={buildWhatsAppUrl(
+                            buildAdminOrderWhatsAppMessage(order, siteSettings.site_name),
+                            formatOrderWhatsAppPhone(order.whatsapp, order.phone)
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2.5 py-1.5 rounded-lg bg-[#28A745] hover:bg-[#1e7e34] text-white text-xs font-semibold"
+                        >
+                          WhatsApp
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedOrderId(order.id);
+                            navigate('admin-order-detail', { orderId: order.id });
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold"
+                        >
+                          Manage
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

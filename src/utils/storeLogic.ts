@@ -106,28 +106,135 @@ export function filterProducts(products: Product[], options: ProductFilterOption
   return sorted;
 }
 
+export const PRIMARY_ORDER_STATUSES = [
+  'Pending',
+  'Confirmed',
+  'Skipped',
+  'Cancelled',
+] as const;
+
 export function getNextOrderStatuses(current: OrderStatus): OrderStatus[] {
   switch (current) {
     case 'Pending':
-      return ['Confirmed', 'Cancelled'];
+      return ['Confirmed', 'Skipped', 'Cancelled'];
     case 'Confirmed':
-      return ['Shipped', 'Cancelled'];
+      return ['Pending', 'Skipped', 'Cancelled'];
+    case 'Skipped':
+    case 'On Hold':
+      return ['Confirmed', 'Pending', 'Cancelled'];
     case 'Shipped':
-      return ['Delivered', 'Cancelled'];
-    case 'Delivered':
-      return [];
+      return ['Confirmed', 'Cancelled'];
     case 'Cancelled':
-      return ['Pending'];
+      return ['Pending', 'Confirmed', 'Skipped'];
+    default:
+      return ['Pending', 'Confirmed', 'Skipped', 'Cancelled'];
   }
+}
+
+export function getOrderStatusBadgeClass(status: string): string {
+  switch (status) {
+    case 'Pending':
+      return 'bg-amber-100 text-amber-900 border border-amber-200';
+    case 'Confirmed':
+      return 'bg-emerald-100 text-emerald-900 border border-emerald-200';
+    case 'Skipped':
+      return 'bg-slate-200 text-slate-800 border border-slate-300';
+    case 'Cancelled':
+      return 'bg-error-container text-on-error-container border border-error/25';
+    case 'On Hold':
+      return 'bg-amber-100 text-amber-900 border border-amber-200';
+    case 'Shipped':
+      return 'bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/20';
+    default:
+      return 'bg-surface-container text-on-surface border border-outline-variant';
+  }
+}
+
+function getOrderTimestampMs(order: Order): number {
+  const raw = order.createdAtIso || order.createdAt;
+  if (!raw) return 0;
+  const parsed = Date.parse(raw);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+export function sortOrdersNewestFirst(orders: Order[]): Order[] {
+  return [...orders].sort((a, b) => getOrderTimestampMs(b) - getOrderTimestampMs(a));
+}
+
+export function countUnreadOrders(orders: Order[], seenOrderIds: string[]): number {
+  const seen = new Set(seenOrderIds);
+  return orders.filter((o) => o.status === 'Pending' && !seen.has(o.id)).length;
+}
+
+export function applyRealtimePendingInsert(
+  currentAlertIds: string[],
+  record: Record<string, unknown> | null | undefined
+): string[] {
+  if (!record || typeof record !== 'object') return currentAlertIds;
+  const status = String(record.status ?? '');
+  if (status !== 'Pending') return currentAlertIds;
+  const id = String(record.id ?? record.order_number ?? '').trim();
+  if (!id || currentAlertIds.includes(id)) return currentAlertIds;
+  return [id, ...currentAlertIds];
+}
+
+export function reconcilePendingAlertIds(
+  currentAlertIds: string[],
+  orders: Order[]
+): string[] {
+  const pendingIds = new Set(
+    orders.filter((o) => o.status === 'Pending').map((o) => o.id)
+  );
+  return currentAlertIds.filter((id) => pendingIds.has(id));
+}
+
+export function detectNewPendingOrderIds(
+  knownOrderIds: Iterable<string>,
+  nextOrders: Order[],
+  acknowledgedIds: Iterable<string> = []
+): string[] {
+  const known = new Set(knownOrderIds);
+  const acked = new Set(acknowledgedIds);
+  return nextOrders
+    .filter((o) => o.status === 'Pending' && !known.has(o.id) && !acked.has(o.id))
+    .map((o) => o.id);
+}
+
+export function getNewPendingAlertOrders(orders: Order[], alertIds: string[]): Order[] {
+  if (alertIds.length === 0) return [];
+  const alertSet = new Set(alertIds);
+  return sortOrdersNewestFirst(
+    orders.filter((o) => o.status === 'Pending' && alertSet.has(o.id))
+  );
+}
+
+export function formatReadableOrderDate(raw?: string): string {
+  if (!raw || !raw.trim()) return '—';
+  const trimmed = raw.trim();
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) return trimmed;
+  const datePart = new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(parsed);
+  const timePart = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  }).format(parsed);
+  return `${datePart}, ${timePart}`;
 }
 
 export function computeOrderStats(orders: Order[]) {
   const totalOrders = orders.length;
   const pendingOrders = orders.filter((o) => o.status === 'Pending').length;
-  const confirmedOrShipped = orders.filter(
-    (o) => o.status === 'Confirmed' || o.status === 'Shipped' || o.status === 'Delivered'
+  const confirmedOrders = orders.filter((o) => o.status === 'Confirmed').length;
+  const skippedOrders = orders.filter(
+    (o) => o.status === 'Skipped' || o.status === 'On Hold'
   ).length;
-  const skippedOrders = orders.filter((o) => o.status === 'Skipped').length;
+  const legacyShippedOrders = orders.filter((o) => o.status === 'Shipped').length;
+  const confirmedOrShipped = confirmedOrders + legacyShippedOrders;
   const cancelledOrders = orders.filter((o) => o.status === 'Cancelled').length;
   const grossRevenue = orders
     .filter((o) => o.status !== 'Cancelled')
@@ -139,6 +246,10 @@ export function computeOrderStats(orders: Order[]) {
   return {
     totalOrders,
     pendingOrders,
+    confirmedOrders,
+    skippedOrders,
+    onHoldOrders: skippedOrders,
+    legacyShippedOrders,
     confirmedOrShipped,
     cancelledOrders,
     grossRevenue,
@@ -147,10 +258,91 @@ export function computeOrderStats(orders: Order[]) {
   };
 }
 
+export function formatOrderWhatsAppPhone(whatsapp?: string, phone?: string): string {
+  const primary = (whatsapp || '').trim();
+  const chosen = primary || (phone || '').trim();
+  const cleanDigits = chosen.replace(/\D/g, '');
+  if (!cleanDigits) return WHATSAPP_OFFICIAL_NUMBER;
+  if (cleanDigits.startsWith('00')) return cleanDigits.slice(2);
+  if (cleanDigits.startsWith('0')) return `92${cleanDigits.slice(1)}`;
+  if (cleanDigits.startsWith('3') && cleanDigits.length === 10) return `92${cleanDigits}`;
+  return cleanDigits;
+}
+
 export function buildWhatsAppUrl(message: string, phoneNumber = WHATSAPP_OFFICIAL_NUMBER): string {
-  const cleanPhone = (phoneNumber || WHATSAPP_OFFICIAL_NUMBER).replace(/\D/g, '') || WHATSAPP_OFFICIAL_NUMBER;
-  const formatted = cleanPhone.startsWith('0') ? `92${cleanPhone.slice(1)}` : cleanPhone;
+  const formatted = formatOrderWhatsAppPhone(phoneNumber, WHATSAPP_OFFICIAL_NUMBER);
   return `https://wa.me/${formatted}?text=${encodeURIComponent(message)}`;
+}
+
+export interface CustomerWhatsAppOrderMessageInput {
+  siteName?: string;
+  productName: string;
+  productSku?: string;
+  quantity: number;
+  unitPrice: number;
+  totalAmount?: number;
+  orderId?: string;
+  customerName?: string;
+  city?: string;
+  country?: string;
+  zipCode?: string;
+  location?: string;
+}
+
+export function buildCustomerWhatsAppOrderMessage(input: CustomerWhatsAppOrderMessageInput): string {
+  const brand = (input.siteName || 'ASATEK').trim() || 'ASATEK';
+  const qty = Math.max(1, input.quantity || 1);
+  const productLine = input.productSku
+    ? `${input.productName} (${input.productSku}) x ${qty}`
+    : `${input.productName} x ${qty}`;
+
+  const header = input.orderId
+    ? `Assalam o Alaikum ${brand}, I have placed order ${input.orderId}:`
+    : `Assalam o Alaikum ${brand}, I would like to order:`;
+
+  const lines = [
+    header,
+    `Product: ${productLine}`,
+    `Price: ${formatPkr(input.totalAmount ?? input.unitPrice * qty)}`,
+  ];
+
+  if (input.customerName?.trim()) lines.push(`Name: ${input.customerName.trim()}`);
+  const addressParts = [
+    input.city?.trim(),
+    input.zipCode?.trim() ? `ZIP ${input.zipCode.trim()}` : '',
+    input.country?.trim(),
+  ].filter(Boolean);
+  if (addressParts.length > 0) lines.push(`Destination: ${addressParts.join(', ')}`);
+  if (input.location?.trim()) lines.push(`Location: ${input.location.trim()}`);
+
+  return lines.join('\n');
+}
+
+export function buildAdminOrderWhatsAppMessage(order: Order, siteName = 'ASATEK'): string {
+  const brand = siteName.trim() || 'ASATEK';
+  const orderNo = order.orderNumber || order.id;
+  const itemText = `${order.productName || 'your order'} x ${order.quantity || 1}`;
+  let statusText = 'pending';
+  switch (order.status) {
+    case 'Confirmed':
+      statusText = 'confirmed';
+      break;
+    case 'Skipped':
+    case 'On Hold':
+      statusText = 'on hold';
+      break;
+    case 'Cancelled':
+      statusText = 'cancelled';
+      break;
+    case 'Shipped':
+      statusText = order.trackingNumber && order.trackingNumber !== 'Pending Dispatch'
+        ? `shipped (Tracking: ${order.trackingNumber})`
+        : 'shipped';
+      break;
+    default:
+      statusText = 'pending';
+  }
+  return `Assalam o Alaikum ${order.customerName}, your ${brand} order ${orderNo} for ${itemText} is ${statusText}. Thank you!`;
 }
 
 export function formatTelHref(phone: string): string {
@@ -245,6 +437,8 @@ export function deriveBrandPalette(primaryHex: string) {
 }
 
 export const SITE_ASSET_MAX_BYTES = 45 * 1024 * 1024; // 45 MB upload ceiling
+export const IMAGE_OPTIMIZE_MAX_WIDTH = 1920;
+export const IMAGE_OPTIMIZE_QUALITY = 0.85;
 export const STANDARD_IMAGE_MIME_TYPES = [
   'image/png',
   'image/jpeg',
@@ -259,6 +453,57 @@ export const ALLOWED_SITE_ASSET_MIME_TYPES = [
 
 export interface ImageValidationOptions {
   allowSvg?: boolean;
+}
+
+export function isSvgAsset(file: { name: string; type?: string }): boolean {
+  const mime = (file.type || '').toLowerCase();
+  const ext = file.name.split('.').pop()?.toLowerCase() || '';
+  return mime === 'image/svg+xml' || ext === 'svg';
+}
+
+export function computeResizedDimensions(
+  srcWidth: number,
+  srcHeight: number,
+  maxWidth = IMAGE_OPTIMIZE_MAX_WIDTH
+): { width: number; height: number; resized: boolean } {
+  if (srcWidth <= 0 || srcHeight <= 0 || srcWidth <= maxWidth) {
+    return {
+      width: Math.max(1, Math.round(srcWidth)),
+      height: Math.max(1, Math.round(srcHeight)),
+      resized: false,
+    };
+  }
+  const scale = maxWidth / srcWidth;
+  return {
+    width: Math.round(maxWidth),
+    height: Math.max(1, Math.round(srcHeight * scale)),
+    resized: true,
+  };
+}
+
+export function selectOptimalOutputMime(
+  inputMime: string,
+  opts: { keepPngTransparency?: boolean } = {}
+): 'image/png' | 'image/webp' | 'image/jpeg' {
+  const norm = inputMime.toLowerCase();
+  if (norm === 'image/png' && opts.keepPngTransparency) {
+    return 'image/png';
+  }
+  if (norm === 'image/webp') {
+    return 'image/webp';
+  }
+  return 'image/jpeg';
+}
+
+export function validateOptimizedAssetSize(
+  sizeBytes: number,
+  maxBytes = SITE_ASSET_MAX_BYTES
+): string | null {
+  if (sizeBytes > maxBytes) {
+    const maxMb = Math.round(maxBytes / (1024 * 1024));
+    return `Image is larger than the ${maxMb} MB upload limit. Please choose a smaller file.`;
+  }
+  return null;
 }
 
 export function validateSiteAssetFile(

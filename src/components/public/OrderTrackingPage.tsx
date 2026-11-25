@@ -1,20 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
-import { buildWhatsAppUrl, isValidPkPhone } from '../../utils/storeLogic';
+import { buildWhatsAppUrl, getOrderStatusBadgeClass, isValidPkPhone } from '../../utils/storeLogic';
 import { fetchTrackedOrdersByPhone, type TrackedOrderStatus } from '../../services/storeDataService';
-
-function getStatusBadgeClasses(status: string): string {
-  switch (status) {
-    case 'Shipped':
-      return 'bg-tertiary-fixed text-on-tertiary-fixed';
-    case 'Confirmed':
-      return 'bg-primary-fixed text-on-primary-fixed';
-    case 'Cancelled':
-      return 'bg-error-container text-on-error-container';
-    default:
-      return 'bg-secondary-fixed text-on-secondary-fixed';
-  }
-}
 
 export const OrderTrackingPage: React.FC = () => {
   const { trackingPrefillPhone, siteSettings, navigate } = useStore();
@@ -115,7 +102,7 @@ export const OrderTrackingPage: React.FC = () => {
                     <span className="text-xs text-on-surface-variant block">Order Reference</span>
                     <strong className="font-spec-code text-primary">{order.order_number}</strong>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusBadgeClasses(order.status)}`}>{order.status}</span>
+                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${getOrderStatusBadgeClass(order.status)}`}>{order.status}</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t border-surface-container text-xs">
                   <div><span className="text-on-surface-variant block">Last Updated</span><strong className="text-on-surface">{new Date(order.updated_at || order.created_at).toLocaleString()}</strong></div>

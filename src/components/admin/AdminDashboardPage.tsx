@@ -1,29 +1,64 @@
 import React, { useMemo, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import type { OrderStatus } from '../../types/asatek';
-import { buildWhatsAppUrl, computeOrderStats, formatPkr } from '../../utils/storeLogic';
+import {
+  buildAdminOrderWhatsAppMessage,
+  buildWhatsAppUrl,
+  computeOrderStats,
+  formatOrderWhatsAppPhone,
+  formatPkr,
+  formatReadableOrderDate,
+  getOrderStatusBadgeClass,
+  PRIMARY_ORDER_STATUSES,
+  sortOrdersNewestFirst,
+} from '../../utils/storeLogic';
 
 export const AdminDashboardPage: React.FC = () => {
-  const { orders, products, serviceCenters, siteSettings, navigate, setSelectedOrderId, setSelectedProductId } =
-    useStore();
+  const {
+    orders,
+    products,
+    serviceCenters,
+    siteSettings,
+    navigate,
+    setSelectedOrderId,
+    setSelectedProductId,
+    refreshOrders,
+    ordersSyncing,
+    lastOrdersSyncAt,
+    newPendingOrders,
+    newPendingCount,
+    dismissPendingAlert,
+    acknowledgeAllPendingAlerts,
+  } = useStore();
   const [statusTab, setStatusTab] = useState<'all' | OrderStatus>('all');
-  const [syncMessage, setSyncMessage] = useState('Just now');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [alertsOpen, setAlertsOpen] = useState(false);
 
-  const stats = useMemo(() => computeOrderStats(orders), [orders]);
+  const sortedOrders = useMemo(() => sortOrdersNewestFirst(orders), [orders]);
+  const stats = useMemo(() => computeOrderStats(sortedOrders), [sortedOrders]);
 
   const filteredOrders = useMemo(() => {
-    if (statusTab === 'all') return orders;
-    return orders.filter((o) => o.status === statusTab);
-  }, [orders, statusTab]);
+    const q = searchQuery.trim().toLowerCase();
+    return sortedOrders.filter((o) => {
+      if (statusTab !== 'all' && o.status !== statusTab) return false;
+      if (q) {
+        const hay = `${o.id} ${o.customerName} ${o.phone} ${o.city} ${o.productName}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [sortedOrders, statusTab, searchQuery]);
 
   const handleExportCsv = () => {
-    const headers = ['OrderID', 'Customer', 'Phone', 'City', 'Province', 'Product', 'Qty', 'TotalPKR', 'Payment', 'Status'];
-    const rows = orders.map((o) => [
+    const headers = ['OrderID', 'Customer', 'Phone', 'City', 'Province', 'Country', 'ZIP', 'Product', 'Qty', 'TotalPKR', 'Payment', 'Status'];
+    const rows = sortedOrders.map((o) => [
       o.id,
       `"${o.customerName}"`,
       o.phone,
       `"${o.city}"`,
       `"${o.province}"`,
+      `"${o.country || 'Pakistan'}"`,
+      `"${o.zipCode || ''}"`,
       `"${o.productName}"`,
       o.quantity,
       o.totalAmount,
@@ -76,14 +111,134 @@ export const AdminDashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5 relative">
+          <div className="relative">
+            <button
+              type="button"
+              data-testid="dashboard-pending-notification-badge"
+              aria-label={`New Pending Order Notifications (${newPendingCount})`}
+              aria-expanded={alertsOpen}
+              onClick={() => setAlertsOpen((open) => !open)}
+              className={`relative flex items-center gap-2 px-3.5 py-2 rounded-lg border text-xs font-bold transition-colors ${
+                newPendingCount > 0
+                  ? 'bg-primary border-primary text-on-primary shadow-sm hover:bg-secondary'
+                  : 'bg-surface-container-lowest border-outline-variant text-on-surface hover:bg-surface-container-low'
+              }`}
+            >
+              <span className="relative inline-flex items-center">
+                <span className="material-symbols-outlined text-[18px]">
+                  {newPendingCount > 0 ? 'notifications_active' : 'notifications'}
+                </span>
+                {newPendingCount > 0 && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5"
+                  >
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-80" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-300" />
+                  </span>
+                )}
+              </span>
+              <span>New Pending</span>
+              <span
+                data-testid="dashboard-pending-badge-count"
+                className={`px-2 py-0.5 rounded-full text-[11px] font-extrabold tabular-nums ${
+                  newPendingCount > 0
+                    ? 'bg-white text-primary'
+                    : 'bg-surface-container text-on-surface-variant'
+                }`}
+              >
+                {newPendingCount}
+              </span>
+            </button>
+
+            {alertsOpen && (
+              <div
+                role="region"
+                aria-label="New Pending Order Alerts"
+                className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-80 sm:w-96 rounded-xl bg-surface-container-lowest border border-surface-container shadow-xl z-40 overflow-hidden"
+              >
+                <div className="px-4 py-3 bg-surface-container-low border-b border-surface-container flex items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-on-surface">
+                    New Pending Orders ({newPendingCount})
+                  </span>
+                  {newPendingCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        acknowledgeAllPendingAlerts();
+                        setAlertsOpen(false);
+                      }}
+                      className="text-[11px] font-bold text-primary hover:underline"
+                    >
+                      Mark all read
+                    </button>
+                  )}
+                </div>
+
+                {newPendingOrders.length === 0 ? (
+                  <div className="p-4 text-xs text-on-surface-variant text-center">
+                    No new pending orders right now. New orders will appear here automatically.
+                  </div>
+                ) : (
+                  <div className="divide-y divide-surface-container max-h-72 overflow-y-auto">
+                    {newPendingOrders.map((alertOrder) => (
+                      <div
+                        key={alertOrder.id}
+                        className="p-3.5 flex items-start justify-between gap-3 hover:bg-surface-container-low/60"
+                      >
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <strong className="font-spec-code text-xs text-primary">
+                              {alertOrder.orderNumber || alertOrder.id}
+                            </strong>
+                            <span className="px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 text-[10px] font-bold">
+                              Pending
+                            </span>
+                          </div>
+                          <div className="text-xs font-semibold text-on-surface truncate mt-0.5">
+                            {alertOrder.customerName} · {alertOrder.city}
+                          </div>
+                          <div className="font-spec-code text-[11px] text-on-surface-variant">
+                            {formatPkr(alertOrder.totalAmount)} · {formatReadableOrderDate(alertOrder.createdAtIso || alertOrder.createdAt)}
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end gap-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setAlertsOpen(false);
+                              setSelectedOrderId(alertOrder.id);
+                              navigate('admin-order-detail', { orderId: alertOrder.id });
+                            }}
+                            className="px-2.5 py-1 rounded bg-primary text-on-primary text-[11px] font-bold"
+                          >
+                            View Order
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => dismissPendingAlert(alertOrder.id)}
+                            className="text-[11px] font-semibold text-on-surface-variant hover:text-on-surface"
+                          >
+                            Dismiss
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           <button
             type="button"
-            onClick={() => setSyncMessage(new Date().toLocaleTimeString('en-PK'))}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-low border border-surface-container font-spec-code text-xs text-on-surface"
+            onClick={() => void refreshOrders()}
+            disabled={ordersSyncing}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-low border border-surface-container font-spec-code text-xs text-on-surface hover:bg-surface-container"
           >
             <span className="material-symbols-outlined text-[16px] text-tertiary">sync</span>
-            <span>Synced: {syncMessage}</span>
+            <span>{ordersSyncing ? 'Syncing...' : `Synced: ${lastOrdersSyncAt || 'Live'}`}</span>
           </button>
           <button
             type="button"
@@ -107,8 +262,53 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
       </div>
 
+      {newPendingCount > 0 && newPendingOrders[0] && (
+        <div
+          role="status"
+          aria-live="polite"
+          data-testid="dashboard-pending-alert-banner"
+          className="rounded-xl bg-primary-fixed/40 border border-primary/30 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-9 h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[20px]">notifications_active</span>
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-extrabold text-primary">
+                {newPendingCount === 1
+                  ? 'New Pending Order Received'
+                  : `${newPendingCount} New Pending Orders Received`}
+              </div>
+              <p className="text-xs text-on-surface truncate">
+                Latest: <strong className="font-spec-code">{newPendingOrders[0].orderNumber || newPendingOrders[0].id}</strong> — {newPendingOrders[0].customerName} ({newPendingOrders[0].city}) · <strong className="font-spec-code">{formatPkr(newPendingOrders[0].totalAmount)}</strong>
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                const target = newPendingOrders[0];
+                setSelectedOrderId(target.id);
+                navigate('admin-order-detail', { orderId: target.id });
+              }}
+              className="px-3.5 py-1.5 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-bold"
+            >
+              View Order
+            </button>
+            <button
+              type="button"
+              onClick={acknowledgeAllPendingAlerts}
+              className="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-on-surface"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 4 Live KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
@@ -129,7 +329,14 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-label-uppercase text-on-surface-variant block">Pending Confirmation</span>
+              <div className="flex items-center gap-2">
+                <span className="text-label-uppercase text-on-surface-variant block">Pending Confirmation</span>
+                {newPendingCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-primary text-on-primary text-[10px] font-bold">
+                    +{newPendingCount} New
+                  </span>
+                )}
+              </div>
               <span className="text-headline-lg font-extrabold text-secondary tabular-nums mt-1 block">
                 {stats.pendingOrders}
               </span>
@@ -144,35 +351,24 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-label-uppercase text-on-surface-variant block">Confirmed</span>
-              <span className="text-headline-lg font-extrabold text-primary tabular-nums mt-1 block">
-                {stats.confirmedOrShipped}
+              <span className="text-label-uppercase text-on-surface-variant block">Confirmed Orders</span>
+              <span className="text-headline-lg font-extrabold text-tertiary tabular-nums mt-1 block">
+                {stats.confirmedOrders}
               </span>
             </div>
-            <div className="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
-              <span className="material-symbols-outlined text-[22px]">local_shipping</span>
+            <div className="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+              <span className="material-symbols-outlined text-[22px]">check_circle</span>
             </div>
           </div>
-          <div className="mt-3 text-xs text-on-surface-variant">Via TCS, Leopards &amp; Trax Express</div>
+          <div className="mt-3 text-xs text-on-surface-variant">
+            {stats.skippedOrders} Skipped · Nationwide COD
+          </div>
         </div>
 
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-label-uppercase text-on-surface-variant block">Skipped</span>
-              <span className="text-headline-lg font-extrabold text-slate-600 tabular-nums mt-1 block">{stats.skippedOrders}</span>
-            </div>
-            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
-              <span className="material-symbols-outlined text-[22px]">pause_circle</span>
-            </div>
-          </div>
-          <div className="mt-3 text-xs text-on-surface-variant">Orders on hold</div>
-        </div>
-
-        <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-label-uppercase text-on-surface-variant block">Cancelled</span>
+              <span className="text-label-uppercase text-on-surface-variant block">Cancelled / Returned</span>
               <span className="text-headline-lg font-extrabold text-error tabular-nums mt-1 block">
                 {stats.cancelledOrders}
               </span>
@@ -271,16 +467,26 @@ export const AdminDashboardPage: React.FC = () => {
               <div className="flex flex-col gap-1.5 text-xs font-spec-code flex-1">
                 <div className="flex justify-between">
                   <span>Pending</span>
-                  <strong className="text-secondary">{stats.pendingOrders}</strong>
+                  <strong className="text-amber-800">{stats.pendingOrders}</strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Confirmed</span>
-                  <strong className="text-tertiary">{stats.confirmedOrShipped}</strong>
+                  <strong className="text-emerald-800">{stats.confirmedOrders}</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span>Skipped</span>
+                  <strong className="text-slate-700">{stats.skippedOrders}</strong>
                 </div>
                 <div className="flex justify-between">
                   <span>Cancelled</span>
                   <strong className="text-error">{stats.cancelledOrders}</strong>
                 </div>
+                {stats.legacyShippedOrders > 0 && (
+                  <div className="flex justify-between">
+                    <span>Shipped (Legacy)</span>
+                    <strong className="text-tertiary">{stats.legacyShippedOrders}</strong>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -320,21 +526,31 @@ export const AdminDashboardPage: React.FC = () => {
           </button>
         </div>
 
-        <div className="px-5 py-3 bg-surface-container-low/50 flex flex-wrap items-center gap-1.5 border-b border-surface-container">
-          {(['all', 'Pending', 'Confirmed', 'Skipped', 'Cancelled'] as const).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setStatusTab(tab)}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
-                statusTab === tab
-                  ? 'bg-surface-container-lowest text-primary shadow-sm border border-surface-container'
-                  : 'text-on-surface-variant hover:text-on-surface'
-              }`}
-            >
-              {tab === 'all' ? `All (${orders.length})` : tab}
-            </button>
-          ))}
+        <div className="px-5 py-3 bg-surface-container-low/50 flex flex-col md:flex-row md:items-center justify-between gap-2.5 border-b border-surface-container">
+          <div className="flex flex-wrap items-center gap-1.5">
+            {(['all', ...PRIMARY_ORDER_STATUSES] as const).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setStatusTab(tab)}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                  statusTab === tab
+                    ? 'bg-surface-container-lowest text-primary shadow-sm border border-surface-container'
+                    : 'text-on-surface-variant hover:text-on-surface'
+                }`}
+              >
+                {tab === 'all' ? `All (${sortedOrders.length})` : tab}
+              </button>
+            ))}
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search order #, customer, phone, or city..."
+            aria-label="Search Dashboard Orders"
+            className="w-full md:w-64 rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+          />
         </div>
 
         <div className="overflow-x-auto">
@@ -350,56 +566,71 @@ export const AdminDashboardPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-container">
-              {filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-surface-container-low/60 transition-colors">
-                  <td className="py-3 px-4 font-spec-code font-bold text-on-surface">
-                    {order.id}
-                    <div className="text-[11px] font-normal text-on-surface-variant">{order.paymentMethod}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="font-semibold text-on-surface">{order.customerName}</div>
-                    <div className="font-spec-code text-xs text-on-surface-variant">
-                      {order.city}, {order.province}
-                    </div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="font-medium text-on-surface">{order.productName}</div>
-                    <div className="font-spec-code text-xs text-on-surface-variant">Qty: {order.quantity}</div>
-                  </td>
-                  <td className="py-3 px-4 font-spec-code font-bold text-on-surface whitespace-nowrap">
-                    {formatPkr(order.totalAmount)}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span
-                      className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                        order.status === 'Pending'
-                          ? 'bg-secondary-fixed text-on-secondary-fixed'
-                          : order.status === 'Confirmed'
-                          ? 'bg-primary-fixed text-on-primary-fixed'
-                          : order.status === 'Skipped'
-                          ? 'bg-slate-100 text-slate-700'
-                          : order.status === 'Cancelled'
-                          ? 'bg-error-container text-on-error-container'
-                          : 'bg-tertiary-fixed text-on-tertiary-fixed'
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-right">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedOrderId(order.id);
-                        navigate('admin-order-detail', { orderId: order.id });
-                      }}
-                      className="px-3 py-1.5 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-semibold"
-                    >
-                      View &amp; Process
-                    </button>
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-10 px-4 text-center text-xs text-on-surface-variant">
+                    No customer orders match the current view yet. New checkout orders will appear here automatically.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-surface-container-low/60 transition-colors">
+                    <td className="py-3 px-4 font-spec-code font-bold text-primary">
+                      {order.orderNumber || order.id}
+                      <div className="text-[11px] font-normal text-on-surface-variant">
+                        {formatReadableOrderDate(order.createdAtIso || order.createdAt)}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-on-surface">{order.customerName}</div>
+                      <div className="font-spec-code text-xs text-on-surface-variant">
+                        {order.city}, {order.province}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-medium text-on-surface">{order.productName}</div>
+                      <div className="font-spec-code text-xs text-on-surface-variant">Qty: {order.quantity}</div>
+                    </td>
+                    <td className="py-3 px-4 font-spec-code font-bold text-on-surface whitespace-nowrap">
+                      {formatPkr(order.totalAmount)}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${getOrderStatusBadgeClass(
+                          order.status
+                        )}`}
+                      >
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <div className="inline-flex items-center justify-end gap-2">
+                        <a
+                          href={buildWhatsAppUrl(
+                            buildAdminOrderWhatsAppMessage(order, siteSettings.site_name),
+                            formatOrderWhatsAppPhone(order.whatsapp, order.phone)
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2.5 py-1.5 rounded-lg bg-[#28A745] hover:bg-[#1e7e34] text-white text-xs font-semibold"
+                        >
+                          WhatsApp
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedOrderId(order.id);
+                            navigate('admin-order-detail', { orderId: order.id });
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-primary hover:bg-secondary text-on-primary text-xs font-semibold"
+                        >
+                          View &amp; Process
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

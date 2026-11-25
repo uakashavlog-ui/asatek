@@ -17,8 +17,13 @@ import type {
 } from '../types/asatek';
 import {
   applyAdminAuthGuard,
+  applyRealtimePendingInsert,
   calculateOrderTotals,
+  countUnreadOrders,
   deriveBrandPalette,
+  detectNewPendingOrderIds,
+  getNewPendingAlertOrders,
+  reconcilePendingAlertIds,
   resolveRouteFromLocation,
   routeToPath,
   STANDARD_COD_SHIPPING_PKR,
@@ -58,6 +63,9 @@ export interface PlaceOrderInput {
   address: string;
   city: string;
   province: string;
+  country?: string;
+  zipCode?: string;
+  location?: string;
   landmark?: string;
   instructions?: string;
   paymentMethod?: 'COD' | 'Bank Transfer';
@@ -105,6 +113,15 @@ interface StoreContextValue {
   logoutAdmin: () => Promise<void>;
 
   placeOrder: (input: PlaceOrderInput) => Promise<Order>;
+  refreshOrders: () => Promise<void>;
+  ordersSyncing: boolean;
+  lastOrdersSyncAt: string;
+  unreadOrdersCount: number;
+  newPendingOrders: Order[];
+  newPendingCount: number;
+  realtimeConnected: boolean;
+  dismissPendingAlert: (orderId: string) => void;
+  acknowledgeAllPendingAlerts: () => void;
   updateOrderStatus: (
     orderId: string,
     newStatus: OrderStatus,
@@ -181,6 +198,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [siteSettings, setSiteSettings] = useState<SiteSettings>(() => loadLocalSiteSettings());
   const [siteSettingsSaving, setSiteSettingsSaving] = useState<boolean>(false);
+  const [ordersSyncing, setOrdersSyncing] = useState<boolean>(false);
+  const [lastOrdersSyncAt, setLastOrdersSyncAt] = useState<string>('');
+  const [seenOrderIds, setSeenOrderIds] = useState<string[]>([]);
+  const [newPendingAlertIds, setNewPendingAlertIds] = useState<string[]>([]);
+  const [realtimeConnected, setRealtimeConnected] = useState<boolean>(false);
+  const ordersHydratedRef = React.useRef<boolean>(false);
+  const knownOrderIdsRef = React.useRef<Set<string>>(new Set());
+  const acknowledgedAlertIdsRef = React.useRef<Set<string>>(new Set());
+  const wasDisconnectedRef = React.useRef<boolean>(false);
   const [postLoginRoute, setPostLoginRoute] = useState<PageRoute>(() => {
     const initial = resolveRouteFromLocation(window.location.pathname, window.location.hash);
     return initial.startsWith('admin-') && initial !== 'admin-login' ? initial : 'admin-dashboard';
@@ -260,27 +286,203 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
-  // Admin-only order hydration and live updates. Guest clients never query the orders tables.
+  const refreshOrders = React.useCallback(async () => {
+    if (!supabase || !hasSessionRef.current) return;
+    setOrdersSyncing(true);
+    try {
+      const remoteOrders = await fetchOrdersRemote();
+      setStoreData((prev) => ({ ...prev, orders: remoteOrders }));
+      setNewPendingAlertIds((prev) => {
+        const reconciled = reconcilePendingAlertIds(prev, remoteOrders);
+        if (!ordersHydratedRef.current) {
+          return reconciled;
+        }
+        const newlyFound = detectNewPendingOrderIds(
+          knownOrderIdsRef.current,
+          remoteOrders,
+          acknowledgedAlertIdsRef.current
+        );
+        if (newlyFound.length === 0) return reconciled;
+        const merged = [...reconciled];
+        for (const id of newlyFound) {
+          if (!merged.includes(id)) merged.unshift(id);
+        }
+        return merged;
+      });
+      knownOrderIdsRef.current = new Set(remoteOrders.map((o) => o.id));
+      ordersHydratedRef.current = true;
+      setLastOrdersSyncAt(
+        new Date().toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        })
+      );
+    } catch (error) {
+      console.error('Unable to load orders from Supabase:', error);
+    } finally {
+      setOrdersSyncing(false);
+    }
+  }, []);
+
+  // Admin-only order hydration and Supabase Realtime subscription for live Pending order alerts.
   useEffect(() => {
-    if (!supabase || !session) return;
+    const client = supabase;
+    if (!client || !session) {
+      ordersHydratedRef.current = false;
+      knownOrderIdsRef.current = new Set();
+      acknowledgedAlertIdsRef.current = new Set();
+      wasDisconnectedRef.current = false;
+      setNewPendingAlertIds([]);
+      setRealtimeConnected(false);
+      return;
+    }
+
     let active = true;
-    const refreshOrders = async () => {
+    const syncNow = async () => {
+      setOrdersSyncing(true);
       try {
         const remoteOrders = await fetchOrdersRemote();
-        if (active) setStoreData((prev) => ({ ...prev, orders: remoteOrders }));
+        if (!active) return;
+        setStoreData((prev) => ({ ...prev, orders: remoteOrders }));
+        setNewPendingAlertIds((prev) => {
+          const reconciled = reconcilePendingAlertIds(prev, remoteOrders);
+          if (!ordersHydratedRef.current) {
+            return reconciled;
+          }
+          const newlyFound = detectNewPendingOrderIds(
+            knownOrderIdsRef.current,
+            remoteOrders,
+            acknowledgedAlertIdsRef.current
+          );
+          if (newlyFound.length === 0) return reconciled;
+          const merged = [...reconciled];
+          for (const id of newlyFound) {
+            if (!merged.includes(id)) merged.unshift(id);
+          }
+          return merged;
+        });
+        knownOrderIdsRef.current = new Set(remoteOrders.map((o) => o.id));
+        ordersHydratedRef.current = true;
+        setLastOrdersSyncAt(
+          new Date().toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+          })
+        );
       } catch (error) {
         console.error('Unable to load orders from Supabase:', error);
+      } finally {
+        if (active) setOrdersSyncing(false);
       }
     };
-    void refreshOrders();
-    const channel = supabase
+
+    void syncNow();
+
+    const channel = client
       .channel('asatek-admin-orders')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => void refreshOrders())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, () => void refreshOrders())
-      .subscribe();
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'orders' },
+        (payload) => {
+          if (!active) return;
+          const record = (payload.new ?? null) as Record<string, unknown> | null;
+          if (record) {
+            const incomingId = String(record.id ?? record.order_number ?? '').trim();
+            if (incomingId) {
+              knownOrderIdsRef.current.add(incomingId);
+              if (String(record.status ?? '') === 'Pending' && !acknowledgedAlertIdsRef.current.has(incomingId)) {
+                setNewPendingAlertIds((prev) => applyRealtimePendingInsert(prev, record));
+              }
+              setStoreData((prev) => {
+                if (prev.orders.some((o) => o.id === incomingId)) return prev;
+                const createdRaw = String(record.created_at ?? new Date().toISOString());
+                const optimisticOrder: Order = {
+                  id: incomingId,
+                  orderNumber: String(record.order_number ?? incomingId),
+                  customerName: String(record.customer_name ?? 'New Customer'),
+                  phone: String(record.phone ?? ''),
+                  whatsapp: String(record.whatsapp_number ?? record.phone ?? ''),
+                  address: String(record.address ?? ''),
+                  city: String(record.city ?? ''),
+                  province: String(record.province ?? ''),
+                  country: String(record.country ?? 'Pakistan'),
+                  zipCode: String(record.zip_code ?? ''),
+                  location: typeof record.location === 'string' && record.location.trim() ? record.location.trim() : undefined,
+                  landmark: typeof record.landmark === 'string' ? record.landmark : undefined,
+                  instructions: typeof record.instructions === 'string' ? record.instructions : undefined,
+                  productId: '',
+                  productSku: '',
+                  productName: 'New Order',
+                  quantity: 1,
+                  unitPrice: Number(record.total_amount ?? 0),
+                  shippingFee: Number(record.shipping_fee ?? STANDARD_COD_SHIPPING_PKR),
+                  totalAmount: Number(record.total_amount ?? 0),
+                  paymentMethod: (record.payment_method as Order['paymentMethod']) || 'COD',
+                  status: (record.status as OrderStatus) || 'Pending',
+                  createdAt: createdRaw,
+                  createdAtIso: createdRaw,
+                  updatedAt: String(record.updated_at ?? createdRaw),
+                  history: Array.isArray(record.history) ? (record.history as Order['history']) : [],
+                };
+                return { ...prev, orders: [optimisticOrder, ...prev.orders] };
+              });
+            }
+          }
+          void syncNow();
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'orders' },
+        (payload) => {
+          if (!active) return;
+          const record = (payload.new ?? null) as Record<string, unknown> | null;
+          const updatedId = String(record?.id ?? record?.order_number ?? '').trim();
+          const nextStatus = String(record?.status ?? '');
+          if (updatedId && nextStatus && nextStatus !== 'Pending') {
+            setNewPendingAlertIds((prev) => prev.filter((id) => id !== updatedId));
+          }
+          void syncNow();
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: 'DELETE', schema: 'public', table: 'orders' },
+        (payload) => {
+          if (!active) return;
+          const oldRecord = (payload.old ?? null) as Record<string, unknown> | null;
+          const deletedId = String(oldRecord?.id ?? '').trim();
+          if (deletedId) {
+            setNewPendingAlertIds((prev) => prev.filter((id) => id !== deletedId));
+          }
+          void syncNow();
+        }
+      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, () => {
+        if (active) void syncNow();
+      })
+      .subscribe((status) => {
+        if (!active) return;
+        if (status === 'SUBSCRIBED') {
+          setRealtimeConnected(true);
+          if (wasDisconnectedRef.current) {
+            wasDisconnectedRef.current = false;
+            void syncNow();
+          }
+        } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          wasDisconnectedRef.current = true;
+          setRealtimeConnected(false);
+        } else if (status === 'CLOSED') {
+          setRealtimeConnected(false);
+        }
+      });
+
     return () => {
       active = false;
-      void supabase.removeChannel(channel);
+      setRealtimeConnected(false);
+      void client.removeChannel(channel);
     };
   }, [session]);
 
@@ -366,6 +568,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     if (opts?.orderId !== undefined) {
       setSelectedOrderId(opts.orderId);
+      if (opts.orderId) {
+        acknowledgedAlertIdsRef.current.add(opts.orderId);
+        setSeenOrderIds((prev) => (prev.includes(opts.orderId!) ? prev : [...prev, opts.orderId!]));
+        setNewPendingAlertIds((prev) => prev.filter((id) => id !== opts.orderId));
+      }
     }
     if (opts?.category !== undefined) {
       setCatalogCategoryFilter(opts.category);
@@ -436,6 +643,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       address: input.address.trim(),
       city: input.city.trim(),
       province: input.province.trim(),
+      country: input.country?.trim() || 'Pakistan',
+      zipCode: input.zipCode?.trim() || '',
+      location: input.location?.trim() || input.landmark?.trim(),
       landmark: input.landmark?.trim(),
       instructions: input.instructions?.trim(),
       productId: product.id,
@@ -452,12 +662,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       serialNumber: `AST-${Date.now().toString().slice(-8)}`,
       expectedDelivery: '2–3 Working Days',
       createdAt: now,
+      createdAtIso: now,
       updatedAt: now,
       history: [{
         status: 'Order Received',
         timestamp: now,
         note: `Order placed (${input.paymentMethod ?? 'COD'}) for ${totals.quantity}× ${product.name}.`,
-        actor: input.status ? 'Admin Manual Desk' : 'Storefront Checkout',
+        actor: input.status ? 'Admin' : 'Customer',
       }],
     };
 
@@ -479,18 +690,27 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   ) => {
     const order = storeData.orders.find((item) => item.id === orderId);
     if (!order) return;
+    if (
+      order.status === newStatus &&
+      note === undefined &&
+      courierName === undefined &&
+      trackingNumber === undefined
+    ) {
+      return;
+    }
+
     const now = new Date().toISOString();
-    const entryNote = note?.trim() || (newStatus === 'Confirmed'
-      ? 'Order confirmed.'
-      : newStatus === 'Skipped'
-      ? 'Order placed on hold.'
-      : newStatus === 'Pending'
-      ? 'Order status reset to pending.'
-      : newStatus === 'Shipped'
-      ? `Dispatched via ${courierName || order.courierName || 'TCS Express'}${trackingNumber ? ` (CN: ${trackingNumber})` : ''}.`
-      : newStatus === 'Cancelled'
-      ? 'Order cancelled.'
-      : 'Order status updated.');
+    const defaultNote =
+      newStatus === 'Confirmed'
+        ? 'Order confirmed.'
+        : newStatus === 'Skipped'
+        ? 'Order marked skipped / on hold.'
+        : newStatus === 'Cancelled'
+        ? 'Order cancelled.'
+        : newStatus === 'Shipped'
+        ? `Order marked shipped.`
+        : 'Order set to pending.';
+
     const updatedOrder: Order = {
       ...order,
       status: newStatus,
@@ -500,21 +720,48 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       history: [{
         status: `Status -> ${newStatus}`,
         timestamp: now,
-        note: entryNote,
+        note: note?.trim() || defaultNote,
         actor: session?.user?.email || 'Admin',
       }, ...order.history],
     };
+
     await updateOrderRemote(orderId, {
       status: updatedOrder.status,
       courierName: updatedOrder.courierName,
       trackingNumber: updatedOrder.trackingNumber,
       history: updatedOrder.history,
     });
+    setSeenOrderIds((prev) => (prev.includes(orderId) ? prev : [...prev, orderId]));
+    if (newStatus !== 'Pending') {
+      acknowledgedAlertIdsRef.current.add(orderId);
+      setNewPendingAlertIds((prev) => prev.filter((id) => id !== orderId));
+    }
     setStoreData((prev) => ({
       ...prev,
-      orders: prev.orders.map((item) => item.id === orderId ? updatedOrder : item),
+      orders: prev.orders.map((item) => (item.id === orderId ? updatedOrder : item)),
     }));
   };
+
+  const dismissPendingAlert = React.useCallback((orderId: string) => {
+    acknowledgedAlertIdsRef.current.add(orderId);
+    setSeenOrderIds((prev) => (prev.includes(orderId) ? prev : [...prev, orderId]));
+    setNewPendingAlertIds((prev) => prev.filter((id) => id !== orderId));
+  }, []);
+
+  const acknowledgeAllPendingAlerts = React.useCallback(() => {
+    setNewPendingAlertIds((prev) => {
+      for (const id of prev) {
+        acknowledgedAlertIdsRef.current.add(id);
+      }
+      setSeenOrderIds((seen) => Array.from(new Set([...seen, ...prev])));
+      return [];
+    });
+  }, []);
+
+  const newPendingOrders = React.useMemo(
+    () => getNewPendingAlertOrders(storeData.orders, newPendingAlertIds),
+    [storeData.orders, newPendingAlertIds]
+  );
 
   const updateOrderAddress: StoreContextValue['updateOrderAddress'] = (
     orderId,
@@ -788,6 +1035,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         loginWithPassword,
         logoutAdmin,
         placeOrder,
+        refreshOrders,
+        ordersSyncing,
+        lastOrdersSyncAt,
+        unreadOrdersCount: countUnreadOrders(storeData.orders, seenOrderIds),
+        newPendingOrders,
+        newPendingCount: newPendingOrders.length,
+        realtimeConnected,
+        dismissPendingAlert,
+        acknowledgeAllPendingAlerts,
         updateOrderStatus,
         updateOrderAddress,
         appendOrderNote,

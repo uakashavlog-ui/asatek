@@ -1,6 +1,5 @@
 import {
   SEED_FAQS,
-  SEED_ORDERS,
   SEED_PRODUCTS,
   SEED_REVIEWS,
   SEED_SERVICE_CENTERS,
@@ -42,10 +41,7 @@ export function loadLocalStoreSnapshot(): StoreDataSnapshot {
             Array.isArray(parsed.products) && parsed.products.length > 0
               ? parsed.products
               : SEED_PRODUCTS,
-          orders:
-            Array.isArray(parsed.orders) && parsed.orders.length > 0
-              ? parsed.orders
-              : SEED_ORDERS,
+          orders: Array.isArray(parsed.orders) ? parsed.orders : [],
           reviews:
             Array.isArray(parsed.reviews) && parsed.reviews.length > 0
               ? parsed.reviews
@@ -69,7 +65,7 @@ export function loadLocalStoreSnapshot(): StoreDataSnapshot {
   return {
     language: 'en',
     products: SEED_PRODUCTS,
-    orders: SEED_ORDERS,
+    orders: [],
     reviews: SEED_REVIEWS,
     serviceCenters: SEED_SERVICE_CENTERS,
     faqs: SEED_FAQS,
@@ -144,16 +140,25 @@ function mapOrderRow(row: DbRow, itemsByOrderId: Map<string, DbRow[]>): Order {
   const id = String(row.id ?? '');
   const items = itemsByOrderId.get(id) ?? [];
   const primaryItem = items[0];
+  const createdRaw = String(row.created_at ?? row.createdAt ?? '');
 
   return {
     id,
     customerName: String(row.customer_name ?? row.customerName ?? ''),
     phone: String(row.phone ?? ''),
     whatsapp: String(row.whatsapp_number ?? row.whatsapp ?? row.phone ?? ''),
-    orderNumber: String(row.order_number ?? row.id ?? ''),
+    orderNumber: String(row.order_number ?? row.orderNumber ?? row.id ?? ''),
     address: String(row.address ?? ''),
     city: String(row.city ?? ''),
     province: String(row.province ?? ''),
+    country: String(row.country ?? 'Pakistan'),
+    zipCode: String(row.zip_code ?? row.zipCode ?? ''),
+    location:
+      typeof row.location === 'string' && row.location.trim().length > 0
+        ? row.location.trim()
+        : typeof row.landmark === 'string' && row.landmark.trim().length > 0
+        ? row.landmark.trim()
+        : undefined,
     landmark: typeof row.landmark === 'string' ? row.landmark : undefined,
     instructions: typeof row.instructions === 'string' ? row.instructions : undefined,
     productId: String(primaryItem?.product_id ?? row.product_id ?? row.productId ?? ''),
@@ -177,7 +182,8 @@ function mapOrderRow(row: DbRow, itemsByOrderId: Map<string, DbRow[]>): Order {
     expectedDelivery: typeof (row.expected_delivery ?? row.expectedDelivery) === 'string'
       ? String(row.expected_delivery ?? row.expectedDelivery)
       : undefined,
-    createdAt: String(row.created_at ?? row.createdAt ?? ''),
+    createdAt: createdRaw,
+    createdAtIso: createdRaw || undefined,
     updatedAt: String(row.updated_at ?? row.updatedAt ?? ''),
     history: Array.isArray(row.history) ? (row.history as Order['history']) : [],
   };
@@ -323,7 +329,9 @@ export async function createOrderRemote(order: Order): Promise<void> {
       address: order.address,
       city: order.city,
       province: order.province,
-      country: 'Pakistan',
+      country: order.country || 'Pakistan',
+      zip_code: order.zipCode ?? '',
+      location: order.location ?? order.landmark ?? '',
       status: order.status,
       notes: order.instructions ?? '',
       created_at: order.createdAt,
@@ -365,7 +373,14 @@ export async function updateOrderRemote(
   if (patch.province !== undefined) dbPatch.province = patch.province;
   if (patch.history !== undefined) dbPatch.history = patch.history;
   const { error } = await supabase.from(SUPABASE_TABLES.orders).update(dbPatch).eq('id', orderId);
-  if (error) throw error;
+  if (error) {
+    if (error.code === '23514' || error.message?.includes('orders_status_check')) {
+      throw new Error(
+        `Unable to save status "${patch.status}". Update the database orders status check constraint in docs/ORDERS_SCHEMA.sql to allow "${patch.status}".`
+      );
+    }
+    throw error;
+  }
 }
 
 export async function upsertProductRemote(product: Product): Promise<void> {

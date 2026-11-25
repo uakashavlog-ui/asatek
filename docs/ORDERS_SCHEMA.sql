@@ -11,7 +11,7 @@ create table if not exists public.orders (
   country text not null default 'Pakistan',
   zip_code text,
   location text,
-  status text not null default 'Pending' check (status in ('Pending','Confirmed','Skipped','Shipped','Delivered','Cancelled')),
+  status text not null default 'Pending' check (status in ('Pending','Confirmed','Skipped','Shipped','Cancelled')),
   notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
@@ -26,6 +26,11 @@ create table if not exists public.orders (
   landmark text,
   instructions text
 );
+
+do $$ begin
+  alter table public.orders drop constraint if exists orders_status_check;
+  alter table public.orders add constraint orders_status_check check (status in ('Pending','Confirmed','Skipped','Shipped','Cancelled'));
+exception when others then null; end $$;
 
 create table if not exists public.order_items (
   id uuid primary key default gen_random_uuid(),
@@ -83,7 +88,7 @@ create policy "Admins can manage orders" on public.orders for all to authenticat
 drop policy if exists "Guests can submit order items" on public.order_items;
 create policy "Guests can submit order items" on public.order_items for insert to anon with check (true);
 drop policy if exists "Admins can manage order items" on public.order_items;
-create policy "Admins can manage order items" on public.order_items for all to authenticated using (public.is_order_admin()) with check (public.is_order_admin());
+create policy "Admins can manage order items" on public.order_items for all to authenticated using (private.is_order_admin()) with check (private.is_order_admin());
 
 create or replace function public.submit_customer_order(p_order jsonb, p_item jsonb)
 returns text language plpgsql security invoker set search_path = public, pg_temp as $$
