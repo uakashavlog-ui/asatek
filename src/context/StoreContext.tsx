@@ -112,7 +112,7 @@ interface StoreContextValue {
     note?: string,
     courierName?: string,
     trackingNumber?: string
-  ) => void;
+  ) => Promise<void>;
   updateOrderAddress: (orderId: string, address: string, city: string, province: string) => void;
   appendOrderNote: (orderId: string, note: string) => void;
 
@@ -470,59 +470,43 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return newOrder;
   };
 
-  const updateOrderStatus: StoreContextValue['updateOrderStatus'] = (
+  const updateOrderStatus: StoreContextValue['updateOrderStatus'] = async (
     orderId,
     newStatus,
     note,
     courierName,
     trackingNumber
   ) => {
-    const nowStr = new Date().toLocaleTimeString('en-PK', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
+    const order = storeData.orders.find((item) => item.id === orderId);
+    if (!order) return;
+    const now = new Date().toISOString();
+    const entryNote = note?.trim() || (newStatus === 'Confirmed'
+      ? 'Stock allocated & phone verification completed.'
+      : newStatus === 'Shipped'
+      ? `Dispatched via ${courierName || order.courierName || 'TCS Express'}${trackingNumber ? ` (CN: ${trackingNumber})` : ''}.`
+      : 'Order cancelled by operations desk.');
+    const updatedOrder: Order = {
+      ...order,
+      status: newStatus,
+      courierName: courierName ?? order.courierName,
+      trackingNumber: trackingNumber ?? order.trackingNumber,
+      updatedAt: now,
+      history: [{
+        status: `Status -> ${newStatus}`,
+        timestamp: now,
+        note: entryNote,
+        actor: session?.user?.email || 'Admin',
+      }, ...order.history],
+    };
+    await updateOrderRemote(orderId, {
+      status: updatedOrder.status,
+      courierName: updatedOrder.courierName,
+      trackingNumber: updatedOrder.trackingNumber,
+      history: updatedOrder.history,
     });
-
     setStoreData((prev) => ({
       ...prev,
-      orders: prev.orders.map((order) => {
-        if (order.id !== orderId) return order;
-        const entryNote =
-          note?.trim() ||
-          (newStatus === 'Confirmed'
-            ? 'Stock allocated & phone verification completed.'
-            : newStatus === 'Shipped'
-            ? `Dispatched via ${courierName || order.courierName || 'TCS Express'}${
-                trackingNumber ? ` (CN: ${trackingNumber})` : ''
-              }.`
-            : newStatus === 'Delivered'
-            ? 'Package delivered and COD settlement recorded.'
-            : 'Order cancelled by operations desk.');
-
-        const updatedOrder: Order = {
-          ...order,
-          status: newStatus,
-          courierName: courierName ?? order.courierName,
-          trackingNumber: trackingNumber ?? order.trackingNumber,
-          updatedAt: `Today, ${nowStr}`,
-          history: [
-            {
-              status: `Status -> ${newStatus}`,
-              timestamp: `Today, ${nowStr}`,
-              note: entryNote,
-              actor: session?.user?.email || 'Admin',
-            },
-            ...order.history,
-          ],
-        };
-        void updateOrderRemote(orderId, {
-          status: updatedOrder.status,
-          courierName: updatedOrder.courierName,
-          trackingNumber: updatedOrder.trackingNumber,
-          history: updatedOrder.history,
-        });
-        return updatedOrder;
-      }),
+      orders: prev.orders.map((item) => item.id === orderId ? updatedOrder : item),
     }));
   };
 
