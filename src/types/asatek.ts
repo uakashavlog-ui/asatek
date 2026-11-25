@@ -77,6 +77,7 @@ export type OrderStatus =
   | 'Pending'
   | 'Confirmed'
   | 'Shipped'
+  | 'Delivered'
   | 'Cancelled';
 
 export type PaymentMethod = 'COD' | 'Bank Transfer';
