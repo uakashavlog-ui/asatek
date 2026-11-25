@@ -11,7 +11,7 @@ create table if not exists public.orders (
   country text not null default 'Pakistan',
   zip_code text,
   location text,
-  status text not null default 'Pending' check (status in ('Pending','Confirmed','Shipped','Cancelled')),
+  status text not null default 'Pending' check (status in ('Pending','Confirmed','Skipped','Shipped','Delivered','Cancelled')),
   notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
