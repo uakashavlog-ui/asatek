@@ -174,13 +174,6 @@ export const AdminOrderDetailPage: React.FC = () => {
           </button>
           <button
             type="button"
-            onClick={() => updateOrderStatus(order.id, 'Delivered', 'COD collected & 1-Year Warranty activated.')}
-            className="px-4 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high text-xs font-bold"
-          >
-            Mark Delivered
-          </button>
-          <button
-            type="button"
             onClick={() => setCancelModalOpen(true)}
             className="px-4 py-2 rounded-lg bg-error-container text-on-error-container text-xs font-bold ml-auto"
           >
