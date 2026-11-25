@@ -62,9 +62,9 @@ revoke all on public.order_admins from public, anon, authenticated;
 insert into public.order_admins (user_id) select id from auth.users on conflict (user_id) do nothing;
 
 create or replace function public.is_order_admin()
-returns boolean language sql security definer set search_path = pg_catalog, public stable as $
+returns boolean language sql security definer set search_path = pg_catalog, public stable as $admin$
   select exists (select 1 from public.order_admins where user_id = (select auth.uid()));
-$;
+$admin$;
 revoke all on function public.is_order_admin() from public, anon;
 grant execute on function public.is_order_admin() to authenticated;
 
