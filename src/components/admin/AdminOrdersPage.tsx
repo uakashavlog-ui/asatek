@@ -109,7 +109,7 @@ export const AdminOrdersPage: React.FC = () => {
           <strong className="text-2xl font-extrabold text-secondary tabular-nums">{stats.pendingOrders}</strong>
         </div>
         <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container">
-          <span className="text-xs text-tertiary font-semibold block">Confirmed &amp; Shipped</span>
+          <span className="text-xs text-tertiary font-semibold block">Confirmed</span>
           <strong className="text-2xl font-extrabold text-tertiary tabular-nums">{stats.confirmedOrShipped}</strong>
         </div>
         <div className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container">
