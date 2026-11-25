@@ -32,19 +32,13 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
   allowSvg = false,
   defaultUrl,
   defaultButtonLabel = 'Use Default',
-  previewClassName = 'w-20 h-20 rounded-xl bg-white border border-outline-variant p-1.5 flex items-center justify-center shrink-0 overflow-hidden',
-  previewImageClassName = 'w-full h-full object-contain',
   previewAlt,
   helperText,
   inputIdPrefix,
-  compact = false,
   allowClear = false,
 }) => {
   const { uploadSiteAsset } = useStore();
-  const [mode, setMode] = useState<ImageInputMode>('upload');
-  const [urlInput, setUrlInput] = useState<string>(() =>
-    value && !value.startsWith('data:') ? value : ''
-  );
+  const [urlInput, setUrlInput] = useState(value && !value.startsWith('data:') ? value : '');
   const [uploading, setUploading] = useState(false);
   const [checkingUrl, setCheckingUrl] = useState(false);
   const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null);
@@ -55,44 +49,19 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
 
   useEffect(() => {
     setPreviewFailed(false);
-    if (value && !value.startsWith('data:') && mode === 'upload') {
-      setUrlInput(value);
-    }
-  }, [value, mode]);
+    if (!value || !value.startsWith('data:')) setUrlInput(value || '');
+  }, [value]);
 
-  useEffect(() => {
-    return () => {
-      if (localPreviewUrl) {
-        URL.revokeObjectURL(localPreviewUrl);
-      }
-    };
+  useEffect(() => () => {
+    if (localPreviewUrl) URL.revokeObjectURL(localPreviewUrl);
   }, [localPreviewUrl]);
 
-  const notifyValid = (valid: boolean, err?: string) => {
-    onValidityChange?.(valid, err);
-  };
+  const notifyValid = (valid: boolean, err?: string) => onValidityChange?.(valid, err);
 
-  const handleModeSwitch = (nextMode: ImageInputMode) => {
-    setMode(nextMode);
-    setErrorMsg(null);
-    setStatusMsg(null);
-    if (nextMode === 'url') {
-      const initial = value && !value.startsWith('data:') ? value : '';
-      setUrlInput(initial);
-      notifyValid(true);
-    } else {
-      notifyValid(true);
-    }
-  };
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = '';
+  const uploadFile = async (file?: File) => {
     if (!file) return;
-
     setErrorMsg(null);
     setStatusMsg(null);
-
     const validationError = validateSiteAssetFile(
       { name: file.name, type: file.type, size: file.size },
       { allowSvg }
@@ -104,54 +73,44 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
     }
 
     const objectUrl = URL.createObjectURL(file);
-    if (localPreviewUrl) URL.revokeObjectURL(localPreviewUrl);
-    setLocalPreviewUrl(objectUrl);
+    setLocalPreviewUrl((previous) => {
+      if (previous) URL.revokeObjectURL(previous);
+      return objectUrl;
+    });
     setPreviewFailed(false);
     setUploading(true);
-
     try {
       const publicUrl = await uploadSiteAsset(file, uploadFolder);
       onChange(publicUrl);
-      if (!publicUrl.startsWith('data:')) {
-        setUrlInput(publicUrl);
-      }
+      setUrlInput(publicUrl.startsWith('data:') ? '' : publicUrl);
       setLocalPreviewUrl(null);
       URL.revokeObjectURL(objectUrl);
       setStatusMsg(`Uploaded ${file.name}`);
       notifyValid(true);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Image upload failed.';
       setLocalPreviewUrl(null);
       URL.revokeObjectURL(objectUrl);
-      setErrorMsg(msg);
-      notifyValid(false, msg);
+      const message = err instanceof Error ? err.message : 'Image upload failed.';
+      setErrorMsg(message);
+      notifyValid(false, message);
     } finally {
       setUploading(false);
     }
   };
 
-  const handleUrlChange = (raw: string) => {
-    setUrlInput(raw);
-    setStatusMsg(null);
+  const applyUrl = (raw = urlInput) => {
     const trimmed = raw.trim();
-
+    setStatusMsg(null);
     if (!trimmed) {
-      if (allowClear) {
-        setErrorMsg(null);
-        setCheckingUrl(false);
-        onChange('');
-        notifyValid(true);
-      } else {
-        setErrorMsg(null);
-        setCheckingUrl(false);
-        notifyValid(true);
-      }
+      setErrorMsg(null);
+      setCheckingUrl(false);
+      if (allowClear) onChange('');
+      notifyValid(true);
       return;
     }
-
     if (!isValidImageUrlSyntax(trimmed, { allowSvg })) {
-      setCheckingUrl(false);
       setErrorMsg('Invalid image link');
+      setCheckingUrl(false);
       notifyValid(false, 'Invalid image link');
       return;
     }
@@ -160,16 +119,15 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
     setCheckingUrl(true);
     setErrorMsg(null);
     notifyValid(false, 'Checking image link...');
-
     const probe = new Image();
     probe.referrerPolicy = 'no-referrer';
     probe.onload = () => {
       if (checkSeqRef.current !== seq) return;
       setCheckingUrl(false);
-      setErrorMsg(null);
       setPreviewFailed(false);
+      setErrorMsg(null);
       onChange(trimmed);
-      setStatusMsg('Image link verified');
+      setStatusMsg('Image link applied');
       notifyValid(true);
     };
     probe.onerror = () => {
@@ -181,172 +139,147 @@ export const ImageInputControl: React.FC<ImageInputControlProps> = ({
     probe.src = trimmed;
   };
 
-  const activePreviewSrc = localPreviewUrl
-    ? localPreviewUrl
-    : mode === 'url'
-    ? errorMsg
-      ? ''
-      : urlInput.trim() || value
-    : value;
+  const handleUrlInput = (raw: string) => {
+    setUrlInput(raw);
+    setStatusMsg(null);
+    setErrorMsg(null);
+    setPreviewFailed(false);
+    if (!raw.trim()) {
+      checkSeqRef.current += 1;
+      setCheckingUrl(false);
+      return;
+    }
+    if (!isValidImageUrlSyntax(raw.trim(), { allowSvg })) {
+      setErrorMsg('Invalid image link');
+      notifyValid(false, 'Invalid image link');
+      return;
+    }
+    applyUrl(raw);
+  };
+
   const acceptAttr = allowSvg
     ? '.jpg,.jpeg,.png,.webp,.svg,image/jpeg,image/png,image/webp,image/svg+xml'
     : '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp';
-  const formatHint = allowSvg ? 'JPG, PNG, WEBP, SVG · Max 45 MB' : 'JPG, PNG, WEBP · Max 45 MB';
+  const previewSrc = localPreviewUrl || (
+    urlInput.trim() && !errorMsg ? urlInput.trim() : value
+  );
 
   return (
-    <div className={`rounded-xl bg-surface-container-low border border-surface-container flex flex-col gap-3 ${compact ? 'p-3' : 'p-4'}`}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-bold text-on-surface">{label}</span>
-        <div className="flex items-center gap-2">
+    <section className="w-full min-w-0 overflow-hidden rounded-xl border border-surface-container bg-surface-container-low p-3 sm:p-4 flex flex-col gap-3">
+      <div className="w-full min-w-0 flex items-center justify-between gap-3">
+        <span className="min-w-0 break-words text-xs font-bold text-on-surface">{label}</span>
+        <div className="flex shrink-0 items-center gap-3">
           {allowClear && value && (
-            <button
-              type="button"
-              onClick={() => {
-                setUrlInput('');
-                setErrorMsg(null);
-                setStatusMsg(null);
-                onChange('');
-                notifyValid(true);
-              }}
-              className="text-[11px] font-semibold text-on-surface-variant hover:text-error"
-            >
+            <button type="button" onClick={() => {
+              setUrlInput('');
+              setErrorMsg(null);
+              setStatusMsg(null);
+              onChange('');
+              notifyValid(true);
+            }} className="text-[11px] font-semibold text-on-surface-variant hover:text-error">
               Clear
             </button>
           )}
           {defaultUrl && (
-            <button
-              type="button"
-              onClick={() => {
-                setErrorMsg(null);
-                setStatusMsg(null);
-                setPreviewFailed(false);
-                setUrlInput(defaultUrl);
-                onChange(defaultUrl);
-                notifyValid(true);
-              }}
-              className="text-[11px] font-semibold text-primary hover:underline"
-            >
+            <button type="button" onClick={() => {
+              setErrorMsg(null);
+              setStatusMsg(null);
+              setPreviewFailed(false);
+              setUrlInput(defaultUrl);
+              onChange(defaultUrl);
+              notifyValid(true);
+            }} className="text-[11px] font-semibold text-primary hover:underline whitespace-nowrap">
               {defaultButtonLabel}
             </button>
           )}
         </div>
       </div>
 
-      {/* Mode Switcher Tabs: Upload Image / Image URL */}
-      <div
-        role="tablist"
-        aria-label={`${label} input mode`}
-        className="inline-flex rounded-lg bg-surface-container p-0.5 self-start border border-surface-container-high"
-      >
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === 'upload'}
-          onClick={() => handleModeSwitch('upload')}
-          className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
-            mode === 'upload'
-              ? 'bg-surface-container-lowest text-primary shadow-sm'
-              : 'text-on-surface-variant hover:text-on-surface'
-          }`}
-        >
-          Upload Image
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === 'url'}
-          onClick={() => handleModeSwitch('url')}
-          className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
-            mode === 'url'
-              ? 'bg-surface-container-lowest text-primary shadow-sm'
-              : 'text-on-surface-variant hover:text-on-surface'
-          }`}
-        >
-          Image URL
-        </button>
+      <div className="w-full min-w-0 aspect-[16/9] max-h-64 overflow-hidden rounded-lg border border-outline-variant bg-white flex items-center justify-center p-3">
+        {previewSrc && !previewFailed ? (
+          <img
+            src={previewSrc}
+            alt={previewAlt || `${label} preview`}
+            referrerPolicy="no-referrer"
+            onError={() => setPreviewFailed(true)}
+            onLoad={() => setPreviewFailed(false)}
+            className="h-full w-full object-contain"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-2 text-on-surface-variant/60">
+            <span aria-hidden="true" className="material-symbols-outlined text-3xl">image</span>
+            <span className="text-xs font-medium">{previewFailed ? 'Image preview unavailable' : 'No image selected'}</span>
+          </div>
+        )}
       </div>
 
-      <div className={compact ? 'flex items-center gap-3' : 'flex flex-col sm:flex-row sm:items-center gap-4'}>
-        <div className={previewClassName}>
-          {activePreviewSrc && !previewFailed ? (
-            <img
-              src={activePreviewSrc}
-              alt={previewAlt || `${label} preview`}
-              referrerPolicy="no-referrer"
-              onError={() => setPreviewFailed(true)}
-              className={previewImageClassName}
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-on-surface-variant/60">
-              <span aria-hidden="true" className="material-symbols-outlined text-[22px]">
-                image
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1.5 min-w-0 flex-1">
-          {mode === 'upload' ? (
-            <>
-              <label
-                htmlFor={`${inputIdPrefix}-file`}
-                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-on-surface cursor-pointer"
-              >
-                <span aria-hidden="true" className="material-symbols-outlined text-[16px] text-primary">
-                  upload
-                </span>
-                <span>{uploading ? 'Uploading...' : `Choose ${label}`}</span>
-              </label>
-              <input
-                id={`${inputIdPrefix}-file`}
-                type="file"
-                accept={acceptAttr}
-                disabled={uploading}
-                onChange={(e) => void handleFileChange(e)}
-                className="sr-only"
-              />
-              <span className="text-[11px] text-on-surface-variant font-spec-code">
-                {formatHint}
-              </span>
-            </>
-          ) : (
-            <>
-              <label htmlFor={`${inputIdPrefix}-url`} className="sr-only">
-                {label} URL
-              </label>
-              <input
-                id={`${inputIdPrefix}-url`}
-                type="url"
-                value={urlInput}
-                onChange={(e) => handleUrlChange(e.target.value)}
-                placeholder="https://example.com/image.jpg"
-                className={`w-full rounded-lg border px-3 py-2 text-xs font-spec-code bg-surface-container-lowest focus:outline-none focus:ring-2 ${
-                  errorMsg
-                    ? 'border-error focus:ring-error/30'
-                    : 'border-outline-variant focus:ring-primary'
-                }`}
-              />
-              <span className="text-[11px] text-on-surface-variant">
-                {checkingUrl
-                  ? 'Checking image link...'
-                  : 'Paste an HTTPS image link. Live preview verifies before saving.'}
-              </span>
-            </>
-          )}
-
-          {helperText && !errorMsg && !statusMsg && (
-            <span className="text-[11px] text-on-surface-variant">{helperText}</span>
-          )}
-          {errorMsg && (
-            <span role="alert" className="text-[11px] font-semibold text-error">
-              {errorMsg}
+      <div className="w-full min-w-0 flex flex-col gap-2">
+        <label
+          htmlFor={`${inputIdPrefix}-file`}
+          onDragOver={(event) => event.preventDefault()}
+          onDrop={(event) => {
+            event.preventDefault();
+            void uploadFile(event.dataTransfer.files?.[0]);
+          }}
+          className="w-full min-w-0 overflow-hidden cursor-pointer rounded-lg border-2 border-dashed border-outline-variant bg-white px-3 py-4 sm:px-4 text-center hover:border-primary hover:bg-surface-container-low transition-colors"
+        >
+          <span className="flex flex-col items-center gap-1.5">
+            <span aria-hidden="true" className="material-symbols-outlined text-2xl text-primary">cloud_upload</span>
+            <span className="text-sm font-semibold text-on-surface">{uploading ? 'Uploading image...' : 'Click to upload or drag and drop'}</span>
+            <span className="w-full text-[11px] leading-relaxed text-on-surface-variant break-words">
+              JPG, PNG, WEBP{allowSvg ? ', SVG' : ''} (SVG for logo and favicon only)
             </span>
-          )}
-          {statusMsg && !errorMsg && (
-            <span className="text-[11px] font-semibold text-tertiary">{statusMsg}</span>
-          )}
-        </div>
+          </span>
+        </label>
+        <input
+          id={`${inputIdPrefix}-file`}
+          type="file"
+          accept={acceptAttr}
+          disabled={uploading}
+          onChange={(event) => {
+            void uploadFile(event.target.files?.[0]);
+            event.target.value = '';
+          }}
+          className="sr-only"
+        />
       </div>
-    </div>
+
+      <div className="flex w-full min-w-0 items-center gap-3 text-[10px] font-bold tracking-widest text-on-surface-variant">
+        <span className="h-px flex-1 bg-outline-variant" />
+        <span>OR</span>
+        <span className="h-px flex-1 bg-outline-variant" />
+      </div>
+
+      <div className="w-full min-w-0 flex flex-col gap-1.5">
+        <label htmlFor={`${inputIdPrefix}-url`} className="text-xs font-semibold text-on-surface">Image URL</label>
+        <div className="flex w-full min-w-0 flex-col sm:flex-row gap-2">
+          <input
+            id={`${inputIdPrefix}-url`}
+            type="url"
+            value={urlInput}
+            onChange={(event) => handleUrlInput(event.target.value)}
+            onBlur={() => {
+              if (urlInput.trim() && !errorMsg) applyUrl();
+            }}
+            placeholder="https://example.com/image.png"
+            className={`w-full min-w-0 flex-1 rounded-lg border px-3 py-2.5 text-xs bg-white focus:outline-none focus:ring-2 ${
+              errorMsg ? 'border-error focus:ring-error/30' : 'border-outline-variant focus:ring-primary'
+            }`}
+          />
+          <button
+            type="button"
+            onClick={() => applyUrl()}
+            disabled={checkingUrl || !urlInput.trim()}
+            className="w-full sm:w-auto shrink-0 rounded-lg bg-primary px-5 py-2.5 text-xs font-bold text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {checkingUrl ? 'Checking...' : 'Apply'}
+          </button>
+        </div>
+        {checkingUrl && <span className="text-[11px] text-on-surface-variant">Checking image link...</span>}
+        {errorMsg && <span role="alert" className="text-[11px] font-semibold text-error">{errorMsg}</span>}
+        {statusMsg && !errorMsg && <span className="text-[11px] font-semibold text-tertiary">{statusMsg}</span>}
+        {helperText && !errorMsg && !statusMsg && <span className="text-[11px] text-on-surface-variant">{helperText}</span>}
+      </div>
+    </section>
   );
 };
