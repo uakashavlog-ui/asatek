@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import type { OrderStatus } from '../../types/asatek';
-import { computeOrderStats, formatPkr } from '../../utils/storeLogic';
+import { buildWhatsAppUrl, computeOrderStats, formatPkr } from '../../utils/storeLogic';
 
 export const AdminOrdersPage: React.FC = () => {
   const { orders, products, placeOrder, updateOrderStatus, navigate, setSelectedOrderId } = useStore();
@@ -158,7 +158,7 @@ export const AdminOrdersPage: React.FC = () => {
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-1.5">
-            {(['All', 'Pending', 'Confirmed', 'Shipped', 'Cancelled'] as const).map((st) => (
+            {(['All', 'Pending', 'Confirmed', 'Skipped', 'Cancelled'] as const).map((st) => (
               <button
                 key={st}
                 type="button"
@@ -220,6 +220,7 @@ export const AdminOrdersPage: React.FC = () => {
                   <td className="py-3 px-4">
                     <div className="font-semibold text-on-surface">{order.customerName}</div>
                     <div className="font-spec-code text-xs text-on-surface-variant">{order.phone}</div>
+                    <a href={buildWhatsAppUrl(`Assalam o Alaikum ${order.customerName}, your ASATEK order ${order.orderNumber || order.id} for ${order.productName} x ${order.quantity} is ${order.status === 'Confirmed' ? 'confirmed' : order.status === 'Skipped' ? 'on hold' : order.status === 'Cancelled' ? 'cancelled' : 'pending'}. Thank you!`, order.whatsapp || order.phone)} target="_blank" rel="noreferrer" className="mt-1 inline-flex rounded-md bg-[#28A745] px-2 py-1 text-[11px] font-bold text-white">WhatsApp</a>
                   </td>
                   <td className="py-3 px-4 text-xs">
                     <div className="font-semibold text-on-surface">{order.city}</div>
@@ -239,6 +240,8 @@ export const AdminOrdersPage: React.FC = () => {
                           ? 'bg-secondary-fixed text-on-secondary-fixed'
                           : order.status === 'Confirmed'
                           ? 'bg-primary-fixed text-on-primary-fixed'
+                          : order.status === 'Skipped'
+                          ? 'bg-slate-100 text-slate-700'
                           : order.status === 'Cancelled'
                           ? 'bg-error-container text-on-error-container'
                           : 'bg-tertiary-fixed text-on-tertiary-fixed'
