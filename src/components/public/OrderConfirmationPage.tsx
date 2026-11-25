@@ -5,9 +5,15 @@ import { SafeImage } from '../common/SafeImage';
 
 export const OrderConfirmationPage: React.FC = () => {
   const { orders, products, lastPlacedOrderId, siteSettings, setTrackingPrefillPhone, navigate } = useStore();
-  const order = orders.find((o) => o.id === lastPlacedOrderId) || orders[0];
+  const order = orders.find((o) => o.id === lastPlacedOrderId);
 
-  if (!order) return null;
+  if (!order) return (
+    <div className="max-w-2xl mx-auto px-4 py-12 text-center">
+      <h1 className="text-headline-md font-bold text-on-surface">Order confirmation unavailable</h1>
+      <p className="text-body-sm text-on-surface-variant mt-2">No successfully saved order is available for this confirmation.</p>
+      <button type="button" onClick={() => navigate('products')} className="mt-5 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-on-primary">Back to Products</button>
+    </div>
+  );
 
   const product = products.find((p) => p.id === order.productId);
   const waConfirmMsg = `Assalam-o-Alaikum ${siteSettings.site_name} Team! Please confirm my Cash on Delivery order ${order.id} for ${order.quantity}x ${order.productName} (${formatPkr(order.totalAmount)}). Name: ${order.customerName}, City: ${order.city}, Phone: ${order.phone}.`;
