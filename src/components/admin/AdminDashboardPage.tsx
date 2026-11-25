@@ -144,7 +144,7 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-label-uppercase text-on-surface-variant block">Confirmed &amp; Dispatched</span>
+              <span className="text-label-uppercase text-on-surface-variant block">Confirmed</span>
               <span className="text-headline-lg font-extrabold text-tertiary tabular-nums mt-1 block">
                 {stats.confirmedOrShipped}
               </span>
@@ -308,7 +308,7 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
 
         <div className="px-5 py-3 bg-surface-container-low/50 flex flex-wrap items-center gap-1.5 border-b border-surface-container">
-          {(['all', 'Pending', 'Confirmed', 'Shipped', 'Cancelled'] as const).map((tab) => (
+          {(['all', 'Pending', 'Confirmed', 'Skipped', 'Cancelled'] as const).map((tab) => (
             <button
               key={tab}
               type="button"
