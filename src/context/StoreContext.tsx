@@ -34,6 +34,7 @@ import {
 } from '../services/siteSettingsService';
 import {
   createOrderRemote,
+  fetchOrdersRemote,
   deleteFaqRemote,
   deleteProductRemote,
   deleteReviewRemote,
@@ -104,7 +105,7 @@ interface StoreContextValue {
   loginWithPassword: (email: string, password: string) => Promise<{ error: string | null }>;
   logoutAdmin: () => Promise<void>;
 
-  placeOrder: (input: PlaceOrderInput) => Order;
+  placeOrder: (input: PlaceOrderInput) => Promise<Order>;
   updateOrderStatus: (
     orderId: string,
     newStatus: OrderStatus,
@@ -259,6 +260,30 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, []);
 
+  // Admin-only order hydration and live updates. Guest clients never query the orders tables.
+  useEffect(() => {
+    if (!supabase || !session) return;
+    let active = true;
+    const refreshOrders = async () => {
+      try {
+        const remoteOrders = await fetchOrdersRemote();
+        if (active) setStoreData((prev) => ({ ...prev, orders: remoteOrders }));
+      } catch (error) {
+        console.error('Unable to load orders from Supabase:', error);
+      }
+    };
+    void refreshOrders();
+    const channel = supabase
+      .channel('asatek-admin-orders')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => void refreshOrders())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, () => void refreshOrders())
+      .subscribe();
+    return () => {
+      active = false;
+      void supabase.removeChannel(channel);
+    };
+  }, [session]);
+
   // Sync dynamic brand CSS theme variables, document title, and favicon
   useEffect(() => {
     const palette = deriveBrandPalette(siteSettings.primary_color);
@@ -394,19 +419,17 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     syncBrowserUrl('admin-login', false);
   };
 
-  const placeOrder = (input: PlaceOrderInput): Order => {
+  const placeOrder: StoreContextValue['placeOrder'] = async (input) => {
     const product =
       storeData.products.find((p) => p.id === input.productId) || storeData.products[0];
+    if (!product) throw new Error('This product is currently unavailable. Please refresh and try again.');
     const totals = calculateOrderTotals(product.price, input.quantity, STANDARD_COD_SHIPPING_PKR);
-    const nowStr = new Date().toLocaleTimeString('en-PK', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
-    const orderId = generateNextOrderId(storeData.orders);
+    const now = new Date().toISOString();
+    const orderId = `#AST-${new Date().getFullYear()}-${Date.now().toString().slice(-8)}`;
 
     const newOrder: Order = {
       id: orderId,
+      orderNumber: orderId,
       customerName: input.customerName.trim(),
       phone: input.phone.trim(),
       whatsapp: input.whatsapp.trim() || input.phone.trim(),
@@ -426,25 +449,21 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       status: input.status ?? 'Pending',
       courierName: 'Leopards Courier',
       trackingNumber: 'Pending Dispatch',
-      serialNumber: `AST-2025-${Math.floor(1000 + Math.random() * 8999)}`,
+      serialNumber: `AST-${Date.now().toString().slice(-8)}`,
       expectedDelivery: '2–3 Working Days',
-      createdAt: `Today, ${nowStr}`,
-      updatedAt: `Today, ${nowStr}`,
-      history: [
-        {
-          status: 'Order Received',
-          timestamp: `Today, ${nowStr}`,
-          note: `Order placed (${input.paymentMethod ?? 'COD'}) for ${totals.quantity}× ${product.name}.`,
-          actor: input.status ? 'Admin Manual Desk' : 'Storefront Checkout',
-        },
-      ],
+      createdAt: now,
+      updatedAt: now,
+      history: [{
+        status: 'Order Received',
+        timestamp: now,
+        note: `Order placed (${input.paymentMethod ?? 'COD'}) for ${totals.quantity}× ${product.name}.`,
+        actor: input.status ? 'Admin Manual Desk' : 'Storefront Checkout',
+      }],
     };
 
-    setStoreData((prev) => ({
-      ...prev,
-      orders: [newOrder, ...prev.orders],
-    }));
-    void createOrderRemote(newOrder);
+    // Persist first. Do not show a confirmation or mutate local order state on failure.
+    await createOrderRemote(newOrder);
+    setStoreData((prev) => ({ ...prev, orders: [newOrder, ...prev.orders] }));
     setLastPlacedOrderId(newOrder.id);
     setSelectedOrderId(newOrder.id);
     setTrackingPrefillPhone(newOrder.phone);
