@@ -77,7 +77,6 @@ export type OrderStatus =
   | 'Pending'
   | 'Confirmed'
   | 'Shipped'
-  | 'Delivered'
   | 'Cancelled';
 
 export type PaymentMethod = 'COD' | 'Bank Transfer';
@@ -91,6 +90,7 @@ export interface OrderHistoryEntry {
 
 export interface Order {
   id: string;
+  orderNumber?: string;
   customerName: string;
   phone: string;
   whatsapp: string;
