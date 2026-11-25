@@ -481,10 +481,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (!order) return;
     const now = new Date().toISOString();
     const entryNote = note?.trim() || (newStatus === 'Confirmed'
-      ? 'Stock allocated & phone verification completed.'
+      ? 'Order confirmed.'
+      : newStatus === 'Skipped'
+      ? 'Order placed on hold.'
+      : newStatus === 'Pending'
+      ? 'Order status reset to pending.'
       : newStatus === 'Shipped'
       ? `Dispatched via ${courierName || order.courierName || 'TCS Express'}${trackingNumber ? ` (CN: ${trackingNumber})` : ''}.`
-      : 'Order cancelled by operations desk.');
+      : newStatus === 'Cancelled'
+      ? 'Order cancelled.'
+      : 'Order status updated.');
     const updatedOrder: Order = {
       ...order,
       status: newStatus,
