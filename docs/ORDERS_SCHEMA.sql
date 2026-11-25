@@ -51,10 +51,27 @@ grant insert on public.order_items to anon;
 grant select, insert, update, delete on public.orders to authenticated;
 grant select, insert, update, delete on public.order_items to authenticated;
 
+grant usage on schema public to anon, authenticated;
+
+create table if not exists public.order_admins (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+alter table public.order_admins enable row level security;
+revoke all on public.order_admins from public, anon, authenticated;
+insert into public.order_admins (user_id) select id from auth.users on conflict (user_id) do nothing;
+
+create or replace function public.is_order_admin()
+returns boolean language sql security definer set search_path = pg_catalog, public stable as $
+  select exists (select 1 from public.order_admins where user_id = (select auth.uid()));
+$;
+revoke all on function public.is_order_admin() from public, anon;
+grant execute on function public.is_order_admin() to authenticated;
+
 drop policy if exists "Guests can submit orders" on public.orders;
 create policy "Guests can submit orders" on public.orders for insert to anon with check (true);
 drop policy if exists "Admins can manage orders" on public.orders;
-create policy "Admins can manage orders" on public.orders for all to authenticated using (auth.uid() is not null) with check (auth.uid() is not null);
+create policy "Admins can manage orders" on public.orders for all to authenticated using (public.is_order_admin()) with check (public.is_order_admin());
 drop policy if exists "Guests can submit order items" on public.order_items;
 create policy "Guests can submit order items" on public.order_items for insert to anon with check (true);
 drop policy if exists "Admins can manage order items" on public.order_items;
@@ -131,4 +148,5 @@ grant execute on function public.track_orders_by_phone(text) to anon, authentica
 
 do $$ begin
   alter publication supabase_realtime add table public.orders;
+  alter publication supabase_realtime add table public.order_items;
 exception when duplicate_object then null; when undefined_object then null; end $$;
