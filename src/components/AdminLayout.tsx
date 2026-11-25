@@ -14,15 +14,18 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
     logoutAdmin,
     setSelectedOrderId,
     setSelectedProductId,
-    unreadOrdersCount,
-    refreshOrders,
   } = useStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
 
+  const pendingCount = useMemo(
+    () => orders.filter((o) => o.status === 'Pending').length,
+    [orders]
+  );
+
   const navItems: { route: PageRoute; icon: string; label: string; badge?: number }[] = [
     { route: 'admin-dashboard', icon: 'dashboard', label: 'Dashboard' },
-    { route: 'admin-orders', icon: 'shopping_bag', label: 'Orders', badge: unreadOrdersCount },
+    { route: 'admin-orders', icon: 'shopping_bag', label: 'Orders', badge: pendingCount },
     { route: 'admin-products', icon: 'inventory_2', label: 'Products' },
     { route: 'admin-reviews', icon: 'rate_review', label: 'Reviews' },
     { route: 'admin-service-centers', icon: 'home_repair_service', label: 'Service Centers' },
@@ -98,9 +101,6 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
                 type="button"
                 onClick={() => {
                   navigate(item.route);
-                  if (item.route === 'admin-orders' || item.route === 'admin-dashboard') {
-                    void refreshOrders();
-                  }
                   setSidebarOpen(false);
                 }}
                 aria-current={active ? 'page' : undefined}
@@ -116,7 +116,6 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
                 </span>
                 {typeof item.badge === 'number' && item.badge > 0 && (
                   <span
-                    aria-label={`${item.badge} unread orders`}
                     className={`px-2 py-0.5 rounded-full text-[11px] font-bold tabular-nums ${
                       active ? 'bg-white text-primary' : 'bg-secondary text-on-secondary'
                     }`}
