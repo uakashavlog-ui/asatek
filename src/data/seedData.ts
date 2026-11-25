@@ -5,17 +5,26 @@ import type {
   ReviewItem,
   ServiceCenter,
 } from '../types/asatek';
+import logoImage from '../assets/images/asatek_logo_1795590454722.jpg';
+import sc5_1260Image from '../assets/images/sc5_va1260_1795590454397.jpg';
+import sc5_2460Image from '../assets/images/sc5_va2460_1795590454494.jpg';
+import sc6_1230Image from '../assets/images/sc6_1230_1795590454606.jpg';
+import ups_1000wImage from '../assets/images/ups_1000w_1795590455207.jpg';
+import charger_12v20aImage from '../assets/images/charger_12v20a_1795590454178.jpg';
+import workshopImage from '../assets/images/factory_workshop_1795590454408.jpg';
+import tubewellImage from '../assets/images/review_tubewell_1795590454630.jpg';
+import hubMapImage from '../assets/images/pakistan_hub_map_1795590454527.jpg';
 
 export const ASSETS = {
-  logo: '/src/assets/images/asatek_logo_1795590454722.jpg',
-  sc5_1260: '/src/assets/images/sc5_va1260_1795590454397.jpg',
-  sc5_2460: '/src/assets/images/sc5_va2460_1795590454494.jpg',
-  sc6_1230: '/src/assets/images/sc6_1230_1795590454606.jpg',
-  ups_1000w: '/src/assets/images/ups_1000w_1795590455207.jpg',
-  charger_12v20a: '/src/assets/images/charger_12v20a_1795590454178.jpg',
-  workshop: '/src/assets/images/factory_workshop_1795590454408.jpg',
-  tubewell: '/src/assets/images/review_tubewell_1795590454630.jpg',
-  hubMap: '/src/assets/images/pakistan_hub_map_1795590454527.jpg',
+  logo: logoImage,
+  sc5_1260: sc5_1260Image,
+  sc5_2460: sc5_2460Image,
+  sc6_1230: sc6_1230Image,
+  ups_1000w: ups_1000wImage,
+  charger_12v20a: charger_12v20aImage,
+  workshop: workshopImage,
+  tubewell: tubewellImage,
+  hubMap: hubMapImage,
 };
 
 export const SEED_PRODUCTS: Product[] = [
