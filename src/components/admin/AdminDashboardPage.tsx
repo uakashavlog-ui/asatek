@@ -108,7 +108,7 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* 4 Live KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
@@ -159,7 +159,20 @@ export const AdminDashboardPage: React.FC = () => {
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-label-uppercase text-on-surface-variant block">Cancelled / Returned</span>
+              <span className="text-label-uppercase text-on-surface-variant block">Skipped</span>
+              <span className="text-headline-lg font-extrabold text-slate-600 tabular-nums mt-1 block">{stats.skippedOrders}</span>
+            </div>
+            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
+              <span className="material-symbols-outlined text-[22px]">pause_circle</span>
+            </div>
+          </div>
+          <div className="mt-3 text-xs text-on-surface-variant">Orders on hold</div>
+        </div>
+
+        <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
+          <div className="flex items-start justify-between">
+            <div>
+              <span className="text-label-uppercase text-on-surface-variant block">Cancelled</span>
               <span className="text-headline-lg font-extrabold text-error tabular-nums mt-1 block">
                 {stats.cancelledOrders}
               </span>
@@ -261,7 +274,7 @@ export const AdminDashboardPage: React.FC = () => {
                   <strong className="text-secondary">{stats.pendingOrders}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span>Confirmed / Shipped</span>
+                  <span>Confirmed</span>
                   <strong className="text-tertiary">{stats.confirmedOrShipped}</strong>
                 </div>
                 <div className="flex justify-between">
@@ -363,6 +376,8 @@ export const AdminDashboardPage: React.FC = () => {
                           ? 'bg-secondary-fixed text-on-secondary-fixed'
                           : order.status === 'Confirmed'
                           ? 'bg-primary-fixed text-on-primary-fixed'
+                          : order.status === 'Skipped'
+                          ? 'bg-slate-100 text-slate-700'
                           : order.status === 'Cancelled'
                           ? 'bg-error-container text-on-error-container'
                           : 'bg-tertiary-fixed text-on-tertiary-fixed'
