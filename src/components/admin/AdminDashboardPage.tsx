@@ -307,8 +307,8 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* 4 Live KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      {/* 5 Live KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
@@ -360,9 +360,22 @@ export const AdminDashboardPage: React.FC = () => {
               <span className="material-symbols-outlined text-[22px]">check_circle</span>
             </div>
           </div>
-          <div className="mt-3 text-xs text-on-surface-variant">
-            {stats.skippedOrders} Skipped · Nationwide COD
+          <div className="mt-3 text-xs text-on-surface-variant">Confirmed orders</div>
+        </div>
+
+        <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
+          <div className="flex items-start justify-between">
+            <div>
+              <span className="text-label-uppercase text-on-surface-variant block">Skipped Orders</span>
+              <span className="text-headline-lg font-extrabold text-slate-700 tabular-nums mt-1 block">
+                {stats.skippedOrders}
+              </span>
+            </div>
+            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700">
+              <span className="material-symbols-outlined text-[22px]">pause_circle</span>
+            </div>
           </div>
+          <div className="mt-3 text-xs text-on-surface-variant">Orders on hold</div>
         </div>
 
         <div className="rounded-xl bg-surface-container-lowest border border-surface-container p-5 shadow-sm">
