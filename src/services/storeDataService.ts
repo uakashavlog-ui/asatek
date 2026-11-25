@@ -80,7 +80,17 @@ export function loadLocalStoreSnapshot(): StoreDataSnapshot {
 export function saveLocalStoreSnapshot(snapshot: StoreDataSnapshot): void {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(STORE_STORAGE_KEY, JSON.stringify(snapshot));
+    let existingOrders: unknown[] = [];
+    const existingRaw = window.localStorage.getItem(STORE_STORAGE_KEY);
+    if (existingRaw) {
+      try {
+        const existing = JSON.parse(existingRaw) as Partial<StoreDataSnapshot>;
+        if (Array.isArray(existing.orders)) existingOrders = existing.orders;
+      } catch {
+        // Preserve an empty local order cache when the prior snapshot is malformed.
+      }
+    }
+    window.localStorage.setItem(STORE_STORAGE_KEY, JSON.stringify({ ...snapshot, orders: existingOrders }));
   } catch {
     // Ignore storage quota errors
   }
