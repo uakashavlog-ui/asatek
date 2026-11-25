@@ -151,7 +151,7 @@ export const AdminOrdersPage: React.FC = () => {
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-1.5">
-            {(['All', 'Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'] as const).map((st) => (
+            {(['All', 'Pending', 'Confirmed', 'Shipped', 'Cancelled'] as const).map((st) => (
               <button
                 key={st}
                 type="button"
